@@ -102,7 +102,7 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
       </div>
 
       {/* Mobile Layout */}
-      <div className="lg:hidden h-full">
+      <div className="lg:hidden w-full h-full">
         {!supportId ? (
           // Mail List View for Mobile
           <div className="rounded-xl border border-border h-full flex flex-col">

@@ -1,10 +1,10 @@
 import { SupportApi } from './Support.api';
 import { GetSupportUserTicketMessagesByIdParams, GetSupportUserTicketsParams } from './Support.types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 export const getSupportUserTicketsQueryOptions = (params: GetSupportUserTicketsParams) => ({
-  queryKey: ['getSupportUserTickets', params],
+  queryKey: ['getSupportUserTickets', params.status],
   queryFn: () => SupportApi.getSupportUserTickets(params)
 });
 

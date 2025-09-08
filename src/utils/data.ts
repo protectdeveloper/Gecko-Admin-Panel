@@ -1,27 +1,4 @@
-import {
-  ArrowLeftRight,
-  ChartColumn,
-  Settings,
-  SquareUserRound,
-  ChartArea,
-  TableProperties,
-  type LucideIcon,
-  User2Icon,
-  Edit2Icon,
-  UserPlusIcon,
-  Settings2Icon,
-  UsersIcon,
-  CalendarDays,
-  CalendarPlus,
-  UserIcon,
-  Package,
-  Banknote,
-  HandCoins,
-  ShoppingCart,
-  Ban,
-  HelpCircle,
-  HomeIcon
-} from 'lucide-react';
+import { Settings, SquareUserRound, type LucideIcon, User2Icon, Settings2Icon, HelpCircle, HomeIcon } from 'lucide-react';
 
 export interface BreadcrumbItem {
   title: string;
@@ -30,25 +7,8 @@ export interface BreadcrumbItem {
 }
 
 export const breadcrumbData: BreadcrumbItem[] = [
-  // Settings
   { title: 'settings', icon: Settings2Icon, pattern: '/settings' },
-  // Users
-  { title: 'usersDetail', icon: User2Icon, pattern: '/users/detail/' },
-  { title: 'userEdit', icon: Edit2Icon, pattern: '/users/edit/' },
-  { title: 'userCreate', icon: UserPlusIcon, pattern: '/users/create' },
-  { title: 'multiUserCreate', icon: UsersIcon, pattern: '/users/multi-create' },
-  // PDKS Users
-  { title: 'pdksUsersDetail', icon: User2Icon, pattern: '/users-list/detail/' },
-
-  // Event Areas
-  { title: 'eventDetail', icon: CalendarDays, pattern: '/event/detail/' },
-  { title: 'eventCreate', icon: CalendarPlus, pattern: '/event/create' },
-  { title: 'eventUserDetail', icon: UsersIcon, pattern: '/event/detail/id/user/id' },
-  { title: 'participantUserDetail', icon: UserIcon, pattern: '/all-participants/user' },
-
-  // Shop Products
-  { title: 'productDetail', icon: Package, pattern: '/products/detail' },
-  { title: 'shoppingCart', icon: ShoppingCart, pattern: '/shopping-cart' }
+  { title: 'usersDetail', icon: User2Icon, pattern: '/users/detail/' }
 ];
 
 export const menuFooterData = [
@@ -63,18 +23,6 @@ export const menuFooterData = [
       }
     ]
   }
-  // {
-  //   title: 'Destek',
-  //   url: '',
-  //   items: [
-  //     {
-  //       title: 'Support',
-  //       url: '/support',
-  //       icon: HelpCircle,
-  //       isNewFeature: true
-  //     }
-  //   ]
-  // }
 ];
 
 export const sidebarMenuData = {
@@ -96,8 +44,7 @@ export const sidebarMenuData = {
         {
           title: 'Destek Talepleri',
           url: '/support-requests',
-          icon: HelpCircle,
-          notificationCount: 3
+          icon: HelpCircle
         }
       ]
     }

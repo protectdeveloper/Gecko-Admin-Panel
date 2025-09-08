@@ -26,7 +26,7 @@ const SupportDisplay = () => {
   };
 
   return (
-    <div className="flex flex-col h-full min-h-0">
+    <div className="flex flex-col w-full h-full min-h-0">
       <div className="lg:hidden flex items-center gap-2 p-4 border-b min-h-[4rem]">
         <Button variant="ghost" size="icon" onClick={handleBackToList}>
           <ArrowLeft className="h-4 w-4" />

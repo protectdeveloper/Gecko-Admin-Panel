@@ -155,7 +155,7 @@ const ChatContent = () => {
       const newMessage = {
         messageID: Math.random().toString(36).substr(2, 9),
         ticketID: supportId as string,
-        senderType: 'user',
+        senderType: 'admin',
         messageContent: messageInput,
         createdAt: dayjs.utc().add(3, 'hour').toISOString(),
         replyToMessage: selectedMessage.isReply
@@ -246,7 +246,7 @@ const ChatContent = () => {
       const newMessage = {
         messageID: Math.random().toString(36).substr(2, 9),
         ticketID: supportId as string,
-        senderType: 'user',
+        senderType: 'admin',
         messageContent: messageInput,
         createdAt: dayjs.utc().add(3, 'hour').toISOString(),
         replyToMessage: null,
@@ -348,7 +348,7 @@ const ChatContent = () => {
   }
 
   return (
-    <div className="flex flex-col h-full min-h-0">
+    <div className="w-full flex flex-col h-full min-h-0">
       <div
         ref={containerRef}
         className="flex-1 flex flex-col gap-4 p-3 overflow-scroll"
@@ -371,12 +371,15 @@ const ChatContent = () => {
               </div>
 
               {groupedMessages[groupKey]?.map((msg, index) => (
-                <div key={index} className={`flex gap-2 ${msg.senderType === 'user' ? 'flex-row-reverse' : 'flex-row'} relative`}>
+                <div
+                  key={index}
+                  className={`flex gap-2 ${msg.senderType === 'admin' ? 'flex-row-reverse' : 'flex-row'} relative`}
+                >
                   <Avatar className="h-8 w-8 rounded-full">
                     <AvatarImage src={undefined} alt={'avatar'} />
                     <AvatarFallback className="rounded-lg bg-accent">
                       {msg.senderType === 'user'
-                        ? formatAvatarFallback(user?.firstName || '-', user?.lastName || '-')
+                        ? formatAvatarFallback(user?.firstName || 'K', user?.lastName || '')
                         : formatAvatarFallback('G', 'D')}
                     </AvatarFallback>
                   </Avatar>

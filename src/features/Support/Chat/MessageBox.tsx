@@ -35,9 +35,9 @@ const MessageBox = ({
       id={`message-${msg.messageID}`}
       className={cn(
         'max-w-[50%] flex flex-col gap-1.5 py-1.5 px-2.5 rounded-lg text-sm relative',
-        msg?.senderType === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted',
+        msg?.senderType === 'admin' ? 'bg-primary text-primary-foreground' : 'bg-muted',
         highlight &&
-          (msg.senderType === 'user' ? 'ring-2 ring-black dark:ring-gray-100 opacity-60 ' : 'ring-2 ring-primary opacity-60')
+          (msg.senderType === 'admin' ? 'ring-2 ring-black dark:ring-gray-100 opacity-60 ' : 'ring-2 ring-primary opacity-60')
       )}
     >
       {msg?.replyToMessage && (
@@ -45,7 +45,7 @@ const MessageBox = ({
           onClick={() => onScrollReplyToMessage(msg.replyToMessage?.messageID as string)}
           className={cn(
             'border-l-4 px-2 py-1 rounded-sm cursor-pointer',
-            msg.senderType === 'user' ? 'bg-card/20 border-secondary' : 'bg-input dark:bg-card border-primary'
+            msg.senderType === 'admin' ? 'bg-card/20 border-secondary' : 'bg-input dark:bg-card border-primary'
           )}
         >
           <p className="text-sm font-medium italic opacity-80 whitespace-pre-wrap">{msg.replyToMessage.messageContent}</p>
@@ -68,7 +68,7 @@ const MessageBox = ({
         />
       </div>
 
-      <span className={cn('text-[11px] font-medium opacity-70 block', msg?.senderType === 'user' ? 'text-end' : 'text-start')}>
+      <span className={cn('text-[11px] font-medium opacity-70 block', msg?.senderType === 'admin' ? 'text-end' : 'text-start')}>
         {formatDateHourMinute(msg?.createdAt)}
       </span>
     </div>

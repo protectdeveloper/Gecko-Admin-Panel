@@ -14,13 +14,14 @@ import {
   useSidebar
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Badge } from '../ui/badge';
+import { useTranslation } from 'react-i18next';
+import { sidebarMenuData } from '@/utils/data';
 import { usePathname, useRouter } from 'next/navigation';
 import CustomSidebarFooter from './custom-sidebar-footer';
-import { useTheme } from 'next-themes';
-import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
-import { sidebarMenuData } from '@/utils/data';
-import { Badge } from '../ui/badge';
+import GeckoAiImage from '../../../public/assets/img/geckoAi.png';
+import { useGetSupportUserTicketsQuery } from '@/api/Support/Support.hook';
 
 export interface NavItem {
   title: string;
@@ -34,17 +35,17 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-interface NavData {
-  navMain: NavGroup[];
-  navFooter: NavGroup[];
-}
-
 export function GenericSidebar({ ...props }) {
   const router = useRouter();
-  const { theme } = useTheme();
   const { t } = useTranslation();
   const pathname = usePathname() || '';
   const { isMobile, open } = useSidebar();
+
+  const { data: supportTicketsData } = useGetSupportUserTicketsQuery({
+    pageSize: 1,
+    pageNumber: 20,
+    status: 'open'
+  });
 
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => setIsMounted(true), []);
@@ -58,8 +59,8 @@ export function GenericSidebar({ ...props }) {
             width={40}
             height={40}
             onClick={() => router.push('/')}
-            className="w-full max-h-[40px] min-h-[40px] object-contain cursor-pointer"
-            src={theme === 'dark' ? '/assets/img/logo_white.png' : '/assets/img/logo.png'}
+            className="max-h-[40px] min-h-[40px] mx-auto object-contain cursor-pointer"
+            src={GeckoAiImage}
           />
         )}
         <SidebarTrigger className="w-8 h-8 " />
@@ -78,9 +79,9 @@ export function GenericSidebar({ ...props }) {
                           {item?.icon && <item.icon />}
                           <span>{t(`menu.${item?.title}`)}</span>
 
-                          {item?.notificationCount && (
+                          {item?.url === '/support-requests' && (supportTicketsData?.totalCount ?? 0) > 0 && (
                             <Badge variant="default" className="rounded-full ml-auto text-center p-[0px] h-[20px] w-[20px]">
-                              {item?.notificationCount}
+                              {supportTicketsData?.totalCount ?? 0}
                             </Badge>
                           )}
                         </Link>
