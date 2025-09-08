@@ -1,0 +1,55 @@
+{
+  "title": "Destek",
+  "description": "Destek ekibimizle iletişime geçin, sorunlarınızı bildirin veya yardım alın.",
+
+  "photoLimitDescription": "En Fazla 3 fotoğraf yükleyebilirsiniz. Fotoğraflar, talebinizin daha iyi anlaşılmasına yardımcı olacaktır.",
+
+  "supportTitleCreate": "Destek Talebi Oluştur",
+  "supportDescriptionCreate": "Destek talebinizle ilgili gerekli bilgileri doldurun.",
+
+  "create": "Oluştur",
+  "cancel": "İptal",
+
+  "supportTypeTitle": "Talep Türü",
+  "supportTypePlaceholder": "Talep türünü seçin",
+  "supportTypeRequired": "Lütfen bir talep başlığı girin.",
+
+  "supportTitle": "Talep Başlığı",
+  "supportTitlePlaceholder": "Talep başlığını girin",
+  "supportTitleRequired": "Lütfen bir talep başlığı girin.",
+
+  "lowStatus": "Düşük",
+  "normalStatus": "Normal",
+  "urgentStatus": "Acil",
+  "criticalStatus": "Çok Acil",
+
+  "requestUrgencyStatusTitle": "Talep Aciliyet Durumu",
+  "requestUrgencyStatusPlaceholder": "Talep aciliyet durumunu seçin",
+  "requestUrgencyStatusRequired": "Lütfen bir talep aciliyet durumu seçin.",
+
+  "supportDescriptionTitle": "Talep Açıklaması",
+  "supportDescriptionPlaceholder": "Talep açıklamasını girin",
+  "supportDescriptionRequired": "Lütfen en az 10 karakter uzunluğunda bir açıklama girin.",
+
+  "supportRequests": "Destek Talepleri",
+  "supportTabWaiting": "Bekleyen",
+  "supportTabResolved": "Çözülen",
+  "searchSupport": "Talep Ara...",
+
+  "markAsSolved": "Çözüldü olarak işaretle",
+  "deleteSupportRequest": "Destek talebini sil",
+
+  "pleaseSelectSupportRequest": "Lütfen bir destek talebi seçin.",
+  "back": "Geri",
+  "supportDetailTitle": "Destek Talebi Detayı",
+  "geckoSupport": "Gecko Destek",
+  "moreOptions": "Daha fazla",
+  "send": "Gönder",
+  "reply": "Cevapla",
+  "edit": "Düzenle",
+  "delete": "Sil",
+  "today": "Bugün",
+  "yesterday": "Dün",
+  "noTickets": "Destek talebi bulunmamaktadır.",
+  "messagePlaceholder": "Mesajınızı yazın..."
+}

@@ -1,0 +1,17 @@
+{
+  "semi": true,
+  "trailingComma": "none",
+  "singleQuote": true,
+  "printWidth": 130,
+  "plugins": [],
+  "importOrder": [
+    "^react$",
+    "^react-native$",
+    "<THIRD_PARTY_MODULES>",
+    "^@/",
+    "^[./]"
+  ],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true,
+  "overrides": []
+}

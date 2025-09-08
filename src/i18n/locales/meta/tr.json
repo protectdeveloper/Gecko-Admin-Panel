@@ -1,0 +1,26 @@
+{
+  "login": {
+    "title": "Giriş Yap",
+    "description": "GeckoPlus Web'e giriş yapın."
+  },
+  "forgotPassword": {
+    "title": "Şifremi Unuttum",
+    "description": "GeckoPlus Web şifrenizi sıfırlayın."
+  },
+  "verify": {
+    "title": "Doğrulama",
+    "description": "Hesabınızı doğrulayın ve giriş yapın."
+  },
+  "home": {
+    "title": "Gösterge Paneli",
+    "description": "GeckoPlus Web yönetim paneline hoş geldiniz."
+  },
+  "all-users": {
+    "title": "Tüm Kullanıcılar",
+    "description": "Kayıtlı tüm kullanıcıları yönetin ve görüntüleyin."
+  },
+  "support": {
+    "title": "Destek",
+    "description": "Destek taleplerinizi yönetin ve görüntüleyin."
+  }
+}
