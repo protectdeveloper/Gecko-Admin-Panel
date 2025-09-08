@@ -9,23 +9,16 @@ export function middleware(request: NextRequest) {
   const isAuthPage = request.nextUrl.pathname.startsWith('/auth');
   const isVerifyPage = request.nextUrl.pathname.startsWith('/auth/verify');
 
-  // if (isLogin === 'true' && token) {
-  //   const modules = request.cookies.get('modules')?.value;
-  //   let userModules: string[] = [];
+  if (isLogin === 'true' && token) {
+    if (isAuthPage) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+  }
 
-  //   try {
-  //     userModules = modules ? JSON.parse(modules) : [];
-  //   } catch {}
-
-  //   if (isAuthPage) {
-  //     return NextResponse.redirect(new URL('/', request.url));
-  //   }
-  // }
-
-  // // /auth/verify route'una erişim kontrolü
-  // if (isVerifyPage && isSendVerifyCode !== 'true') {
-  //   return NextResponse.redirect(new URL('/auth/login', request.url));
-  // }
+  // auth/verify route'una erişim kontrolü
+  if (isVerifyPage && isSendVerifyCode !== 'true') {
+    return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
 
   return NextResponse.next();
 }

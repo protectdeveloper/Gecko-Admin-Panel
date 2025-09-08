@@ -45,11 +45,11 @@ const LoginPage = () => {
 
   return (
     <div className={cn('flex flex-col gap-6')}>
-      <Card className="overflow-hidden p-0">
+      <Card className="overflow-hidden p-0 bg-black/50">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8 ">
             <div className="flex flex-col gap-4">
-              <div className="flex flex-col items-center text-center">
+              <div className="flex flex-col items-center text-center pb-4">
                 <h1 className="text-2xl font-bold">Gecko Admin Panel</h1>
                 <p className="text-muted-foreground text-balance">Hoş geldiniz! Lütfen giriş yapın.</p>
               </div>
@@ -90,7 +90,7 @@ const LoginPage = () => {
             </div>
           </form>
 
-          <div className="bg-muted relative hidden md:block">
+          <div className="bg-black/10 relative hidden md:block">
             <Image
               src={LogoWhite}
               width={150}
@@ -102,7 +102,7 @@ const LoginPage = () => {
         </CardContent>
       </Card>
 
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+      <div className="text-black *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         By clicking continue, you agree to the Gecko Admin Panel <a href="#">Terms of Service</a> and{' '}
         <a href="#">Privacy Policy</a>.
       </div>
