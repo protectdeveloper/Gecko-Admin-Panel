@@ -1,18 +1,22 @@
 'use client';
+
 import { z } from 'zod';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Card, CardContent } from '@/components/ui/card';
+import Logo from '../../../../public/assets/img/logo.png';
 import LogoWhite from '../../../../public/assets/img/logo_white.png';
 import CustomUiTextInput from '@/components/inputs/CustomUiTextInput';
 
 const LoginPage = () => {
   const router = useRouter();
+  const { theme } = useTheme();
   const { t } = useTranslation();
 
   const LoginSchema = z.object({
@@ -45,13 +49,13 @@ const LoginPage = () => {
 
   return (
     <div className={cn('flex flex-col gap-6')}>
-      <Card className="overflow-hidden p-0 bg-black/50">
+      <Card className="overflow-hidden p-0 bg-white/5 dark:bg-black/50 border-none">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8 ">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col items-center text-center pb-4">
-                <h1 className="text-2xl font-bold">Gecko Admin Panel</h1>
-                <p className="text-muted-foreground text-balance">Hoş geldiniz! Lütfen giriş yapın.</p>
+                <h1 className="text-2xl font-bold text-foreground">Gecko Admin Panel</h1>
+                <p className="text-foreground font-extralight text-balance">Hoş geldiniz! Lütfen giriş yapın.</p>
               </div>
 
               <Controller
@@ -90,9 +94,9 @@ const LoginPage = () => {
             </div>
           </form>
 
-          <div className="bg-black/10 relative hidden md:block">
+          <div className="bg-white/10 dark:bg-black/10 relative hidden md:block">
             <Image
-              src={LogoWhite}
+              src={theme === 'dark' ? LogoWhite : Logo}
               width={150}
               height={150}
               alt="Image"
@@ -102,7 +106,7 @@ const LoginPage = () => {
         </CardContent>
       </Card>
 
-      <div className="text-black *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+      <div className="text-white *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         By clicking continue, you agree to the Gecko Admin Panel <a href="#">Terms of Service</a> and{' '}
         <a href="#">Privacy Policy</a>.
       </div>
