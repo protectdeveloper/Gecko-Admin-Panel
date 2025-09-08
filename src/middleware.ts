@@ -15,8 +15,12 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // auth/verify route'una erişim kontrolü
+  // /auth/verify route'una erişim kontrolü
   if (isVerifyPage && isSendVerifyCode !== 'true') {
+    return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
+
+  if (isLogin !== 'true' && !isAuthPage) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 

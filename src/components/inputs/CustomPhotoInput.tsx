@@ -1,12 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ImagePlus } from 'lucide-react';
 import { Button } from '../ui/button';
+import { toast } from 'sonner';
+
+export type CustomPhotoInputValueType = {
+  image: string;
+  isUrl: boolean;
+};
 
 interface CustomPhotoInputProps {
-  onChange: (imageDataUrls: string[]) => void;
-  value?: string[];
+  onChange: (imageDataUrls: CustomPhotoInputValueType[]) => void;
+  value?: CustomPhotoInputValueType[];
   maxFiles?: number;
   disabled?: boolean;
 }
@@ -25,6 +31,19 @@ export function CustomPhotoInput({ onChange, value = [], maxFiles = 5, disabled 
           // If larger than 2MB, resize
           const img = document.createElement('img');
           img.onload = () => {
+            // Calculate new size while keeping aspect ratio, max 800x800
+            const maxDim = 800;
+            let width = img.width;
+            let height = img.height;
+            if (width > maxDim || height > maxDim) {
+              if (width > height) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
             // Create canvas to resize image
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -32,16 +51,11 @@ export function CustomPhotoInput({ onChange, value = [], maxFiles = 5, disabled 
               resolve(reader.result as string);
               return;
             }
-
-            // Set canvas size to 128x128 for better quality
-            canvas.width = 128;
-            canvas.height = 128;
-
-            // Draw resized image
-            ctx.drawImage(img, 0, 0, 128, 128);
-
-            // Convert to data URL with good compression
-            const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+            // Convert to data URL with lowest reasonable quality
+            const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.1);
             resolve(resizedDataUrl);
           };
           img.onerror = () => {
@@ -67,16 +81,24 @@ export function CustomPhotoInput({ onChange, value = [], maxFiles = 5, disabled 
     const validFiles = files.filter((file) => validTypes.includes(file.type));
 
     if (validFiles.length === 0) {
+      toast.error('Lütfen geçerli bir resim dosyası seçin (jpeg, png, jpg)');
+      return;
+    }
+
+    const oversizedFiles = validFiles.filter((file) => file.size > 1024 * 1024);
+    if (oversizedFiles.length > 0) {
+      toast.error("1MB'dan büyük fotoğraflar yüklenemez");
       return;
     }
 
     if (value.length + validFiles.length > maxFiles) {
+      toast.error(`En fazla ${maxFiles} fotoğraf yükleyebilirsiniz`);
       return;
     }
 
     try {
       const dataUrls = await Promise.all(validFiles.map((file) => readFileAsDataURL(file)));
-      onChange([...value, ...dataUrls]);
+      onChange([...value, ...dataUrls.map((url) => ({ image: url, isUrl: false }))]);
     } catch (err) {}
 
     // Reset input
