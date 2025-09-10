@@ -33,21 +33,18 @@ const MessageBox = ({
   return (
     <div
       id={`message-${msg.messageID}`}
-      className={cn(
-        'max-w-[50%] flex flex-col gap-1.5 text-sm relative',
-        highlight &&
-          (msg.senderType === 'user' ? 'ring-2 ring-black dark:ring-gray-100 opacity-60 ' : 'ring-2 ring-primary opacity-60')
-      )}
+      className={cn('flex flex-col gap-1.5 text-sm relative', msg.senderType === 'user' ? 'items-end' : 'items-start')}
     >
       {msg?.replyToMessage && (
         <div
           onClick={() => onScrollReplyToMessage(msg.replyToMessage?.messageID as string)}
           className={cn(
-            'border-l-4 px-2 py-1 rounded-sm cursor-pointer',
-            msg.senderType === 'user' ? 'bg-card/20 border-secondary' : 'bg-input dark:bg-card border-primary'
+            'border-l-4 px-2 py-1.5 rounded-md cursor-pointer max-w-sm text-sm',
+            'overflow-hidden text-ellipsis whitespace-pre-wrap break-words',
+            'bg-input/40 dark:bg-input border-primary'
           )}
         >
-          <p className="text-sm font-medium italic opacity-80 whitespace-pre-wrap">{msg.replyToMessage.messageContent}</p>
+          <p className="italic opacity-80">{msg.replyToMessage.messageContent}</p>
         </div>
       )}
 
@@ -55,11 +52,13 @@ const MessageBox = ({
 
       <div
         className={cn(
-          'flex flex-wrap items-start gap-2 py-1.5 px-2.5 rounded-lg',
-          msg?.senderType === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'
+          'flex items-start gap-2 rounded-lg shadow-sm px-2.5 py-2',
+          msg.senderType === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground',
+          highlight &&
+            (msg.senderType === 'user' ? 'ring-2 ring-black dark:ring-gray-100 opacity-80' : 'ring-2 ring-primary opacity-80')
         )}
       >
-        <div className="flex-1 break-words whitespace-pre-wrap min-w-0">
+        <div className={'whitespace-pre-wrap break-words overflow-wrap-anywhere max-w-xs sm:max-w-sm lg:max-w-md'}>
           <p>{msg?.messageContent}</p>
         </div>
 
@@ -72,7 +71,7 @@ const MessageBox = ({
         />
       </div>
 
-      <span className={cn('text-[11px] font-medium opacity-70 block', msg?.senderType === 'user' ? 'text-end' : 'text-start')}>
+      <span className={cn('text-[11px] font-medium opacity-70 mt-0.5', msg?.senderType === 'user' ? 'text-right' : 'text-left')}>
         {formatDateHourMinute(msg?.createdAt)}
       </span>
     </div>
