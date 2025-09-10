@@ -4,7 +4,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 export const getSupportUserTicketsQueryOptions = (params: GetSupportUserTicketsParams) => ({
-  queryKey: ['getSupportUserTickets', params.status],
+  queryKey: ['getSupportUserTickets', params],
   queryFn: () => SupportApi.getSupportUserTickets(params)
 });
 

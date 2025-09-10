@@ -23,6 +23,10 @@
   "urgentStatus": "Acil",
   "criticalStatus": "Çok Acil",
 
+  "technical": "Teknik Destek",
+  "billing": "Faturalandırma",
+  "general": "Genel",
+
   "requestUrgencyStatusTitle": "Talep Aciliyet Durumu",
   "requestUrgencyStatusPlaceholder": "Talep aciliyet durumunu seçin",
   "requestUrgencyStatusRequired": "Lütfen bir talep aciliyet durumu seçin.",
@@ -51,5 +55,6 @@
   "today": "Bugün",
   "yesterday": "Dün",
   "noTickets": "Destek talebi bulunmamaktadır.",
-  "messagePlaceholder": "Mesajınızı yazın..."
+  "messagePlaceholder": "Mesajınızı yazın...",
+  "noMessages": "Henüz mesaj yok."
 }

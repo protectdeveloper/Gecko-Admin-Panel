@@ -47,7 +47,7 @@ const CustomTextAreaInput = ({
 
       <div
         className={cn(
-          'w-full flex items-center px-3 py-0 rounded-xl border shadow-sm gap-0 dark:bg-input/30',
+          'w-full flex items-center px-3 py-0 rounded-xl border shadow-sm gap-0 dark:bg-input/30 overflow-hidden',
           'transition-all duration-200 ease-in-out',
           'focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary',
           error ? 'border-red-500 bg-destructive/10 text-red-500' : 'border-input'
@@ -60,9 +60,10 @@ const CustomTextAreaInput = ({
           placeholder={placeholder}
           disabled={disabled}
           className={cn(
-            'w-full resize-none dark:bg-input/0 p-0 py-1.5 m-0 border-none shadow-none text-sm whitespace-pre-wrap',
+            'w-full max-w-full resize-none dark:bg-input/0 p-0 py-1.5 m-0 border-none shadow-none text-sm',
             'focus-visible:ring-0 focus-visible:ring-offset-0',
-            'overflow-y-auto max-h-32'
+            'overflow-y-auto overflow-x-hidden max-h-32 min-h-[38px]',
+            'break-all whitespace-pre-wrap'
           )}
           id={`input-${placeholder.replace(/\s+/g, '-').toLowerCase()}`}
           maxLength={maxLength}

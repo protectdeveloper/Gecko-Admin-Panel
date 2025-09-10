@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, MessageCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
@@ -361,7 +361,7 @@ const ChatContent = () => {
           setShowScrollButton(!atBottom);
         }}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col h-full gap-3">
           {sortedGroupKeys?.map((groupKey) => (
             <React.Fragment key={groupKey}>
               <div className="sticky top-0 z-10 flex items-center justify-center">
@@ -396,6 +396,13 @@ const ChatContent = () => {
               ))}
             </React.Fragment>
           ))}
+
+          {sortedGroupKeys?.length === 0 && (
+            <div className="flex flex-col w-full h-full gap-3 items-center justify-center bg-card rounded-lg">
+              <MessageCircle className="size-16 text-muted-foreground" />
+              <p className="text-base font-medium text-muted-foreground">{t('support.noMessages')}</p>
+            </div>
+          )}
         </div>
 
         {showScrollButton && (
