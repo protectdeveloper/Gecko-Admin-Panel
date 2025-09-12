@@ -128,3 +128,18 @@ export const getEventDetailParticipantStatusData = (t: (key: string) => string) 
   { label: t('eventDetail.participantsAwaitingApproval'), value: 'awaiting' },
   { label: t('eventDetail.bannedUsers'), value: 'banned' }
 ];
+
+// Support Ticket Data
+
+export const getSupportRequestUrgencyStatusData = (t: (key: string) => string) => [
+  { label: t('support.lowStatus'), value: 'low' },
+  { label: t('support.normalStatus'), value: 'normal' },
+  { label: t('support.urgentStatus'), value: 'urgent' },
+  { label: t('support.criticalStatus'), value: 'critical' }
+];
+
+export const getSupportRequestTypeData = (t: (key: string) => string) => [
+  { value: 'technical', label: t('support.technical') },
+  { value: 'billing', label: t('support.billing') },
+  { value: 'general', label: t('support.general') }
+];

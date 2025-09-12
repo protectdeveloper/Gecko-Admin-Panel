@@ -1,102 +1,35 @@
-export type PostCustomerUserLoginParams = {
-  customerCode: string;
+export type PostSystemAdminLoginParams = {
   username: string;
   password: string;
 };
 
-export type PostCustomerUserForgotPasswordParams = {
-  customerCode: string;
-  username: string;
-};
-
-export type PostCustomerUserForgotPasswordCheckParams = {
-  customerID: string;
-  authUserID: string;
-  verificationCode: string;
-};
-
-export type PostCustomerUserLoginResponse = {
+export type PostSystemAdminLoginDTO = {
   data: {
     success: boolean;
     message: string;
     expirationTime: string;
   };
   headers: {
-    'x-authuserpretoken': string;
+    'x-adminpretoken': string;
   };
 };
 
-export type PostCustomerUserValidateParams = {
+export type PostSystemAdminValidateParams = {
   verificationCode: string;
 };
 
-export type PostCustomerUserForgotPasswordConfirmParams = {
-  customerID: string;
-  authUserID: string;
-  password: string;
-  verificationCode: string;
-};
-
-export type PostCustomerUserValidateResponse = {
+export type PostSystemAdminValidateResponse = {
   data: {
     success: boolean;
     message: string;
     expirationTime: string;
   };
   headers?: {
-    'x-authusertoken': string;
+    'x-admintoken': string;
   };
 };
 
-export type PostCustomerUserForgotPasswordResponse = {
-  data: {
-    success: boolean;
-    message: string;
-    data: {
-      customerID: string;
-      customerName: string;
-      authUserID: string;
-      firstName: string;
-      lastName: string;
-    };
-    error: string;
-    statusCode: number;
-    count: number;
-    totalCount: number;
-    pageNumber: number;
-    pageSize: number;
-  };
-};
-
-export type PostCustomerUserForgotPasswordCheckResponse = {
-  data: {
-    success: boolean;
-    message: string;
-    data: null;
-    error: string;
-    statusCode: number;
-    count: number;
-    totalCount: number;
-    pageNumber: number;
-    pageSize: number;
-  };
-};
-
-export type PostCustomerUserForgotPasswordConfirmResponse = {
-  data: {
-    success: boolean;
-    message: string;
-    data: null;
-    error: string;
-    statusCode: number;
-    count: number;
-    totalCount: number;
-    pageNumber: number;
-    pageSize: number;
-  };
-};
-
-export type GetMeUserDetailDTO = {
+export type GetMeSystemAdminDetailDTO = {
   success: boolean;
   message: string;
   data: {
@@ -135,84 +68,6 @@ export type GetMeUserDetailDTO = {
       roleName: string;
       token: string;
     }[];
-  };
-  error: string;
-  statusCode: number;
-  count: number;
-  totalCount: number;
-  pageNumber: number;
-  pageSize: number;
-};
-
-export type GetCustomersUserCheckReservationParams = {
-  customerCode: string;
-  reservationCode: string;
-};
-
-export type GetCustomersUserCheckReservationDTO = {
-  success: boolean;
-  message: string;
-  data: {
-    userID: string;
-    customerID: string;
-    fullName: string;
-    reservationDate: string;
-    customerName: string;
-  };
-  error: string;
-  statusCode: number;
-  count: number;
-  totalCount: number;
-  pageNumber: number;
-  pageSize: number;
-};
-
-export type GetCustomersAuthUserCheckReservationDTO = {
-  success: boolean;
-  message: string;
-  data: {
-    authUserID: string;
-    customerID: string;
-    fullName: string;
-    reservationDate: string;
-    customerName: string;
-  };
-  error: string;
-  statusCode: number;
-  count: number;
-  totalCount: number;
-  pageNumber: number;
-  pageSize: number;
-};
-
-export type PostCustomersUserCompleteReservationParams = {
-  customerID: string;
-  userID: string;
-  password: string;
-  reservationCode: string;
-};
-
-export type PostCustomersUserAuthUserCompleteReservationParams = {
-  customerID: string;
-  authUserID: string;
-  password: string;
-  reservationCode: string;
-};
-
-export type GetCustomersVisitorPreviewParams = {
-  CustomerCode: string;
-  ReservationCode: string;
-};
-
-export type GetCustomersVisitorPreviewDTO = {
-  success: boolean;
-  message: string;
-  data: {
-    visitorID: string;
-    fullName: string;
-    phone: string;
-    reservationStart: string;
-    reservationEnd: string;
   };
   error: string;
   statusCode: number;

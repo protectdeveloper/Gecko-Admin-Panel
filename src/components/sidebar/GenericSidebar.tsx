@@ -42,8 +42,8 @@ export function GenericSidebar({ ...props }) {
   const { isMobile, open } = useSidebar();
 
   const { data: supportTicketsData } = useGetSupportUserTicketsQuery({
-    pageSize: 1,
-    pageNumber: 20,
+    pageNumber: 1,
+    pageSize: 20,
     status: 'open'
   });
 

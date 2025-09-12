@@ -12,11 +12,16 @@ import { Card, CardContent } from '@/components/ui/card';
 import Logo from '../../../../public/assets/img/logo.png';
 import LogoWhite from '../../../../public/assets/img/logo_white.png';
 import CustomUiTextInput from '@/components/inputs/CustomUiTextInput';
+import { useSystemAdminLoginMutation } from '@/api/Auth/Auth.hook';
+import { useLoginStore } from '@/store/useLoginStore';
 
 const LoginForm = () => {
   const router = useRouter();
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const { setPassword, setUserName } = useLoginStore();
+
+  const { mutateAsync: systemAdminLogin } = useSystemAdminLoginMutation();
 
   const LoginSchema = z.object({
     userName: z
@@ -42,9 +47,22 @@ const LoginForm = () => {
     resolver: zodResolver(LoginSchema)
   });
 
-  const { handleSubmit, control, setValue } = form;
+  const { handleSubmit, control } = form;
 
-  const onSubmit = async (data: FormValues) => {};
+  const onSubmit = async (data: FormValues) => {
+    const response = await systemAdminLogin({
+      username: data.userName,
+      password: data.password
+    });
+
+    if (response.data.success) {
+      setUserName(data.userName);
+      setPassword(data.password);
+
+      localStorage.removeItem('verifyCodeExpire');
+      router.push('/auth/verify');
+    }
+  };
 
   return (
     <Card className="overflow-hidden p-0 bg-white/5 dark:bg-black/50 border-none">

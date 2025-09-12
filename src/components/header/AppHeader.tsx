@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,15 +7,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { getBreadcrumbMetaFromPathname, getBreadcrumbTrailFromPathname } from '@/lib/get-breadcrumb';
-import { UserPlus } from 'lucide-react';
-import { usePathname } from 'next/navigation';
-import { SidebarTrigger, useSidebar } from '../ui/sidebar';
-import { cn } from '@/lib/utils';
-import { LanguageToggle } from '@/components/ui/language-toggle';
-import { ModeToggle } from '../sidebar/theme-dropdown';
-import Image from 'next/image';
 import React from 'react';
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
+import { ModeToggle } from '../sidebar/theme-dropdown';
+import { SidebarTrigger, useSidebar } from '../ui/sidebar';
+import { getBreadcrumbMetaFromPathname, getBreadcrumbTrailFromPathname } from '@/lib/get-breadcrumb';
 
 export default function HeaderBar() {
   const pathname = usePathname() || '';

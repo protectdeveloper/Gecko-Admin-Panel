@@ -20,7 +20,7 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
 
   return (
     <div>
-      {ticketsData?.data && ticketsData.data.length > 0 && (
+      {ticketsData?.data && ticketsData?.data?.length > 0 && (
         <div className="flex flex-col gap-2">
           {ticketsData?.data?.map((item, index) => (
             <button
@@ -64,7 +64,7 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
         </div>
       )}
 
-      {ticketsData?.data && ticketsData.data.length === 0 && (
+      {(!ticketsData || ticketsData?.data.length === 0) && (
         <div className="flex flex-col items-center justify-center text-center px-5 py-10 gap-3 bg-card rounded-lg">
           <Info className="h-10 w-10 text-muted-foreground" />
           <p className="text-sm text-muted-foreground font-medium">{t('support.noTickets')}</p>
