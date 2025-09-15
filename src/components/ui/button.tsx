@@ -59,7 +59,7 @@ function Button({
     <Comp
       disabled={disabled || loading}
       className={cn(buttonVariants({ variant, size, className }), {
-        'opacity-50': disabled || loading
+        'opacity-50 cursor-not-allowed': disabled || loading
       })}
       aria-label="button"
       {...props}

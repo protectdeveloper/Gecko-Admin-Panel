@@ -1,10 +1,10 @@
-import { GetMeUserDetailDTO } from '@/api/Auth/Auth.types';
+import { GetMeSystemAdminDetailDTO } from '@/api/Auth/Auth.types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface AuthState {
-  user: GetMeUserDetailDTO['data'] | null;
-  setUser: (user: GetMeUserDetailDTO['data'] | null) => void;
+  user: GetMeSystemAdminDetailDTO['data'] | null;
+  setUser: (user: GetMeSystemAdminDetailDTO['data'] | null) => void;
   logout: () => void;
 }
 

@@ -1,6 +1,6 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useGetSupportUserTicketsQuery } from '@/api/Support/Support.hook';
+import { useGetSupportAdminTicketsQuery } from '@/api/Support/Support.hook';
 import SupportListContent from './suppor-list-content';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -21,7 +21,7 @@ const SupportListClosed = ({ supportId }: SupportListProps) => {
   const [finished, setFinished] = useState(false);
   const [prevLength, setPrevLength] = useState<number>(0);
 
-  const { data: ticketsData, isLoading } = useGetSupportUserTicketsQuery({
+  const { data: ticketsData, isLoading } = useGetSupportAdminTicketsQuery({
     pageNumber: Number(page),
     pageSize: Number(pageSize),
     subject: name,

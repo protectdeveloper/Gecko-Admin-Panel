@@ -3,12 +3,12 @@ import dynamic from 'next/dynamic';
 import { cn } from '@/lib/utils';
 import React from 'react';
 import MessageDropdownMenu from './MessageDropdownMenu';
-import { GetSupportUserTicketMessagesByIdDTO } from '@/api/Support/Support.types';
+import { GetSupportAdminTicketMessagesByIdDTO } from '@/api/Support/Support.types';
 
 const MessagePhotoGallery = dynamic(() => import('./MessagePhotoGallery'), { ssr: false });
 
 interface MessageBoxProps {
-  msg: GetSupportUserTicketMessagesByIdDTO['data'][0];
+  msg: GetSupportAdminTicketMessagesByIdDTO['data'][0];
   onScrollReplyToMessage: (messageID: string) => void;
   handleSelectMessage: (
     messageID: string,
@@ -33,7 +33,7 @@ const MessageBox = ({
   return (
     <div
       id={`message-${msg.messageID}`}
-      className={cn('flex flex-col gap-1.5 text-sm relative', msg.senderType === 'user' ? 'items-end' : 'items-start')}
+      className={cn('flex flex-col gap-1.5 text-sm relative', msg.senderType === 'admin' ? 'items-end' : 'items-start')}
     >
       {msg?.replyToMessage && (
         <div
@@ -53,12 +53,12 @@ const MessageBox = ({
       <div
         className={cn(
           'flex items-start gap-2 rounded-lg shadow-sm px-2.5 py-2',
-          msg.senderType === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground',
+          msg.senderType === 'admin' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground',
           highlight &&
-            (msg.senderType === 'user' ? 'ring-2 ring-black dark:ring-gray-100 opacity-80' : 'ring-2 ring-primary opacity-80')
+            (msg.senderType === 'admin' ? 'ring-2 ring-black dark:ring-gray-100 opacity-80' : 'ring-2 ring-primary opacity-80')
         )}
       >
-        <div className={'whitespace-pre-wrap break-words overflow-wrap-anywhere max-w-xs sm:max-w-sm lg:max-w-md'}>
+        <div className={'whitespace-pre-wrap break-words overflow-wrap-anywhere max-w-[150px] sm:max-w-sm lg:max-w-md'}>
           <p>{msg?.messageContent}</p>
         </div>
 
@@ -71,7 +71,7 @@ const MessageBox = ({
         />
       </div>
 
-      <span className={cn('text-[11px] font-medium opacity-70 mt-0.5', msg?.senderType === 'user' ? 'text-right' : 'text-left')}>
+      <span className={cn('text-[11px] font-medium opacity-70 mt-0.5', msg?.senderType === 'admin' ? 'text-right' : 'text-left')}>
         {formatDateHourMinute(msg?.createdAt)}
       </span>
     </div>

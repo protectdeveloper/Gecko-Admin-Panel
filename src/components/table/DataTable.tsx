@@ -304,7 +304,7 @@ export const DataTable = (props: DataTableProps) => {
 
   if (props?.isError) {
     return (
-      <div className="w-full p-5 gap-3 grid bg-background shadow-xl rounded-xl border border-border">
+      <div className="w-full p-5 gap-3 grid bg-background shadow-sm rounded-xl border border-border">
         <DataTableFilters filterColumns={props?.filterColumns} />
         <ErrorView error={props?.error} />
       </div>
@@ -313,7 +313,7 @@ export const DataTable = (props: DataTableProps) => {
 
   if (props?.isLoading) {
     return (
-      <div className="w-full p-5 gap-3 grid bg-background shadow-xl rounded-xl border border-border">
+      <div className="w-full p-5 gap-3 grid bg-background shadow-sm rounded-xl border border-border">
         <DataTableFilters filterColumns={props?.filterColumns} />
         <DataTableSkeleton columnCount={tableInstance.getAllColumns().length} />
       </div>
@@ -321,7 +321,7 @@ export const DataTable = (props: DataTableProps) => {
   }
 
   return (
-    <div className="w-full px-5 gap-3 grid shadow-xl rounded-xl border bg-background border-border">
+    <div className="w-full px-5 gap-3 grid shadow-sm rounded-lg border bg-background border-border">
       <DataTableToolbar
         table={tableInstance}
         handleExcelExportButton={props.handleExcelExportButton}

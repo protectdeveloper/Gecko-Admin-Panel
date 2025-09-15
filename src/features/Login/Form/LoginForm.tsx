@@ -55,7 +55,7 @@ const LoginForm = () => {
       password: data.password
     });
 
-    if (response.data.success) {
+    if (response) {
       setUserName(data.userName);
       setPassword(data.password);
 

@@ -1,5 +1,5 @@
 'use client';
-import { X } from 'lucide-react';
+import { Send, X } from 'lucide-react';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CustomPhotoInput, CustomPhotoInputValueType } from '@/components/inputs/CustomPhotoInput';
@@ -99,10 +99,10 @@ const ChatMessageInputBox = ({
             setMessageInput('');
             setSelectedFiles([]);
           }}
-          size="sm"
+          size="icon"
           disabled={!messageInput.trim()}
         >
-          {t('support.send')}
+          <Send />
         </Button>
       </div>
     </div>

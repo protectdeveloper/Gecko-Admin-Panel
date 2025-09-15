@@ -1,14 +1,15 @@
 'use client';
-import { GetSupportUserTicketsDTO } from '@/api/Support/Support.types';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { formatDateHourMinute } from '@/utils/formatTime';
-import { Info } from 'lucide-react';
 import React from 'react';
+import { cn } from '@/lib/utils';
+import { Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { useSupportStore } from '@/store/useSupportStore';
+import { GetSupportAdminTicketsDTO } from '@/api/Support/Support.types';
+import { formatDateHourMinute, formatDateTransactions } from '@/utils/formatTime';
 
 interface SupportListContentProps {
-  ticketsData?: GetSupportUserTicketsDTO;
+  ticketsData?: GetSupportAdminTicketsDTO;
   supportId?: string | null;
   onChangeHandler: (value: string, queryName: string) => void;
   finished: boolean;
@@ -17,6 +18,7 @@ interface SupportListContentProps {
 
 const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished, handleLoadMore }: SupportListContentProps) => {
   const { t } = useTranslation();
+  const { setCustomer, setRole, setUser } = useSupportStore();
 
   return (
     <div>
@@ -29,7 +31,12 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
                 'flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent',
                 supportId === item.ticketID && 'bg-muted'
               )}
-              onClick={() => onChangeHandler(item.ticketID, 'supportId')}
+              onClick={() => {
+                setCustomer(item.customer);
+                setUser(item.user);
+                setRole(item.role);
+                onChangeHandler(item.ticketID, 'supportId');
+              }}
             >
               <div className="w-full flex flex-col gap-1">
                 <div className="flex flex-wrap justify-between items-center">
@@ -43,7 +50,7 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
                       supportId === item.ticketID ? 'text-foreground' : 'text-muted-foreground'
                     )}
                   >
-                    {formatDateHourMinute(item.createdAt)}
+                    {formatDateTransactions(item.createdAt)} {formatDateHourMinute(item.createdAt)}
                     {item?.lastMessage?.senderType !== 'user' && <span className="flex h-2 w-2 rounded-full bg-blue-600" />}
                   </div>
                 </div>

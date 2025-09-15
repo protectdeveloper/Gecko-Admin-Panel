@@ -101,10 +101,8 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
         </ResizablePanelGroup>
       </div>
 
-      {/* Mobile Layout */}
-      <div className="lg:hidden w-full h-full">
+      <div className="lg:hidden h-full">
         {!supportId ? (
-          // Mail List View for Mobile
           <div className="rounded-xl border border-border h-full flex flex-col">
             <div className="flex flex-col h-full p-4">
               <Tabs defaultValue="all" className="flex flex-col h-full gap-3">
@@ -137,7 +135,6 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
             </div>
           </div>
         ) : (
-          // Mail Detail View for Mobile
           <div className="rounded-xl border border-border h-full">
             <SupportDisplay />
           </div>

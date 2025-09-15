@@ -28,7 +28,7 @@ const MessageDropdownMenu = ({ onDeletePress, onEditPress, onReplyPress, created
           size="icon"
           className={cn(
             'w-4 h-4 p-0 border-0',
-            senderType === 'user'
+            senderType === 'admin'
               ? 'text-background bg-white/20 dark:bg-white/20'
               : 'text-foreground bg-black/10 dark:bg-white/20'
           )}

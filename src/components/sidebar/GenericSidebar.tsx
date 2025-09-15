@@ -21,7 +21,7 @@ import { sidebarMenuData } from '@/utils/data';
 import { usePathname, useRouter } from 'next/navigation';
 import CustomSidebarFooter from './custom-sidebar-footer';
 import GeckoAiImage from '../../../public/assets/img/geckoAi.png';
-import { useGetSupportUserTicketsQuery } from '@/api/Support/Support.hook';
+import { useGetSupportAdminTicketsQuery } from '@/api/Support/Support.hook';
 
 export interface NavItem {
   title: string;
@@ -41,7 +41,7 @@ export function GenericSidebar({ ...props }) {
   const pathname = usePathname() || '';
   const { isMobile, open } = useSidebar();
 
-  const { data: supportTicketsData } = useGetSupportUserTicketsQuery({
+  const { data: supportTicketsData, refetch } = useGetSupportAdminTicketsQuery({
     pageNumber: 1,
     pageSize: 20,
     status: 'open'

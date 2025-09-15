@@ -10,17 +10,16 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
-  useSupportUserTicketDeleteMessageMutation,
-  useSupportUserTicketEditMessageMutation,
-  useSupportUserTicketSendMessageMutation,
-  useSupportUserTicketSendMessagePhotoMutation
+  useSupportAdminTicketDeleteMessageMutation,
+  useSupportAdminTicketEditMessageMutation,
+  useSupportAdminTicketSendMessageMutation,
+  useSupportAdminTicketSendMessagePhotoMutation
 } from '@/api/Support/Support.hook';
 import { groupMessagesByDate, getDateHeader, getSortedGroupKeys } from '../function/ChatFunction';
 import { SupportApi } from '@/api/Support/Support.api';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
 import { formatAvatarFallback } from '@/utils/formatAvatarFallback';
-import { useAuthStore } from '@/store/useAuthStore';
 import { CustomPhotoInputValueType } from '@/components/inputs/CustomPhotoInput';
 import { Skeleton } from '@/components/ui/skeleton';
 import MessageBox from './MessageBox';
@@ -28,11 +27,11 @@ import ChatMessageInputBox from './ChatMessageInputBox';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useTranslation } from 'react-i18next';
+import { useSupportStore } from '@/store/useSupportStore';
 
 const ChatContent = () => {
   dayjs.extend(utc);
   const { t } = useTranslation();
-  const { user } = useAuthStore();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams() || new URLSearchParams();
   const supportId = searchParams.get('supportId');
@@ -47,16 +46,17 @@ const ChatContent = () => {
     isReply: false
   });
 
-  const { mutateAsync: editMessage } = useSupportUserTicketEditMessageMutation();
-  const { mutateAsync: deleteMessage } = useSupportUserTicketDeleteMessageMutation();
-  const { mutateAsync: sendMessage } = useSupportUserTicketSendMessageMutation();
-  const { mutateAsync: sendMessagePhoto } = useSupportUserTicketSendMessagePhotoMutation();
+  const { user: supportUser } = useSupportStore();
+  const { mutateAsync: editMessage } = useSupportAdminTicketEditMessageMutation();
+  const { mutateAsync: deleteMessage } = useSupportAdminTicketDeleteMessageMutation();
+  const { mutateAsync: sendMessage } = useSupportAdminTicketSendMessageMutation();
+  const { mutateAsync: sendMessagePhoto } = useSupportAdminTicketSendMessagePhotoMutation();
 
   const { data, fetchNextPage, hasNextPage, refetch, isFetching, isLoading } = useInfiniteQuery({
     queryKey: ['getSupportUserTicketMessagesById', supportId],
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await SupportApi.getSupportUserTicketMessagesById({
+      const response = await SupportApi.getSupportAdminTicketMessagesById({
         pageNumber: pageParam,
         pageSize: 20,
         ticketId: supportId as string
@@ -110,7 +110,6 @@ const ChatContent = () => {
     const response = await deleteMessage(messageId as string);
 
     if (!response.success) {
-      toast.error(response?.error || 'Mesaj silinirken bir hata oluştu.');
       return;
     }
 
@@ -148,7 +147,8 @@ const ChatContent = () => {
     const response = await sendMessage({
       ticketID: supportId as string,
       messageContent: messageInput,
-      replyToMessageID: selectedMessage.isReply ? selectedMessage.messageId : undefined
+      replyToMessageID: selectedMessage.isReply ? selectedMessage.messageId : undefined,
+      isInternal: false
     });
 
     if (response?.success) {
@@ -209,7 +209,6 @@ const ChatContent = () => {
     const response = await editMessage({ messageID: messageId, messageContent: newContent });
 
     if (!response.success) {
-      toast.error(response?.error || 'Mesaj düzenlenirken bir hata oluştu.');
       return;
     }
 
@@ -238,11 +237,11 @@ const ChatContent = () => {
     const response = await sendMessagePhoto({
       ticketID: supportId as string,
       images: photos,
-      messageContent: messageInput
+      messageContent: messageInput,
+      isInternal: false
     });
 
     if (response?.success) {
-      // Fotoğraflı yeni mesajı ilk sayfanın başına ekle
       const newMessage = {
         messageID: Math.random().toString(36).substr(2, 9),
         ticketID: supportId as string,
@@ -319,12 +318,6 @@ const ChatContent = () => {
     }
   };
 
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [supportId]);
-
   if (isLoading) {
     return (
       <div className="flex-1 flex flex-col gap-4 p-3 overflow-scroll bg-background">
@@ -348,7 +341,7 @@ const ChatContent = () => {
   }
 
   return (
-    <div className="w-full flex flex-col h-full min-h-0">
+    <div className="flex flex-col h-full min-h-0">
       <div
         ref={containerRef}
         className="flex-1 flex flex-col gap-4 p-3 overflow-scroll"
@@ -361,7 +354,7 @@ const ChatContent = () => {
           setShowScrollButton(!atBottom);
         }}
       >
-        <div className="flex flex-col h-full gap-3">
+        <div className="flex flex-col gap-3 h-full">
           {sortedGroupKeys?.map((groupKey) => (
             <React.Fragment key={groupKey}>
               <div className="sticky top-0 z-10 flex items-center justify-center">
@@ -379,7 +372,7 @@ const ChatContent = () => {
                     <AvatarImage src={undefined} alt={'avatar'} />
                     <AvatarFallback className="rounded-lg bg-accent">
                       {msg.senderType === 'user'
-                        ? formatAvatarFallback(user?.firstName || 'K', user?.lastName || '')
+                        ? formatAvatarFallback(supportUser?.firstName || '-', supportUser?.lastName || '-')
                         : formatAvatarFallback('G', 'D')}
                     </AvatarFallback>
                   </Avatar>

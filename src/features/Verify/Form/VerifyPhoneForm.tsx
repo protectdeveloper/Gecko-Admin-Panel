@@ -15,17 +15,26 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import Logo from '../../../../public/assets/img/logo.png';
 import LogoWhite from '../../../../public/assets/img/logo_white.png';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/useAuthStore';
+import { useLoginStore } from '@/store/useLoginStore';
+import {
+  getMeSystemAdminDetailQueryOptions,
+  useSystemAdminLoginMutation,
+  useSystemAdminValidateMutation
+} from '@/api/Auth/Auth.hook';
+import { queryClient } from '@/providers/QueryProvider';
+import { toast } from 'sonner';
 
-interface VerifyPhoneFormProps {
-  onPress: (data: any) => void;
-  onGoBack?: () => void;
-  onSendAgainCode?: () => void;
-  isLoading?: boolean;
-}
-
-const VerifyPhoneForm = ({ isLoading, onPress, onGoBack, onSendAgainCode }: VerifyPhoneFormProps) => {
+const VerifyPhoneForm = () => {
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const router = useRouter();
+  const { setUser } = useAuthStore();
+  const { userName, password } = useLoginStore();
+
+  const { mutateAsync: systemAdminValidate, isPending: isValidating } = useSystemAdminValidateMutation();
+  const { mutateAsync: systemAdminLogin, isPending: isLoggingIn } = useSystemAdminLoginMutation();
 
   const [codeTime, setCodeTime] = useState<number>(() => {
     const expireTime = localStorage.getItem('verifyCodeExpire');
@@ -60,15 +69,35 @@ const VerifyPhoneForm = ({ isLoading, onPress, onGoBack, onSendAgainCode }: Veri
 
   const { handleSubmit, control, setValue } = form;
 
-  const onSendAgainCodePress = () => {
-    setValue('verifyCode', '');
-    const newExpire = Date.now() + 180 * 1000;
-    localStorage.setItem('verifyCodeExpire', newExpire.toString());
-    setCodeTime(180);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await systemAdminValidate({
+        verificationCode: data?.verifyCode
+      });
+
+      if (response?.data?.success) {
+        const userData = await queryClient.fetchQuery(getMeSystemAdminDetailQueryOptions);
+        setUser(userData.data);
+
+        toast.success(t('login.successMessage'));
+        router.push('/');
+      } else {
+      }
+    } catch (error) {}
   };
 
-  const onSubmit = async (data: FormValues) => {
-    onPress(data);
+  const handleOnSendAgainCode = async () => {
+    const response = await systemAdminLogin({
+      username: userName,
+      password: password
+    });
+
+    if (response?.data?.success) {
+      form.reset({ verifyCode: '' });
+      const newExpire = Date.now() + 180 * 1000;
+      localStorage.setItem('verifyCodeExpire', newExpire.toString());
+      setCodeTime(180);
+    }
   };
 
   useEffect(() => {
@@ -135,11 +164,8 @@ const VerifyPhoneForm = ({ isLoading, onPress, onGoBack, onSendAgainCode }: Veri
 
               <div className="flex flex-col items-center gap-2">
                 <Button
-                  onClick={() => {
-                    onSendAgainCodePress();
-                    onSendAgainCode && onSendAgainCode();
-                  }}
-                  disabled={codeTime > 0 || isLoading}
+                  onClick={() => handleOnSendAgainCode()}
+                  disabled={codeTime > 0 || isLoggingIn || isValidating}
                   className={cn('bg-input border-none text-foreground text-sm')}
                 >
                   {t('login.resendCode')}
@@ -147,11 +173,21 @@ const VerifyPhoneForm = ({ isLoading, onPress, onGoBack, onSendAgainCode }: Veri
               </div>
 
               <div className="flex flex-row gap-2">
-                <Button className="flex-1" variant={'outline'} onClick={onGoBack} disabled={isLoading}>
+                <Button
+                  className="flex-1"
+                  variant={'outline'}
+                  onClick={() => router.back()}
+                  disabled={isLoggingIn || isValidating}
+                >
                   {t('login.back')}
                 </Button>
 
-                <Button className="flex-1" onClick={handleSubmit(onSubmit)} disabled={isLoading} loading={isLoading}>
+                <Button
+                  className="flex-1"
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={isLoggingIn || isValidating}
+                  loading={isLoggingIn || isValidating}
+                >
                   {t('login.continue')} <ArrowRight />
                 </Button>
               </div>
