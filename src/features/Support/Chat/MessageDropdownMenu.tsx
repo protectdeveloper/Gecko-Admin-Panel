@@ -40,7 +40,7 @@ const MessageDropdownMenu = ({ onDeletePress, onEditPress, onReplyPress, created
         <DropdownMenuItem onClick={onReplyPress}>
           <CornerDownRight className="w-4 h-4" /> {t('support.reply')}
         </DropdownMenuItem>
-        {showDropdown && (
+        {showDropdown && senderType === 'admin' && (
           <Fragment>
             <DropdownMenuItem onClick={onEditPress}>
               <Edit className="w-4 h-4" /> {t('support.edit')}

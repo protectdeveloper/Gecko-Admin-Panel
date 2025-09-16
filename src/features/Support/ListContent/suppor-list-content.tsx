@@ -51,7 +51,7 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
                     )}
                   >
                     {formatDateTransactions(item.createdAt)} {formatDateHourMinute(item.createdAt)}
-                    {item?.lastMessage?.senderType !== 'user' && <span className="flex h-2 w-2 rounded-full bg-blue-600" />}
+                    {item?.lastMessage?.senderType !== 'admin' && <span className="flex h-2 w-2 rounded-full bg-blue-600" />}
                   </div>
                 </div>
                 <div className="text-xs font-medium">{item.description}</div>

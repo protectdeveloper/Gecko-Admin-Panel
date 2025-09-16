@@ -21,7 +21,7 @@ const LoginForm = () => {
   const { t } = useTranslation();
   const { setPassword, setUserName } = useLoginStore();
 
-  const { mutateAsync: systemAdminLogin } = useSystemAdminLoginMutation();
+  const { mutateAsync: systemAdminLogin, isPending } = useSystemAdminLoginMutation();
 
   const LoginSchema = z.object({
     userName: z
@@ -104,7 +104,13 @@ const LoginForm = () => {
               )}
             />
 
-            <Button variant={'default'} className="w-full" onClick={handleSubmit(onSubmit)}>
+            <Button
+              variant={'default'}
+              className="w-full"
+              disabled={isPending}
+              loading={isPending}
+              onClick={handleSubmit(onSubmit)}
+            >
               {t('login.loginButton')}
             </Button>
           </div>

@@ -35,8 +35,10 @@ const ChatContent = () => {
   const queryClient = useQueryClient();
   const searchParams = useSearchParams() || new URLSearchParams();
   const supportId = searchParams.get('supportId');
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
   const [selectedMessage, setSelectedMessage] = useState({
     messageId: '',
@@ -318,6 +320,26 @@ const ChatContent = () => {
     }
   };
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (containerRef.current && firstRender) {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        setFirstRender(false);
+      }
+    }, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [messages, supportId]);
+
+  useEffect(() => {
+    if (containerRef.current && firstRender) {
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [messages]);
+
   if (isLoading) {
     return (
       <div className="flex-1 flex flex-col gap-4 p-3 overflow-scroll bg-background">
@@ -341,7 +363,7 @@ const ChatContent = () => {
   }
 
   return (
-    <div className="flex flex-col h-full min-h-0">
+    <div className="flex flex-col h-full min-h-0 relative">
       <div
         ref={containerRef}
         className="flex-1 flex flex-col gap-4 p-3 overflow-scroll"
@@ -397,23 +419,23 @@ const ChatContent = () => {
             </div>
           )}
         </div>
-
-        {showScrollButton && (
-          <Button
-            onClick={() => {
-              containerRef.current?.scrollTo({
-                top: containerRef.current.scrollHeight,
-                behavior: 'smooth'
-              });
-            }}
-            size={'default'}
-            variant={'link'}
-            className="sticky bottom-1 ml-auto text-primary border border-primary bg-card w-9 h-9 rounded-full"
-          >
-            <ChevronDown className="size-5 font-semibold" />
-          </Button>
-        )}
       </div>
+
+      {showScrollButton && (
+        <Button
+          onClick={() => {
+            containerRef.current?.scrollTo({
+              top: containerRef.current.scrollHeight,
+              behavior: 'smooth'
+            });
+          }}
+          size={'default'}
+          variant={'link'}
+          className=" absolute bottom-20 right-3 ml-auto text-primary border border-primary bg-card w-9 h-9 rounded-full"
+        >
+          <ChevronDown className="size-5 font-semibold" />
+        </Button>
+      )}
 
       <Separator className="mt-auto" />
 

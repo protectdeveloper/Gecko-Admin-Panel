@@ -1,6 +1,6 @@
 'use client';
 import { Send, X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { CustomPhotoInput, CustomPhotoInputValueType } from '@/components/inputs/CustomPhotoInput';
 import CustomTextAreaInput from '@/components/inputs/CustomTextAreaInput';
@@ -22,10 +22,43 @@ const ChatMessageInputBox = ({
   const { t } = useTranslation();
   const [messageInput, setMessageInput] = useState(selectedMessageContent || '');
   const [selectedFiles, setSelectedFiles] = useState<CustomPhotoInputValueType[]>([]);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [forceFocusGuard, setForceFocusGuard] = useState(false);
 
   const handleRemoveFile = (index: number) => {
     setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
   };
+
+  useLayoutEffect(() => {
+    if (!isSelectedMessage) return;
+    // Try focusing on next animation frame to ensure DOM is ready
+    const id = requestAnimationFrame(() => {
+      if (textareaRef.current) {
+        textareaRef.current.focus({ preventScroll: true });
+        const len = textareaRef.current.value.length;
+        try {
+          textareaRef.current.setSelectionRange(len, len);
+        } catch {}
+        // short window where we re-focus if blur happens immediately after click
+        setForceFocusGuard(true);
+        setTimeout(() => setForceFocusGuard(false), 300);
+      } else {
+        // Fallback in case ref not ready yet
+        setTimeout(() => {
+          if (textareaRef.current) {
+            textareaRef.current.focus({ preventScroll: true });
+            const len2 = textareaRef.current.value.length;
+            try {
+              textareaRef.current.setSelectionRange(len2, len2);
+            } catch {}
+            setForceFocusGuard(true);
+            setTimeout(() => setForceFocusGuard(false), 300);
+          }
+        }, 0);
+      }
+    });
+    return () => cancelAnimationFrame(id);
+  }, [isSelectedMessage, selectedMessageContent]);
 
   return (
     <div className="w-full flex flex-col gap-2 px-2 py-3">
@@ -75,10 +108,21 @@ const ChatMessageInputBox = ({
           )}
 
           <CustomTextAreaInput
+            ref={textareaRef}
             value={messageInput}
+            autoFocus={true}
+            onFocusCapture={() => {}}
             onChange={(value) => setMessageInput(value)}
             placeholder={t('support.messagePlaceholder') || 'Type your message...'}
             className="flex-1"
+            onFocus={() => console.log('Textarea focused')}
+            onBlur={() => {
+              if (forceFocusGuard && textareaRef.current) {
+                // re-focus quickly if we just selected a message and a click stole focus
+                requestAnimationFrame(() => textareaRef.current?.focus({ preventScroll: true }));
+              }
+              console.log('Textarea lost focus');
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
