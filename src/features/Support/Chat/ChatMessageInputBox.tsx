@@ -115,13 +115,10 @@ const ChatMessageInputBox = ({
             onChange={(value) => setMessageInput(value)}
             placeholder={t('support.messagePlaceholder') || 'Type your message...'}
             className="flex-1"
-            onFocus={() => console.log('Textarea focused')}
             onBlur={() => {
               if (forceFocusGuard && textareaRef.current) {
-                // re-focus quickly if we just selected a message and a click stole focus
                 requestAnimationFrame(() => textareaRef.current?.focus({ preventScroll: true }));
               }
-              console.log('Textarea lost focus');
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {

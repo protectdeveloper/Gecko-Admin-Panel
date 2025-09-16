@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { formatDateHourMinute } from '@/utils/formatTime';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -38,7 +38,7 @@ const ChatContent = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
-  const [firstRender, setFirstRender] = useState(true);
+  const initScrolledSupportIdRef = useRef<string | null>(null);
   const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
   const [selectedMessage, setSelectedMessage] = useState({
     messageId: '',
@@ -54,7 +54,7 @@ const ChatContent = () => {
   const { mutateAsync: sendMessage } = useSupportAdminTicketSendMessageMutation();
   const { mutateAsync: sendMessagePhoto } = useSupportAdminTicketSendMessagePhotoMutation();
 
-  const { data, fetchNextPage, hasNextPage, refetch, isFetching, isLoading } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, refetch, isFetching, isLoading, isFetched } = useInfiniteQuery({
     queryKey: ['getSupportUserTicketMessagesById', supportId],
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) => {
@@ -320,25 +320,20 @@ const ChatContent = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const currentId = supportId ?? '';
+    if (!currentId) return;
+    // Only run once per supportId open; wait until messages exist
+    if (initScrolledSupportIdRef.current === currentId) return;
+    if (messages.length === 0) return;
     const timeoutId = setTimeout(() => {
-      if (containerRef.current && firstRender) {
-        containerRef.current.scrollTop = containerRef.current.scrollHeight;
-        setFirstRender(false);
-      }
-    }, 50);
-
+      container.scrollTop = container.scrollHeight;
+      initScrolledSupportIdRef.current = currentId;
+    }, 300);
     return () => clearTimeout(timeoutId);
-  }, [messages, supportId]);
-
-  useEffect(() => {
-    if (containerRef.current && firstRender) {
-      containerRef.current.scrollTo({
-        top: containerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
-  }, [messages]);
+  }, [supportId, messages, isFetched]);
 
   if (isLoading) {
     return (
