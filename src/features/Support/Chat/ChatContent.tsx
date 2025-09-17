@@ -48,7 +48,7 @@ const ChatContent = () => {
     isReply: false
   });
 
-  const { user: supportUser } = useSupportStore();
+  const { user: supportUser, status } = useSupportStore();
   const { mutateAsync: editMessage } = useSupportAdminTicketEditMessageMutation();
   const { mutateAsync: deleteMessage } = useSupportAdminTicketDeleteMessageMutation();
   const { mutateAsync: sendMessage } = useSupportAdminTicketSendMessageMutation();
@@ -331,7 +331,7 @@ const ChatContent = () => {
     const timeoutId = setTimeout(() => {
       container.scrollTop = container.scrollHeight;
       initScrolledSupportIdRef.current = currentId;
-    }, 300);
+    }, 500);
     return () => clearTimeout(timeoutId);
   }, [supportId, messages, isFetched]);
 
@@ -401,6 +401,7 @@ const ChatContent = () => {
                     formatDateHourMinute={formatDateHourMinute}
                     onScrollReplyToMessage={onScrollReplyToMessage}
                     highlight={highlightedMessageId === msg.messageID}
+                    status={status as string}
                   />
                 </div>
               ))}
@@ -434,20 +435,22 @@ const ChatContent = () => {
 
       <Separator className="mt-auto" />
 
-      <ChatMessageInputBox
-        selectedMessageContent={selectedMessage.messageContent}
-        isSelectedMessage={!!selectedMessage.messageId}
-        onClearSelectedMessage={() =>
-          setSelectedMessage({ messageId: '', messageContent: '', isReply: false, senderType: '', createdAt: '' })
-        }
-        onSendMessage={(messageInput, photos) => {
-          if (photos.length > 0) {
-            handleSendMessagePhoto(photos, messageInput);
-          } else {
-            handleSendMessage({ messageInput });
+      {status === 'open' && (
+        <ChatMessageInputBox
+          selectedMessageContent={selectedMessage.messageContent}
+          isSelectedMessage={!!selectedMessage.messageId}
+          onClearSelectedMessage={() =>
+            setSelectedMessage({ messageId: '', messageContent: '', isReply: false, senderType: '', createdAt: '' })
           }
-        }}
-      />
+          onSendMessage={(messageInput, photos) => {
+            if (photos.length > 0) {
+              handleSendMessagePhoto(photos, messageInput);
+            } else {
+              handleSendMessage({ messageInput });
+            }
+          }}
+        />
+      )}
     </div>
   );
 };

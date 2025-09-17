@@ -39,10 +39,12 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
   const pathname = usePathname() || '';
   const searchParams = useSearchParams() || new URLSearchParams();
 
+  const tab = searchParams.get('tab');
   const supportId = searchParams.get('supportId');
 
   const onChangeHandler = (value: string, queryName: string) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
+
     if (value) {
       newSearchParams.set(queryName, value);
     } else {
@@ -63,14 +65,18 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
           className="rounded-xl border border-border"
         >
           <ResizablePanel defaultSize={defaultLayout[0]} minSize={20} className="flex flex-col p-4">
-            <Tabs defaultValue="open" className="flex flex-col h-full gap-3">
+            <Tabs
+              defaultValue={tab || 'waiting'}
+              onValueChange={(value) => onChangeHandler(value, 'tab')}
+              className="flex flex-col h-full gap-3"
+            >
               <div className="flex flex-col items-center gap-2">
                 <h1 className="text-xl font-bold">{t('support.supportRequests')}</h1>
                 <TabsList>
-                  <TabsTrigger value="open" className="text-zinc-600 dark:text-zinc-200">
+                  <TabsTrigger value="waiting" className="text-zinc-600 dark:text-zinc-200">
                     {t('support.supportTabWaiting')}
                   </TabsTrigger>
-                  <TabsTrigger value="close" className="text-zinc-600 dark:text-zinc-200">
+                  <TabsTrigger value="resolved" className="text-zinc-600 dark:text-zinc-200">
                     {t('support.supportTabResolved')}
                   </TabsTrigger>
                 </TabsList>
@@ -84,10 +90,10 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
                   </div>
                 </form>
               </div>
-              <TabsContent value="open" className="flex-1 min-h-0 m-0">
+              <TabsContent value="waiting" className="flex-1 min-h-0 m-0">
                 <SupportListOpen supportId={supportId} />
               </TabsContent>
-              <TabsContent value="close" className="flex-1 min-h-0 m-0">
+              <TabsContent value="resolved" className="flex-1 min-h-0 m-0">
                 <SupportListClosed supportId={supportId} />
               </TabsContent>
             </Tabs>
@@ -105,14 +111,18 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
         {!supportId ? (
           <div className="rounded-xl border border-border h-full flex flex-col">
             <div className="flex flex-col h-full p-4">
-              <Tabs defaultValue="all" className="flex flex-col h-full gap-3">
+              <Tabs
+                defaultValue={tab || 'waiting'}
+                onValueChange={(value) => onChangeHandler(value, 'tab')}
+                className="flex flex-col h-full gap-3"
+              >
                 <div className="flex flex-col items-center gap-2 flex-shrink-0">
                   <h1 className="text-lg font-bold">{t('support.supportRequests')}</h1>
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="all" className="text-zinc-600 dark:text-zinc-200 text-sm">
+                    <TabsTrigger value="waiting" className="text-zinc-600 dark:text-zinc-200 text-sm">
                       {t('support.supportTabWaiting')}
                     </TabsTrigger>
-                    <TabsTrigger value="unread" className="text-zinc-600 dark:text-zinc-200 text-sm">
+                    <TabsTrigger value="resolved" className="text-zinc-600 dark:text-zinc-200 text-sm">
                       {t('support.supportTabResolved')}
                     </TabsTrigger>
                   </TabsList>
@@ -125,10 +135,10 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
                     placeholder={t('support.searchSupport')}
                   />
                 </div>
-                <TabsContent value="all" className="flex-1 min-h-0 m-0">
+                <TabsContent value="waiting" className="flex-1 min-h-0 m-0">
                   <SupportList supportId={supportId} />
                 </TabsContent>
-                <TabsContent value="unread" className="flex-1 min-h-0 m-0">
+                <TabsContent value="resolved" className="flex-1 min-h-0 m-0">
                   <SupportListClosed supportId={supportId} />
                 </TabsContent>
               </Tabs>

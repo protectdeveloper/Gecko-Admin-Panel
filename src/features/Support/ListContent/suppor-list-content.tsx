@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useSupportStore } from '@/store/useSupportStore';
 import { GetSupportAdminTicketsDTO } from '@/api/Support/Support.types';
-import { formatDateHourMinute, formatDateTransactions } from '@/utils/formatTime';
+import { formatDateHourMinute, formatDateTransactions, formatDateWithTime } from '@/utils/formatTime';
 
 interface SupportListContentProps {
   ticketsData?: GetSupportAdminTicketsDTO;
@@ -18,7 +18,15 @@ interface SupportListContentProps {
 
 const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished, handleLoadMore }: SupportListContentProps) => {
   const { t } = useTranslation();
-  const { setCustomer, setRole, setUser } = useSupportStore();
+  const { setCustomer, setRole, setUser, setIsActive, setStatus } = useSupportStore();
+
+  const handleSupportStoreState = (item: GetSupportAdminTicketsDTO['data'][0]) => {
+    setCustomer(item.customer);
+    setUser(item.user);
+    setRole(item.role);
+    setIsActive(item.isActive);
+    setStatus(item.status);
+  };
 
   return (
     <div>
@@ -32,9 +40,7 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
                 supportId === item.ticketID && 'bg-muted'
               )}
               onClick={() => {
-                setCustomer(item.customer);
-                setUser(item.user);
-                setRole(item.role);
+                handleSupportStoreState(item);
                 onChangeHandler(item.ticketID, 'supportId');
               }}
             >
@@ -50,8 +56,11 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
                       supportId === item.ticketID ? 'text-foreground' : 'text-muted-foreground'
                     )}
                   >
-                    {formatDateTransactions(item.createdAt)} {formatDateHourMinute(item.createdAt)}
-                    {item?.lastMessage?.senderType !== 'admin' && <span className="flex h-2 w-2 rounded-full bg-blue-600" />}
+                    <span>{formatDateWithTime(item.status === 'open' ? item?.createdAt : item?.closedAt || new Date())}</span>
+
+                    {item?.lastMessage?.senderType !== 'admin' && item.status === 'open' && (
+                      <span className="flex h-2 w-2 rounded-full bg-blue-600" />
+                    )}
                   </div>
                 </div>
                 <div className="text-xs font-medium">{item.description}</div>

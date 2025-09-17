@@ -20,6 +20,7 @@ interface MessageBoxProps {
   handleDeleteMessage: (messageID: string) => void;
   formatDateHourMinute: (dateString: string) => string;
   highlight?: boolean;
+  status: string;
 }
 
 const MessageBox = ({
@@ -28,7 +29,8 @@ const MessageBox = ({
   handleSelectMessage,
   handleDeleteMessage,
   formatDateHourMinute,
-  highlight = false
+  highlight = false,
+  status
 }: MessageBoxProps) => {
   return (
     <div
@@ -62,13 +64,15 @@ const MessageBox = ({
           <p>{msg?.messageContent}</p>
         </div>
 
-        <MessageDropdownMenu
-          createdAt={msg?.createdAt}
-          senderType={msg?.senderType}
-          onReplyPress={() => handleSelectMessage(msg?.messageID, msg?.messageContent, true, msg?.senderType, msg?.createdAt)}
-          onEditPress={() => handleSelectMessage(msg?.messageID, msg?.messageContent, false, msg?.senderType, msg?.createdAt)}
-          onDeletePress={() => handleDeleteMessage(msg?.messageID)}
-        />
+        {status === 'open' && (
+          <MessageDropdownMenu
+            createdAt={msg?.createdAt}
+            senderType={msg?.senderType}
+            onReplyPress={() => handleSelectMessage(msg?.messageID, msg?.messageContent, true, msg?.senderType, msg?.createdAt)}
+            onEditPress={() => handleSelectMessage(msg?.messageID, msg?.messageContent, false, msg?.senderType, msg?.createdAt)}
+            onDeletePress={() => handleDeleteMessage(msg?.messageID)}
+          />
+        )}
       </div>
 
       <span className={cn('text-[11px] font-medium opacity-70 mt-0.5', msg?.senderType === 'admin' ? 'text-right' : 'text-left')}>
