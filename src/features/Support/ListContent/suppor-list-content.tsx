@@ -36,7 +36,7 @@ const SupportListContent = ({ ticketsData, supportId, onChangeHandler, finished,
             <button
               key={index}
               className={cn(
-                'flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent',
+                'flex flex-col cursor-pointer items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent',
                 supportId === item.ticketID && 'bg-muted'
               )}
               onClick={() => {

@@ -134,8 +134,7 @@ export const getEventDetailParticipantStatusData = (t: (key: string) => string) 
 export const getSupportRequestUrgencyStatusData = (t: (key: string) => string) => [
   { label: t('support.lowStatus'), value: 'low' },
   { label: t('support.normalStatus'), value: 'normal' },
-  { label: t('support.urgentStatus'), value: 'urgent' },
-  { label: t('support.criticalStatus'), value: 'critical' }
+  { label: t('support.urgentStatus'), value: 'urgent' }
 ];
 
 export const getSupportRequestTypeData = (t: (key: string) => string) => [
