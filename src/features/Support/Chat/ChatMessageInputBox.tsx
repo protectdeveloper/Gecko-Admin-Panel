@@ -61,7 +61,7 @@ const ChatMessageInputBox = ({
   }, [isSelectedMessage, selectedMessageContent]);
 
   return (
-    <div className="w-full flex flex-col gap-2 px-2 py-3">
+    <div className="w-full flex flex-col gap-2 px-2">
       {selectedFiles.length > 0 && (
         <div className="flex gap-2 flex-wrap">
           {selectedFiles.map((file, index) => (

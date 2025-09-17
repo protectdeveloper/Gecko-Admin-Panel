@@ -55,7 +55,11 @@ const MessageBox = ({
       <div
         className={cn(
           'flex items-start gap-2 rounded-lg shadow-sm px-2.5 py-2',
-          msg.senderType === 'admin' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground',
+          msg.isInternal
+            ? 'bg-primary/30 text-secondary-foreground'
+            : msg.senderType === 'admin'
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-muted text-foreground',
           highlight &&
             (msg.senderType === 'admin' ? 'ring-2 ring-black dark:ring-gray-100 opacity-80' : 'ring-2 ring-primary opacity-80')
         )}

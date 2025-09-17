@@ -11,6 +11,7 @@ interface CustomCheckboxProps {
   labelPressable?: () => void;
   disabled?: boolean;
   labelClassName?: string;
+  className?: string;
 }
 
 const CustomCheckbox = ({
@@ -21,10 +22,11 @@ const CustomCheckbox = ({
   secondaryLabel,
   labelPressable,
   labelClassName,
+  className,
   disabled
 }: CustomCheckboxProps) => {
   return (
-    <div className="flex flex-row items-center gap-2 cursor-pointer">
+    <div className={cn('flex flex-row items-center gap-2 cursor-pointer', className)}>
       <Checkbox
         checked={value}
         onCheckedChange={onChange}

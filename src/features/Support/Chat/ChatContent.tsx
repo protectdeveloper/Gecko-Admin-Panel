@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, MessageCircle } from 'lucide-react';
+import { ChevronDown, Circle, MessageCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
@@ -28,6 +28,8 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useTranslation } from 'react-i18next';
 import { useSupportStore } from '@/store/useSupportStore';
+import { Checkbox } from '@/components/ui/checkbox';
+import CustomCheckbox from '@/components/inputs/CustomCheckbox';
 
 const ChatContent = () => {
   dayjs.extend(utc);
@@ -36,6 +38,7 @@ const ChatContent = () => {
   const searchParams = useSearchParams() || new URLSearchParams();
   const supportId = searchParams.get('supportId');
 
+  const [isAdminOnlyMessage, setIsAdminOnlyMessage] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const initScrolledSupportIdRef = useRef<string | null>(null);
@@ -150,7 +153,7 @@ const ChatContent = () => {
       ticketID: supportId as string,
       messageContent: messageInput,
       replyToMessageID: selectedMessage.isReply ? selectedMessage.messageId : undefined,
-      isInternal: false
+      isInternal: isAdminOnlyMessage
     });
 
     if (response?.success) {
@@ -160,6 +163,7 @@ const ChatContent = () => {
         senderType: 'admin',
         messageContent: messageInput,
         createdAt: dayjs.utc().add(3, 'hour').toISOString(),
+        isInternal: isAdminOnlyMessage,
         replyToMessage: selectedMessage.isReply
           ? {
               messageID: selectedMessage.messageId,
@@ -240,7 +244,7 @@ const ChatContent = () => {
       ticketID: supportId as string,
       images: photos,
       messageContent: messageInput,
-      isInternal: false
+      isInternal: isAdminOnlyMessage
     });
 
     if (response?.success) {
@@ -251,6 +255,7 @@ const ChatContent = () => {
         messageContent: messageInput,
         createdAt: dayjs.utc().add(3, 'hour').toISOString(),
         replyToMessage: null,
+        isInternal: isAdminOnlyMessage,
         photos: photos
       };
 
@@ -436,20 +441,32 @@ const ChatContent = () => {
       <Separator className="mt-auto" />
 
       {status === 'open' && (
-        <ChatMessageInputBox
-          selectedMessageContent={selectedMessage.messageContent}
-          isSelectedMessage={!!selectedMessage.messageId}
-          onClearSelectedMessage={() =>
-            setSelectedMessage({ messageId: '', messageContent: '', isReply: false, senderType: '', createdAt: '' })
-          }
-          onSendMessage={(messageInput, photos) => {
-            if (photos.length > 0) {
-              handleSendMessagePhoto(photos, messageInput);
-            } else {
-              handleSendMessage({ messageInput });
+        <div className="space-y-2 py-3">
+          <CustomCheckbox
+            value={isAdminOnlyMessage || false}
+            onChange={setIsAdminOnlyMessage}
+            label={'Bu mesajı yalnızca adminler görebilsin.'}
+            labelClassName="text-muted-foreground text-xs"
+            className="pl-4"
+          />
+
+          <Separator />
+
+          <ChatMessageInputBox
+            selectedMessageContent={selectedMessage.messageContent}
+            isSelectedMessage={!!selectedMessage.messageId}
+            onClearSelectedMessage={() =>
+              setSelectedMessage({ messageId: '', messageContent: '', isReply: false, senderType: '', createdAt: '' })
             }
-          }}
-        />
+            onSendMessage={(messageInput, photos) => {
+              if (photos.length > 0) {
+                handleSendMessagePhoto(photos, messageInput);
+              } else {
+                handleSendMessage({ messageInput });
+              }
+            }}
+          />
+        </div>
       )}
     </div>
   );

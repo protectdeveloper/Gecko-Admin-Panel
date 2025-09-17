@@ -85,9 +85,11 @@ export type GetSupportAdminTicketMessagesByIdDTO = {
   message: string;
   data: {
     messageID: string;
-    ticketID: string;
     senderType: 'user' | 'admin';
+    senderID: string;
     messageContent: string;
+    isPhoto: boolean;
+    isInternal: boolean;
     createdAt: string;
     replyToMessage: {
       messageID: string;
