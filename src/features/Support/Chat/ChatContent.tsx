@@ -1,12 +1,12 @@
 'use client';
 
-import { ChevronDown, Circle, MessageCircle } from 'lucide-react';
+import { ChevronDown, MessageCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { formatDateHourMinute } from '@/utils/formatTime';
-import React, { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from 'react';
+import React, { useCallback, useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -28,7 +28,6 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useTranslation } from 'react-i18next';
 import { useSupportStore } from '@/store/useSupportStore';
-import { Checkbox } from '@/components/ui/checkbox';
 import CustomCheckbox from '@/components/inputs/CustomCheckbox';
 
 const ChatContent = () => {
@@ -376,7 +375,7 @@ const ChatContent = () => {
           setShowScrollButton(!atBottom);
         }}
       >
-        <div className="flex flex-col gap-3 h-full">
+        <div className="flex flex-col h-full">
           {sortedGroupKeys?.map((groupKey) => (
             <React.Fragment key={groupKey}>
               <div className="sticky top-0 z-10 flex items-center justify-center">
@@ -388,7 +387,7 @@ const ChatContent = () => {
               {groupedMessages[groupKey]?.map((msg, index) => (
                 <div
                   key={index}
-                  className={`flex gap-2 ${msg.senderType === 'admin' ? 'flex-row-reverse' : 'flex-row'} relative`}
+                  className={`flex gap-2 pb-2 ${msg.senderType === 'admin' ? 'flex-row-reverse' : 'flex-row'} relative`}
                 >
                   <Avatar className="h-8 w-8 rounded-full">
                     <AvatarImage src={undefined} alt={'avatar'} />

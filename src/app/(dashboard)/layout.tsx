@@ -8,7 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <GenericSidebar />
 
       <HeaderBar />
-      <main className="flex flex-1 h-screen pt-[85px] pb-6 px-4 flex-col lg:flex-row gap-4">{children}</main>
+      <main className="flex flex-1 pt-[85px] pb-6 px-4 flex-col lg:flex-row gap-4">{children}</main>
     </MainSidebarProvider>
   );
 }
