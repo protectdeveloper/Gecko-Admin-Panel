@@ -1,107 +1,60 @@
 'use client';
 
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { DataTable } from '@/components/table/DataTable';
 import { DataTableName } from '@/components/table/DataTable.enum';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import TotalTransitionCardStatistic from '@/features/Dashboard/TotalTransitionCardStatistic';
+import RabbitmqInfoCard from '@/features/Dashboard/RabbitmqInfoCard';
+import MicroservicesStatusCard from '@/features/Dashboard/MicroservicesStatusCard';
+import LastJobsCard from '@/features/Dashboard/LastJobsCard';
+import ExpiringCompaniesCard from '@/features/Dashboard/ExpiringCompaniesCard';
+import SupportRequestsCard from '@/features/Dashboard/SupportRequestsCard';
+import LastUserLogsCard from '@/features/Dashboard/LastUserLogsCard';
+import TotalCountCard from '@/features/Dashboard/TotalCountCard';
+import { Building2, Mails, MonitorCog, UsersRound } from 'lucide-react';
 
 const HomePage = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="w-full grid grid-cols-1 xl:grid-cols-12 gap-4">
         <div className="xl:col-span-9 space-y-4">
-          <div className="grid grid-cols-1 min-[400px]:grid-cols-2 xl:grid-cols-4 gap-4">
-            <Card className="p-4">
-              <CardHeader className="p-0">
-                <CardTitle>Toplam Firma Sayısı</CardTitle>
-              </CardHeader>
-              <CardContent className="w-full h-28 p-0" />
-            </Card>
-            <Card className="p-4">
-              <CardHeader className="p-0">
-                <CardTitle>Toplam Kullanıcı Sayısı</CardTitle>
-              </CardHeader>
-              <CardContent className="w-full h-28 p-0" />
-            </Card>
-            <Card className="p-4">
-              <CardHeader className="p-0">
-                <CardTitle>Toplam Makine Sayısı</CardTitle>
-              </CardHeader>
-              <CardContent className="w-full h-28 p-0" />
-            </Card>
-            <Card className="p-4">
-              <CardHeader className="p-0">
-                <CardTitle>Kalan SMS / E-Posta Sayısı</CardTitle>
-              </CardHeader>
-              <CardContent className="w-full h-28 p-0" />
-            </Card>
+          <div className="grid grid-cols-1 min-h-32 min-[400px]:grid-cols-2 xl:grid-cols-4 gap-4">
+            <TotalCountCard
+              title="Toplam Firma Sayısı"
+              count={20}
+              icon={<Building2 size={45} className="text-muted-foreground" />}
+            />
+            <TotalCountCard
+              title="Toplam Kullanıcı Sayısı"
+              count={150}
+              icon={<UsersRound size={45} className="text-muted-foreground" />}
+            />
+            <TotalCountCard
+              title="Toplam Makine Sayısı"
+              count={100}
+              icon={<MonitorCog size={45} className="text-muted-foreground" />}
+            />
+            <TotalCountCard
+              title="Toplam Kalan SMS / E-posta Sayısı"
+              count={50}
+              icon={<Mails size={45} className="text-muted-foreground" />}
+            />
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            <Card className="p-4">
-              <CardHeader className="flex flex-row gap-3 px-0">
-                <div className="flex-1 space-y-1">
-                  <CardTitle>Toplam Geçiş Sayısı</CardTitle>
-                </div>
-
-                <Tabs value={'daily'} onValueChange={(value) => console.log(value)} className=" space-x-1">
-                  <TabsList>
-                    <TabsTrigger value="daily" className="px-3">
-                      Günlük
-                    </TabsTrigger>
-                    <TabsTrigger value="weekly" className="px-3">
-                      Haftalık
-                    </TabsTrigger>
-                    <TabsTrigger value="monthly" className="px-3">
-                      Aylık
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
-              </CardHeader>
-              <CardContent className="w-full h-36 p-0" />
-            </Card>
+            <TotalTransitionCardStatistic />
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-[300px]">
-            <Card className="w-full xl:col-span-1 p-4 gap-4">
-              <CardHeader className="p-0">
-                <CardTitle>Rabbitmq Kuyruk ve Dinleyici Bilgisi</CardTitle>
-              </CardHeader>
-
-              <CardContent className="w-full h-full p-0" />
-            </Card>
-
-            <Card className="w-full xl:col-span-1 p-4 gap-4">
-              <CardHeader className="p-0">
-                <CardTitle>Micro Servisler ve Durumu</CardTitle>
-              </CardHeader>
-              <CardContent className="w-full h-full p-0" />
-            </Card>
-
-            <Card className="w-full xl:col-span-1 p-4">
-              <CardHeader className="p-0">
-                <CardTitle>Son Çalışan Görevler</CardTitle>
-              </CardHeader>
-              <CardContent className="w-full h-full p-0" />
-            </Card>
+            <RabbitmqInfoCard className="h-full" />
+            <MicroservicesStatusCard className="h-full" />
+            <LastJobsCard className="h-full" />
           </div>
         </div>
 
-        <div className="xl:col-span-3 flex flex-col gap-4 min-h-0">
-          <Card className="p-4 flex-1 min-h-0">
-            <CardHeader className="p-0">
-              <CardTitle>Ödemesi Yaklaşan Firmalar</CardTitle>
-            </CardHeader>
-            <CardContent className="w-full h-full p-0" />
-          </Card>
-
-          <Card className="p-4 flex-1 min-h-0">
-            <CardHeader className="p-0">
-              <CardTitle>Destek Talepleri</CardTitle>
-            </CardHeader>
-            <CardContent className="w-full h-full p-0" />
-          </Card>
+        <div className="xl:col-span-3 flex flex-col sm:flex-row xl:flex-col gap-4 xl:h-[865px] min-h-0">
+          <ExpiringCompaniesCard className="flex-1 h-[400px] xl:min-h-0" />
+          <SupportRequestsCard className="flex-1 h-[400px] xl:min-h-0" />
         </div>
       </div>
 
@@ -119,12 +72,7 @@ const HomePage = () => {
         </div>
 
         <div className="xl:col-span-3">
-          <Card className="p-4 h-full">
-            <CardHeader className="p-0">
-              <CardTitle>Son 10 Kullanıcı Logu</CardTitle>
-            </CardHeader>
-            <CardContent className="w-full p-0" />
-          </Card>
+          <LastUserLogsCard className="h-[715px] xl:min-h-0" />
         </div>
       </div>
     </div>
