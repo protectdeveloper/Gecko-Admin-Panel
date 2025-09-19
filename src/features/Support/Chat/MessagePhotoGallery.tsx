@@ -1,11 +1,11 @@
 'use client';
-import { GetSupportUserTicketMessagesByIdDTO } from '@/api/Support/Support.types';
+import { GetSupportAdminTicketMessagesByIdDTO } from '@/api/Support/Support.types';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import React, { useState } from 'react';
 
 interface MessagePhotoGalleryProps {
-  msg: GetSupportUserTicketMessagesByIdDTO['data'][0];
+  msg: GetSupportAdminTicketMessagesByIdDTO['data'][0];
 }
 
 const MessagePhotoGallery = ({ msg }: MessagePhotoGalleryProps) => {
