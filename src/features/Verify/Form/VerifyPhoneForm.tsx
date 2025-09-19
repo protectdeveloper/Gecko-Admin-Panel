@@ -37,13 +37,14 @@ const VerifyPhoneForm = () => {
   const { mutateAsync: systemAdminLogin, isPending: isLoggingIn } = useSystemAdminLoginMutation();
 
   const [codeTime, setCodeTime] = useState<number>(() => {
-    const expireTime = localStorage.getItem('verifyCodeExpire');
+    if (typeof window === 'undefined') return 180;
+    const expireTime = window.localStorage.getItem('verifyCodeExpire');
     if (expireTime) {
       const remaining = Math.max(0, Math.floor((parseInt(expireTime) - Date.now()) / 1000));
       return remaining;
     } else {
       const newExpire = Date.now() + 180 * 1000;
-      localStorage.setItem('verifyCodeExpire', newExpire.toString());
+      window.localStorage.setItem('verifyCodeExpire', newExpire.toString());
       return 180;
     }
   });
