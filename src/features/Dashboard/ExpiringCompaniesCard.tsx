@@ -71,11 +71,11 @@ const ExpiringCompaniesCard = ({ className }: Props) => {
             </div>
 
             <div className="flex flex-col items-end gap-2">
-              <span className="flex items-center gap-1 text-xs font-medium text-white bg-chart-3 px-2 py-0.5 rounded-full">
+              <span className="flex items-center gap-1 text-xs font-medium text-white bg-chart-2 dark:bg-amber-700 px-2 py-0.5 rounded-full">
                 <Calendar size={13} className="text-white" />
                 {formatDateWithTime(item.lastPaymentDate)}
               </span>
-              <span className="flex items-center gap-1 text-xs font-medium text-white bg-chart-2 px-2 py-0.5 rounded-full">
+              <span className="flex items-center gap-1 text-xs font-medium text-white bg-chart-3 dark:bg-green-700 px-2 py-0.5 rounded-full">
                 <Package size={13} className="text-white" />
                 {item.packageName}
               </span>

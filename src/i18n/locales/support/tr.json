@@ -21,7 +21,6 @@
   "lowStatus": "Düşük",
   "normalStatus": "Normal",
   "urgentStatus": "Acil",
-  "criticalStatus": "Çok Acil",
 
   "technical": "Teknik Destek",
   "billing": "Faturalandırma",

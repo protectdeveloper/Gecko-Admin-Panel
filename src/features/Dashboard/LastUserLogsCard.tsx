@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { formatAvatarFallback } from '@/utils/formatAvatarFallback';
 import { formatDateWithTime } from '@/utils/formatTime';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
   className?: string;
@@ -120,7 +121,7 @@ const LastUserLogsCard = ({ className = '' }: Props) => {
 
       <CardContent className="w-full h-full flex flex-col p-0 overflow-scroll">
         {randomUserLogData.map((item, index) => (
-          <div key={index} className="p-3 space-y-2 border-b last:border-b-0 transition-shadow">
+          <div key={index} className="py-3 first:pt-0 last:pb-0 space-y-2 border-b last:border-b-0 transition-shadow">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Avatar className="h-10 w-10">
@@ -131,12 +132,13 @@ const LastUserLogsCard = ({ className = '' }: Props) => {
                 </Avatar>
                 <span className="text-sm">{item.fullName}</span>
               </div>
-              <p className="text-sm text-muted-foreground">{formatDateWithTime(item.createdAt)}</p>
+              <Badge variant={'default'}>{item.departmentName}</Badge>
             </div>
 
-            <p className="text-sm text-muted-foreground">
-              {item.departmentName} - {item.actionName}
-            </p>
+            <div className="flex flex-row gap-1">
+              <p className="text-sm text-muted-foreground">- {item.actionName}</p>
+              <p className="text-xs text-muted-foreground">{formatDateWithTime(item.createdAt)}</p>
+            </div>
           </div>
         ))}
       </CardContent>

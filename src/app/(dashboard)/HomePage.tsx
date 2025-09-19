@@ -2,16 +2,16 @@
 
 import React from 'react';
 import { DataTable } from '@/components/table/DataTable';
-import { DataTableName } from '@/components/table/DataTable.enum';
-import TotalTransitionCardStatistic from '@/features/Dashboard/TotalTransitionCardStatistic';
-import RabbitmqInfoCard from '@/features/Dashboard/RabbitmqInfoCard';
-import MicroservicesStatusCard from '@/features/Dashboard/MicroservicesStatusCard';
 import LastJobsCard from '@/features/Dashboard/LastJobsCard';
-import ExpiringCompaniesCard from '@/features/Dashboard/ExpiringCompaniesCard';
-import SupportRequestsCard from '@/features/Dashboard/SupportRequestsCard';
-import LastUserLogsCard from '@/features/Dashboard/LastUserLogsCard';
 import TotalCountCard from '@/features/Dashboard/TotalCountCard';
+import { DataTableName } from '@/components/table/DataTable.enum';
+import LastUserLogsCard from '@/features/Dashboard/LastUserLogsCard';
+import RabbitmqInfoCard from '@/features/Dashboard/RabbitmqInfoCard';
 import { Building2, Mails, MonitorCog, UsersRound } from 'lucide-react';
+import SupportRequestsCard from '@/features/Dashboard/SupportRequestsCard';
+import ExpiringCompaniesCard from '@/features/Dashboard/ExpiringCompaniesCard';
+import MicroservicesStatusCard from '@/features/Dashboard/MicroservicesStatusCard';
+import TotalTransitionCardStatistic from '@/features/Dashboard/TotalTransitionCardStatistic';
 
 const HomePage = () => {
   return (
@@ -53,8 +53,8 @@ const HomePage = () => {
         </div>
 
         <div className="xl:col-span-3 flex flex-col sm:flex-row xl:flex-col gap-4 xl:h-[865px] min-h-0">
-          <ExpiringCompaniesCard className="flex-1 h-[400px] xl:min-h-0" />
-          <SupportRequestsCard className="flex-1 h-[400px] xl:min-h-0" />
+          <ExpiringCompaniesCard className="flex-1 md:h-[400px] xl:min-h-0" />
+          <SupportRequestsCard className="flex-1 md:h-[400px] xl:min-h-0" />
         </div>
       </div>
 
