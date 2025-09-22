@@ -12,17 +12,6 @@ export interface BreadcrumbNode extends BreadcrumbMeta {
 }
 
 function findBreadcrumbByPattern(pathname: string): BreadcrumbItem | undefined {
-  // Özel desen: /event/detail/:eventId/user/:userId
-  const special = breadcrumbData.find((item) => {
-    if (item.pattern === '/event/detail/id/user/id') {
-      const regex = /^\/event\/detail\/[^/]+\/user\/[^/]+$/;
-      return regex.test(pathname);
-    }
-    return false;
-  });
-  if (special) return special;
-
-  // Genel eşleşme: tam veya baştan eşleşme
   return breadcrumbData.find((item) => pathname === item.pattern || pathname.startsWith(item.pattern));
 }
 

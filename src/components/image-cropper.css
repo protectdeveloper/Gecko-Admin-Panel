@@ -1,0 +1,10 @@
+.ReactCrop__crop-selection {
+  border-radius: 50% !important;
+  border: 2px solid #a6a6a6 !important;
+  color: #a6a6a6;
+}
+
+.ReactCrop__drag-handle {
+  border: 2px solid #f3f3f3 !important;
+  color: #a6a6a6;
+}

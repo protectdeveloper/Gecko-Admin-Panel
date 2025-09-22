@@ -18,6 +18,8 @@ import supportTr from './locales/support/tr.json';
 
 import loginTr from './locales/login/tr.json';
 
+import staticData from './locales/staticData/tr.json';
+
 // Dil kaynaklarını birleştir
 const resources = {
   tr: {
@@ -28,7 +30,8 @@ const resources = {
       inputs: inputsTr,
       notFound: notFoundTr,
       support: supportTr,
-      login: loginTr
+      login: loginTr,
+      staticData: staticData
     }
   }
 };

@@ -1,4 +1,13 @@
-import { Settings, SquareUserRound, type LucideIcon, User2Icon, Settings2Icon, HelpCircle, HomeIcon } from 'lucide-react';
+import {
+  Settings,
+  SquareUserRound,
+  type LucideIcon,
+  User2Icon,
+  Settings2Icon,
+  HelpCircle,
+  HomeIcon,
+  Building2
+} from 'lucide-react';
 
 export interface BreadcrumbItem {
   title: string;
@@ -37,8 +46,13 @@ export const sidebarMenuData = {
           icon: HomeIcon
         },
         {
-          title: 'Tüm Kullanıcılar',
-          url: '/all-users',
+          title: 'Firmalar',
+          url: '/customers',
+          icon: Building2
+        },
+        {
+          title: 'Kullanıcılar',
+          url: '/users',
           icon: SquareUserRound
         },
         {
@@ -53,9 +67,9 @@ export const sidebarMenuData = {
 };
 
 export const getStatusOptionsData = (t: (key: string) => string) => [
-  { label: t('all'), value: 'all' },
-  { label: t('active'), value: 'true' },
-  { label: t('inactive'), value: 'false' }
+  { label: t('staticData.statusOptions.all'), value: 'all' },
+  { label: t('staticData.statusOptions.active'), value: 'true' },
+  { label: t('staticData.statusOptions.inactive'), value: 'false' }
 ];
 
 export const getLocationOptionsData = (t: (key: string) => string) => [

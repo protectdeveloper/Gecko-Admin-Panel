@@ -1,4 +1,5 @@
 export enum DataTableName {
   // Dashboard
-  DashboardTable = 'DashboardTable'
+  DashboardTable = 'DashboardTable',
+  CustomersTable = 'CustomersTable'
 }
