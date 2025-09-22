@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+'use client';
 import { cn } from '@/lib/utils';
-import { Calendar, Info, Package } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { formatDateWithTime, formatDayDateWithTime } from '@/utils/formatTime';
+import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useGetManagementAnalyticsPackagesExpiringQuery } from '@/api/Analytics/Analytics.hook';
+import { formatDayDateWithTime } from '@/utils/formatTime';
 import { CustomSelectBox } from '@/components/inputs/CustomSelectBox';
+import { ArrowRightLeft, Calendar, Info, Package } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { useGetManagementAnalyticsPackagesExpiringQuery } from '@/api/Analytics/Analytics.hook';
 
 interface Props {
   className?: string;
@@ -14,22 +16,36 @@ interface Props {
 
 const ExpiringCompaniesCard = ({ className }: Props) => {
   const [lastDayCount, setLastDayCount] = useState('30');
+  const [forceRefresh, setForceRefresh] = useState(false);
 
-  const { data: packagesExpiringData, isLoading } = useGetManagementAnalyticsPackagesExpiringQuery({
-    forceRefresh: false,
+  const {
+    data: packagesExpiringData,
+    refetch,
+    isLoading
+  } = useGetManagementAnalyticsPackagesExpiringQuery({
+    forceRefresh: forceRefresh,
     daysAhead: Number(lastDayCount),
     limit: 5
   });
 
+  useEffect(() => {
+    if (forceRefresh) {
+      refetch();
+      setForceRefresh(false);
+    }
+  }, [forceRefresh, refetch]);
+
   if (isLoading) {
     return (
       <Card className={cn('p-4 gap-3', className)}>
-        <CardHeader className="p-0">
-          <CardTitle className="flex items-center justify-between">
-            Ödemesi Yaklaşan Firmalar
-            <Badge variant="outline" className="font-medium">
-              Son 5
-            </Badge>
+        <CardHeader className="p-0 gap-0">
+          <CardTitle className="flex flex-col gap-1 p-0">
+            <div className="flex flex-row items-start justify-between gap-0">
+              <span>Ödemesi Yaklaşan Firmalar</span>
+              <Skeleton className="h-7 w-7 rounded-md" />
+            </div>
+
+            <Skeleton className="h-7 w-1/2 rounded-md" />
           </CardTitle>
         </CardHeader>
         <CardContent className="w-full flex flex-col overflow-scroll gap-4 p-0">
@@ -46,19 +62,32 @@ const ExpiringCompaniesCard = ({ className }: Props) => {
               </div>
             </div>
           ))}
-        </CardContent>{' '}
+        </CardContent>
       </Card>
     );
   }
 
   return (
     <Card className={cn('p-4 gap-3', className)}>
-      <CardHeader className="p-0">
-        <CardTitle className="flex items-center justify-between p-0">
-          Ödemesi Yaklaşan Firmalar
+      <CardHeader className="p-0 gap-0">
+        <CardTitle className="flex flex-col gap-0 p-0">
+          <div className="flex flex-row items-start justify-between gap-0">
+            <span>Ödemesi Yaklaşan Firmalar</span>
+            <Button
+              size="icon"
+              variant="outline"
+              className="p-1.5 w-min h-min"
+              onClick={() => setForceRefresh(true)}
+              disabled={isLoading}
+            >
+              <ArrowRightLeft size={20} />
+            </Button>
+          </div>
+
           <CustomSelectBox
             value={lastDayCount}
             onValueChange={(value) => setLastDayCount(value)}
+            height={'35px'}
             data={[
               { label: 'Son 7 Gün', value: '7' },
               { label: 'Son 30 Gün', value: '30' },

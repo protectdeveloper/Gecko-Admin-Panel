@@ -1,36 +1,63 @@
-import React from 'react';
+'use client';
+import { cn } from '@/lib/utils';
+import { ArrowRightLeft } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { useGetManagementAnalyticsMicroservicesHealthQuery } from '@/api/Analytics/Analytics.hook';
-import { cn } from '@/lib/utils';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
 
 interface Props {
   className?: string;
 }
 
 const MicroservicesStatusCard = ({ className }: Props) => {
-  const { data: microservicesHealth, isLoading } = useGetManagementAnalyticsMicroservicesHealthQuery({
-    forceRefresh: false
+  const [forceRefresh, setForceRefresh] = useState(false);
+
+  const {
+    data: microservicesHealth,
+    refetch,
+    isLoading
+  } = useGetManagementAnalyticsMicroservicesHealthQuery({
+    forceRefresh: forceRefresh
   });
+
+  useEffect(() => {
+    if (forceRefresh) {
+      refetch();
+      setForceRefresh(false);
+    }
+  }, [forceRefresh, refetch]);
 
   if (isLoading) {
     return (
       <Card className={cn('p-4 gap-3', className)}>
         <CardHeader className="p-0">
-          <CardTitle className="flex items-center justify-between">Micro Servisler ve Durumu</CardTitle>
+          <CardTitle className="flex flex-col gap-0 p-0">
+            <div className="flex items-start justify-between gap-2">
+              <span>Micro Servisler ve Durumu</span>
+
+              <Skeleton className="h-7 w-7 rounded-md" />
+            </div>
+
+            <div className="flex items-center gap-2 text-sm">
+              <Skeleton className="h-5 w-1/4 rounded-md" />
+              <Skeleton className="h-5 w-1/4 rounded-md" />
+            </div>
+          </CardTitle>
         </CardHeader>
+
         <CardContent className="w-full flex flex-col overflow-scroll gap-4 p-0">
           {Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className="p-4 space-y-3 border rounded-lg bg-accent/5">
               <div className="flex items-center justify-between gap-3">
-                <Skeleton className="h-4 w-1/9" />
-                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-5 w-1/4" />
               </div>
 
               <div className="flex items-center justify-between gap-3">
-                <Skeleton className="h-4 w-1/3" />
-                <Skeleton className="h-4 w-1/3" />
+                <Skeleton className="h-4 w-1/2" />
               </div>
             </div>
           ))}
@@ -42,8 +69,20 @@ const MicroservicesStatusCard = ({ className }: Props) => {
   return (
     <Card className={cn(`p-4 gap-3`, className)}>
       <CardHeader className="p-0">
-        <CardTitle className="flex items-center justify-between gap-2">
-          <span>Micro Servisler ve Durumu</span>
+        <CardTitle className="flex flex-col gap-0 p-0">
+          <div className="flex items-start justify-between gap-2">
+            <span>Micro Servisler ve Durumu</span>
+
+            <Button
+              size="icon"
+              variant="outline"
+              className="p-1.5 w-min h-min"
+              onClick={() => setForceRefresh(true)}
+              disabled={isLoading}
+            >
+              <ArrowRightLeft size={20} />
+            </Button>
+          </div>
 
           <div className="flex items-center gap-2 text-sm">
             <Badge variant="default" className="bg-green-800 text-white">

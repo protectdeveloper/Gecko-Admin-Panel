@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/table/DataTable';
 import LastJobsCard from '@/features/Dashboard/LastJobsCard';
 import TotalCountCard from '@/features/Dashboard/TotalCountCard';
@@ -18,14 +18,27 @@ import {
 } from '@/api/Analytics/Analytics.hook';
 
 const HomePage = () => {
-  const { data: analyticsTotalsData, isLoading: isAnalyticsTotalsLoading } = useGetManagementAnalyticsTotalsQuery({
-    forceRefresh: false
-  });
+  const [forceRefresh, setForceRefresh] = useState(false);
 
-  const { data: analyticsMessageCreditData, isLoading: isAnalyticsMessageCreditLoading } =
-    useGetManagementAnalyticsMessageCreditQuery({
-      forceRefresh: false
-    });
+  const {
+    data: analyticsTotalsData,
+    isLoading: isAnalyticsTotalsLoading,
+    refetch: refetchTotals
+  } = useGetManagementAnalyticsTotalsQuery({ forceRefresh });
+
+  const {
+    data: analyticsMessageCreditData,
+    isLoading: isAnalyticsMessageCreditLoading,
+    refetch: refetchMessageCredit
+  } = useGetManagementAnalyticsMessageCreditQuery({ forceRefresh });
+
+  useEffect(() => {
+    if (forceRefresh) {
+      refetchTotals();
+      refetchMessageCredit();
+      setForceRefresh(false);
+    }
+  }, [forceRefresh]);
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -37,23 +50,40 @@ const HomePage = () => {
               count={analyticsTotalsData?.data.totalCustomers || 0}
               icon={<Building2 size={45} className="text-muted-foreground" />}
               isLoading={isAnalyticsTotalsLoading}
+              onRefresh={() => {
+                setForceRefresh(false);
+                setTimeout(() => setForceRefresh(true), 0);
+              }}
             />
             <TotalCountCard
               title="Toplam Kullanıcı Sayısı"
               count={analyticsTotalsData?.data.totalUsers || 0}
               icon={<UsersRound size={45} className="text-muted-foreground" />}
               isLoading={isAnalyticsTotalsLoading}
+              onRefresh={() => {
+                setForceRefresh(false);
+                setTimeout(() => setForceRefresh(true), 0);
+              }}
             />
             <TotalCountCard
               title="Toplam Makine Sayısı"
               count={analyticsTotalsData?.data.totalMachines || 0}
               icon={<MonitorCog size={45} className="text-muted-foreground" />}
               isLoading={isAnalyticsTotalsLoading}
+              onRefresh={() => {
+                setForceRefresh(false);
+                setTimeout(() => setForceRefresh(true), 0);
+              }}
             />
             <TotalCountCard
               title="Toplam Kalan SMS / E-posta Sayısı"
               count={analyticsMessageCreditData?.data?.creditAmount || 0}
               icon={<Mails size={45} className="text-muted-foreground" />}
+              isLoading={isAnalyticsMessageCreditLoading}
+              onRefresh={() => {
+                setForceRefresh(false);
+                setTimeout(() => setForceRefresh(true), 0);
+              }}
             />
           </div>
 

@@ -107,7 +107,7 @@ const SupportContent = ({ defaultLayout = [20, 32, 48] }: SupportContentProps) =
         </ResizablePanelGroup>
       </div>
 
-      <div className="lg:hidden h-full">
+      <div className="lg:hidden w-full h-full">
         {!supportId ? (
           <div className="rounded-xl border border-border h-full flex flex-col">
             <div className="flex flex-col h-full p-4">

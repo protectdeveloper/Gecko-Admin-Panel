@@ -1,19 +1,29 @@
 'use client';
-
-import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { ArrowRightLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { getMonthIndex, getMonths } from '@/utils/chartFunctions';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useGetManagementAnalyticsPassesStatisticsQuery } from '@/api/Analytics/Analytics.hook';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Skeleton } from '@/components/ui/skeleton';
 
 const TotalTransitionCardStatistic = () => {
   const { t } = useTranslation();
-  const [view, setView] = React.useState('daily');
+  const [view, setView] = useState('daily');
+  const [forceRefresh, setForceRefresh] = useState(false);
+
   let chartData: Array<{ day?: string; month?: string; desktop: number }> = [];
+
+  const chartConfig = {
+    desktop: {
+      label: 'Geçiş Sayısı',
+      color: 'var(--chart-1)'
+    }
+  } satisfies ChartConfig;
 
   const now = new Date();
   let startDate = '';
@@ -45,9 +55,10 @@ const TotalTransitionCardStatistic = () => {
   const {
     data: passesStatisticsData,
     isLoading: isPassesStatisticsLoading,
-    isFetching: isPassesStatisticsFetching
+    isFetching: isPassesStatisticsFetching,
+    refetch
   } = useGetManagementAnalyticsPassesStatisticsQuery({
-    forceRefresh: false,
+    forceRefresh: forceRefresh,
     startDate: startDate,
     endDate: endDate,
     groupBy: view as 'daily' | 'weekly' | 'monthly'
@@ -82,12 +93,12 @@ const TotalTransitionCardStatistic = () => {
     setView(value);
   };
 
-  const chartConfig = {
-    desktop: {
-      label: 'Geçiş Sayısı',
-      color: 'var(--chart-1)'
+  useEffect(() => {
+    if (forceRefresh) {
+      refetch();
+      setForceRefresh(false);
     }
-  } satisfies ChartConfig;
+  }, [forceRefresh, refetch]);
 
   if (isPassesStatisticsLoading || isPassesStatisticsFetching) {
     return (
@@ -137,6 +148,16 @@ const TotalTransitionCardStatistic = () => {
             </TabsTrigger>
           </TabsList>
         </Tabs>
+
+        <Button
+          size="icon"
+          variant="outline"
+          className="p-1.5 w-min h-min"
+          onClick={() => setForceRefresh(true)}
+          disabled={isPassesStatisticsLoading || isPassesStatisticsFetching}
+        >
+          <ArrowRightLeft size={20} />
+        </Button>
       </CardHeader>
 
       <CardContent className="p-0">
