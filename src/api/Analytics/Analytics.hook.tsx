@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AnalyticsApi } from './Analytics.api';
 import {
+  GetManagementAnalyticsAdminLogsParams,
   GetManagementAnalyticsPackagesExpiringParams,
   GetManagementAnalyticsPassesCountParams,
   GetManagementAnalyticsPassesStatisticsParams,
@@ -104,4 +105,13 @@ export const getManagementAnalyticsRabbitMQQueuesQueryOptions = (params: GetMana
 
 export const useGetManagementAnalyticsRabbitMQQueuesQuery = (params: GetManagementAnalyticsTotalsParams) => {
   return useQuery(getManagementAnalyticsRabbitMQQueuesQueryOptions(params));
+};
+
+export const getManagementAnalyticsAdminLogsQueryOptions = (params: GetManagementAnalyticsAdminLogsParams) => ({
+  queryKey: ['getManagementAnalyticsAdminLogs', params],
+  queryFn: () => AnalyticsApi.getManagementAnalyticsAdminLogs(params)
+});
+
+export const useGetManagementAnalyticsAdminLogsQuery = (params: GetManagementAnalyticsAdminLogsParams) => {
+  return useQuery(getManagementAnalyticsAdminLogsQueryOptions(params));
 };

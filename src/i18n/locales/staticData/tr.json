@@ -3,5 +3,13 @@
     "all": "Tümü",
     "active": "Aktif",
     "inactive": "Pasif"
+  },
+
+  "requestTypeOptions": {
+    "all": "Tümü",
+    "get": "GET",
+    "post": "POST",
+    "put": "PUT",
+    "delete": "DELETE"
   }
 }

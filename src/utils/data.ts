@@ -72,6 +72,14 @@ export const getStatusOptionsData = (t: (key: string) => string) => [
   { label: t('staticData.statusOptions.inactive'), value: 'false' }
 ];
 
+export const getRequestTypeData = (t: (key: string) => string) => [
+  { label: t('staticData.requestTypeOptions.all'), value: 'all' },
+  { label: t('staticData.requestTypeOptions.get'), value: 'GET' },
+  { label: t('staticData.requestTypeOptions.post'), value: 'POST' },
+  { label: t('staticData.requestTypeOptions.put'), value: 'PUT' },
+  { label: t('staticData.requestTypeOptions.delete'), value: 'DELETE' }
+];
+
 export const getLocationOptionsData = (t: (key: string) => string) => [
   { label: t('all'), value: 'all' },
   { label: t('entry'), value: 'true' },

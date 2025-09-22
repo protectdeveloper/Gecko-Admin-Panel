@@ -267,3 +267,38 @@ export type GetManagementAnalyticsRabbitMQQueuesDTO = {
   pageNumber: number;
   pageSize: number;
 };
+
+export type GetManagementAnalyticsAdminLogsParams = {
+  pageNumber: number;
+  pageSize: number;
+  searchTerm?: string;
+  requestMethod?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+};
+
+export type GetManagementAnalyticsAdminLogsDTO = {
+  success: boolean;
+  message: string;
+  data: {
+    logID: string;
+    adminID: string;
+    adminName: string;
+    actionType: string;
+    controller: string;
+    action: string;
+    requestMethod: string;
+    ipAddress: string;
+    isAuthorized: boolean;
+    executionTime: number;
+    statusCode: number;
+    errorMessage: string | null;
+    createdAt: string;
+  }[];
+  error: string;
+  statusCode: number;
+  count: number;
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+};

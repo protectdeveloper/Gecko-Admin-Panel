@@ -13,7 +13,7 @@ import { exportCustomersExcel } from '@/utils/excelExport';
 
 export default function CustomersPage() {
   const router = useRouter();
-  const pathname = usePathname() || '';
+  const pathname = usePathname();
   const searchParams = useSearchParams() || new URLSearchParams();
 
   const page = searchParams.get('page') || '1';

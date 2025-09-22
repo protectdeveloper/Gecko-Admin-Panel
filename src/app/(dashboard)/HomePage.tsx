@@ -13,11 +13,23 @@ import ExpiringCompaniesCard from '@/features/Dashboard/ExpiringCompaniesCard';
 import MicroservicesStatusCard from '@/features/Dashboard/MicroservicesStatusCard';
 import TotalTransitionCardStatistic from '@/features/Dashboard/TotalTransitionCardStatistic';
 import {
+  useGetManagementAnalyticsAdminLogsQuery,
   useGetManagementAnalyticsMessageCreditQuery,
   useGetManagementAnalyticsTotalsQuery
 } from '@/api/Analytics/Analytics.hook';
+import { useDashboardAdminLogsTableColumns } from '@/features/Dashboard/table/DashboardAdminLogsTable.columns';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const HomePage = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams() || new URLSearchParams();
+
+  const page = searchParams.get('page') || '1';
+  const pageSize = searchParams.get('pageSize') || '20';
+  const searchTerm = searchParams.get('searchTerm') || undefined;
+  const requestMethod = searchParams.get('requestMethod') || undefined;
+
   const [forceRefresh, setForceRefresh] = useState(false);
 
   const {
@@ -31,6 +43,23 @@ const HomePage = () => {
     isLoading: isAnalyticsMessageCreditLoading,
     refetch: refetchMessageCredit
   } = useGetManagementAnalyticsMessageCreditQuery({ forceRefresh });
+
+  const {
+    data: adminLogsData,
+    isLoading: isAdminLogsLoading,
+    isError: isAdminLogsError
+  } = useGetManagementAnalyticsAdminLogsQuery({
+    pageNumber: Number(page) || 1,
+    pageSize: Number(pageSize) || 20,
+    requestMethod: requestMethod === 'all' ? undefined : requestMethod,
+    searchTerm: searchTerm || undefined
+  });
+
+  const handleClearFiltersPress = () => {
+    router.push(`${pathname}`);
+  };
+
+  const { columns, filterColumns } = useDashboardAdminLogsTableColumns();
 
   useEffect(() => {
     if (forceRefresh) {
@@ -109,11 +138,15 @@ const HomePage = () => {
           <DataTable
             tableName={DataTableName.DashboardTable}
             title={'Admin Logları'}
-            data={[]}
-            columns={[]}
-            filterColumns={[]}
-            totalCount={0}
-            pageCount={1}
+            data={adminLogsData?.data || []}
+            columns={columns}
+            filterColumns={filterColumns}
+            totalCount={adminLogsData?.totalCount || 0}
+            pageCount={adminLogsData?.pageSize || 0}
+            isLoading={isAdminLogsLoading}
+            isError={isAdminLogsError}
+            clearFiltersPress={handleClearFiltersPress}
+            isExcelButtonVisible={false}
           />
         </div>
 

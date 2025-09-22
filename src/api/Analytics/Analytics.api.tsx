@@ -1,6 +1,8 @@
 import { get } from 'http';
 import { BaseAxiosService } from '../BaseAxiosService';
 import {
+  GetManagementAnalyticsAdminLogsDTO,
+  GetManagementAnalyticsAdminLogsParams,
   GetManagementAnalyticsCustomersCountDTO,
   GetManagementAnalyticsCustomersDetailedDTO,
   GetManagementAnalyticsMachinesCountDTO,
@@ -91,6 +93,13 @@ export const AnalyticsApi = {
     params: GetManagementAnalyticsTotalsParams
   ): Promise<GetManagementAnalyticsRabbitMQQueuesDTO> => {
     const response = await BaseAxiosService.get('/management/analytics/rabbitmq/queues', { params });
+    return response.data;
+  },
+
+  getManagementAnalyticsAdminLogs: async (
+    params: GetManagementAnalyticsAdminLogsParams
+  ): Promise<GetManagementAnalyticsAdminLogsDTO> => {
+    const response = await BaseAxiosService.get('/management/analytics/admin-logs', { params });
     return response.data;
   }
 };
