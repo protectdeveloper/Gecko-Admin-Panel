@@ -29,6 +29,8 @@ const HomePage = () => {
   const pageSize = searchParams.get('pageSize') || '20';
   const searchTerm = searchParams.get('searchTerm') || undefined;
   const requestMethod = searchParams.get('requestMethod') || undefined;
+  const sortColumn = searchParams.get('sortColumn') || undefined;
+  const sortDesc = searchParams.get('sortDesc') || undefined;
 
   const [forceRefresh, setForceRefresh] = useState(false);
 
@@ -52,7 +54,9 @@ const HomePage = () => {
     pageNumber: Number(page) || 1,
     pageSize: Number(pageSize) || 20,
     requestMethod: requestMethod === 'all' ? undefined : requestMethod,
-    searchTerm: searchTerm || undefined
+    searchTerm: searchTerm || undefined,
+    sortBy: sortColumn || undefined,
+    sortOrder: sortDesc === 'true' ? 'desc' : sortDesc === 'false' ? 'asc' : undefined
   });
 
   const handleClearFiltersPress = () => {

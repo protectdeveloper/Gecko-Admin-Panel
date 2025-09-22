@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDown, EyeOffIcon } from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '../ui/dropdown-menu';
 import { cn } from '../../lib/utils';
 import { Button } from '../ui/button';
 import { flexRender } from '@tanstack/react-table';
@@ -35,6 +41,20 @@ export default function ColumnHeader({ column, header, className }: { column: an
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="start">
+          {column.getCanSort() && (
+            <React.Fragment>
+              <DropdownMenuItem aria-label="Sort ascending" onClick={() => column.toggleSorting(false)}>
+                <ArrowUpIcon size={15} className="text-muted-foreground/70" />
+                <span style={{ fontSize: 14 }}>Asc</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem aria-label="Sort descending" onClick={() => column.toggleSorting(true)}>
+                <ArrowDownIcon size={15} className="text-muted-foreground/70" />
+                <span style={{ fontSize: 14 }}>Desc</span>
+              </DropdownMenuItem>
+            </React.Fragment>
+          )}
+          {column.getCanSort() && column.getCanHide() && <DropdownMenuSeparator />}
+
           {column.getCanHide() && (
             <DropdownMenuItem aria-label="Hide column" onClick={() => column.toggleVisibility(false)}>
               <EyeOffIcon size={15} className="text-muted-foreground/70" />
