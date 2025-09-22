@@ -12,8 +12,21 @@ import SupportRequestsCard from '@/features/Dashboard/SupportRequestsCard';
 import ExpiringCompaniesCard from '@/features/Dashboard/ExpiringCompaniesCard';
 import MicroservicesStatusCard from '@/features/Dashboard/MicroservicesStatusCard';
 import TotalTransitionCardStatistic from '@/features/Dashboard/TotalTransitionCardStatistic';
+import {
+  useGetManagementAnalyticsMessageCreditQuery,
+  useGetManagementAnalyticsTotalsQuery
+} from '@/api/Analytics/Analytics.hook';
 
 const HomePage = () => {
+  const { data: analyticsTotalsData, isLoading: isAnalyticsTotalsLoading } = useGetManagementAnalyticsTotalsQuery({
+    forceRefresh: false
+  });
+
+  const { data: analyticsMessageCreditData, isLoading: isAnalyticsMessageCreditLoading } =
+    useGetManagementAnalyticsMessageCreditQuery({
+      forceRefresh: false
+    });
+
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="w-full grid grid-cols-1 xl:grid-cols-12 gap-4">
@@ -21,22 +34,25 @@ const HomePage = () => {
           <div className="grid grid-cols-1 min-h-32 min-[400px]:grid-cols-2 xl:grid-cols-4 gap-4">
             <TotalCountCard
               title="Toplam Firma Sayısı"
-              count={20}
+              count={analyticsTotalsData?.data.totalCustomers || 0}
               icon={<Building2 size={45} className="text-muted-foreground" />}
+              isLoading={isAnalyticsTotalsLoading}
             />
             <TotalCountCard
               title="Toplam Kullanıcı Sayısı"
-              count={150}
+              count={analyticsTotalsData?.data.totalUsers || 0}
               icon={<UsersRound size={45} className="text-muted-foreground" />}
+              isLoading={isAnalyticsTotalsLoading}
             />
             <TotalCountCard
               title="Toplam Makine Sayısı"
-              count={100}
+              count={analyticsTotalsData?.data.totalMachines || 0}
               icon={<MonitorCog size={45} className="text-muted-foreground" />}
+              isLoading={isAnalyticsTotalsLoading}
             />
             <TotalCountCard
               title="Toplam Kalan SMS / E-posta Sayısı"
-              count={50}
+              count={analyticsMessageCreditData?.data?.creditAmount || 0}
               icon={<Mails size={45} className="text-muted-foreground" />}
             />
           </div>
@@ -45,16 +61,16 @@ const HomePage = () => {
             <TotalTransitionCardStatistic />
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-[300px]">
-            <RabbitmqInfoCard className="h-full" />
-            <MicroservicesStatusCard className="h-full" />
-            <LastJobsCard className="h-full" />
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-[550px] xl:h-[400px]">
+            <RabbitmqInfoCard className="h-full overflow-auto" />
+            <MicroservicesStatusCard className="h-full overflow-auto" />
+            <LastJobsCard className="h-full overflow-auto" />
           </div>
         </div>
 
-        <div className="xl:col-span-3 flex flex-col sm:flex-row xl:flex-col gap-4 xl:h-[865px] min-h-0">
-          <ExpiringCompaniesCard className="flex-1 md:h-[400px] xl:min-h-0" />
-          <SupportRequestsCard className="flex-1 md:h-[400px] xl:min-h-0" />
+        <div className="xl:col-span-3 flex flex-col sm:flex-row xl:flex-col gap-4 xl:h-[965px] min-h-0">
+          <ExpiringCompaniesCard className="flex-1 h-[400px] xl:min-h-0" />
+          <SupportRequestsCard className="flex-1 h-[400px] xl:min-h-0" />
         </div>
       </div>
 

@@ -62,7 +62,7 @@ const SupportRequestsCard = ({ className = '' }: Props) => {
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="w-full h-full flex flex-col gap-4 p-0 overflow-scroll">
+      <CardContent className="w-full h-full flex flex-col gap-3 p-0 overflow-scroll">
         {ticketsData?.data?.map((ticket, index) => (
           <div
             key={index}
