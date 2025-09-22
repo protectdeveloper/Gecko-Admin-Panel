@@ -61,10 +61,10 @@ const HomePage = () => {
             <TotalTransitionCardStatistic />
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-[550px] xl:h-[400px]">
-            <RabbitmqInfoCard className="h-full overflow-auto" />
-            <MicroservicesStatusCard className="h-full overflow-auto" />
-            <LastJobsCard className="h-full overflow-auto" />
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+            <RabbitmqInfoCard className="h-[400px] overflow-auto" />
+            <MicroservicesStatusCard className="h-[400px] overflow-auto" />
+            <LastJobsCard className="h-[400px] overflow-auto" />
           </div>
         </div>
 

@@ -42,7 +42,11 @@ const TotalTransitionCardStatistic = () => {
 
   const monthsLabels = getMonths(t);
 
-  const { data: passesStatisticsData, isLoading: isPassesStatisticsLoading } = useGetManagementAnalyticsPassesStatisticsQuery({
+  const {
+    data: passesStatisticsData,
+    isLoading: isPassesStatisticsLoading,
+    isFetching: isPassesStatisticsFetching
+  } = useGetManagementAnalyticsPassesStatisticsQuery({
     forceRefresh: false,
     startDate: startDate,
     endDate: endDate,
@@ -85,7 +89,7 @@ const TotalTransitionCardStatistic = () => {
     }
   } satisfies ChartConfig;
 
-  if (isPassesStatisticsLoading) {
+  if (isPassesStatisticsLoading || isPassesStatisticsFetching) {
     return (
       <Card className="p-4 gap-3">
         <CardHeader className="flex items-center gap-2 p-0">

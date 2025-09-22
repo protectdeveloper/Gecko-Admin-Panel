@@ -70,7 +70,7 @@ const MicroservicesStatusCard = ({ className }: Props) => {
               </Badge>
             </div>
 
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-col items-start justify-center gap-1">
               <p className="text-sm text-muted-foreground">URL: {service.serviceUrl || 'Bilinmiyor'}</p>
               <p className="text-sm text-muted-foreground">Response Time: {service.responseTimeMs || 'Bilinmiyor'}ms</p>
             </div>

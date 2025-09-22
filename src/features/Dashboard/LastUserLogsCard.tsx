@@ -135,7 +135,7 @@ const LastUserLogsCard = ({ className = '' }: Props) => {
               <Badge variant={'default'}>{item.departmentName}</Badge>
             </div>
 
-            <div className="flex flex-row gap-1">
+            <div className="flex flex-row items-center justify-between gap-1">
               <p className="text-sm text-muted-foreground">- {item.actionName}</p>
               <p className="text-xs text-muted-foreground">{formatDateWithTime(item.createdAt)}</p>
             </div>
