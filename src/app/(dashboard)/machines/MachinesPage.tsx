@@ -4,13 +4,13 @@ import React from 'react';
 import { DataTable } from '@/components/table/DataTable';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { DataTableName } from '@/components/table/DataTable.enum';
-import { useCustomersTableColumns } from '@/features/Customers/table/CustomersTable.columns';
-import { useGetCustomersQuery } from '@/api/Customer/Customer.hook';
 import { toast } from 'sonner';
-import { CustomerApi } from '@/api/Customer/Customer.api';
-import { exportCustomersExcel } from '@/utils/excelExport';
+import { exportMachinesExcel } from '@/utils/excelExport';
+import { useGetMachinesQuery } from '@/api/Machine/Machine.hook';
+import { useMachinesTableColumns } from '@/features/Machines/table/MachinessTable.columns';
+import { MachineApi } from '@/api/Machine/Machine.api';
 
-export default function CustomersPage() {
+export default function MachinesPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -19,19 +19,27 @@ export default function CustomersPage() {
   const pageSize = searchParams.get('pageSize') || '20';
   const searchTerm = searchParams.get('searchTerm') || undefined;
   const isActive = searchParams.get('isActive') || undefined;
+  const isOnline = searchParams.get('isOnline') || undefined;
+  const machineTypeId = searchParams.get('machineTypeId') || undefined;
+  const ipAddress = searchParams.get('ipAddress') || undefined;
+  const serialNumber = searchParams.get('serialNumber') || undefined;
 
   const {
-    data: customersListData,
+    data: machinesListData,
     isLoading,
     isError
-  } = useGetCustomersQuery({
+  } = useGetMachinesQuery({
     pageNumber: Number(page) || 1,
     pageSize: Number(pageSize) || 20,
     isActive: isActive === 'true' ? true : isActive === 'false' ? false : undefined,
-    searchTerm: searchTerm
+    isOnline: isOnline === 'true' ? true : isOnline === 'false' ? false : undefined,
+    searchTerm: searchTerm,
+    machineTypeId: machineTypeId,
+    ipAddress: ipAddress,
+    serialNumber: serialNumber
   });
 
-  const { columns, filterColumns, renderCreateButton } = useCustomersTableColumns();
+  const { columns, filterColumns, renderCreateButton } = useMachinesTableColumns();
 
   const handleClearFiltersPress = () => {
     router.push(`${pathname}`);
@@ -40,13 +48,17 @@ export default function CustomersPage() {
   const handleExcelExportButton = async () => {
     const loadingToast = toast.loading('Excel dosyası hazırlanıyor...');
     try {
-      const allData = await CustomerApi.getManagementCustomers({
+      const allData = await MachineApi.getManagementMachines({
         pageNumber: Number(page) || 1,
         pageSize: Number(pageSize) || 20,
         isActive: isActive === 'true' ? true : isActive === 'false' ? false : undefined,
-        searchTerm: searchTerm
+        isOnline: isOnline === 'true' ? true : isOnline === 'false' ? false : undefined,
+        searchTerm: searchTerm,
+        machineTypeId: machineTypeId,
+        ipAddress: ipAddress,
+        serialNumber: serialNumber
       });
-      await exportCustomersExcel(allData?.data || [], searchParams);
+      await exportMachinesExcel(allData?.data || [], searchParams);
     } catch (e) {
       toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
     } finally {
@@ -55,15 +67,15 @@ export default function CustomersPage() {
   };
   return (
     <DataTable
-      title={'Firmalar'}
-      tableName={DataTableName.CustomersTable}
-      data={customersListData?.data || []}
+      title={'Makineler'}
+      tableName={DataTableName.MachinesTable}
+      data={machinesListData?.data || []}
       columns={columns}
       filterColumns={filterColumns}
       isLoading={isLoading}
       isError={isError}
-      pageCount={customersListData?.pageSize || 0}
-      totalCount={customersListData?.totalCount || 0}
+      pageCount={machinesListData?.pageSize || 0}
+      totalCount={machinesListData?.totalCount || 0}
       clearFiltersPress={handleClearFiltersPress}
       handleExcelExportButton={handleExcelExportButton}
       renderCreateButton={renderCreateButton}

@@ -302,3 +302,103 @@ export type GetManagementAnalyticsAdminLogsDTO = {
   pageNumber: number;
   pageSize: number;
 };
+
+export type GetManagementAnalyticsCustomersDatabaseSizesDTO = {
+  success: true;
+  message: string;
+  data: {
+    customerId: string;
+    customerName: string;
+    databaseName: string;
+    serverName: string;
+    databaseSizeGB: number;
+    dataSizeGB: number;
+    logSizeGB: number;
+    lastUpdated: string;
+    isConnected: boolean;
+    connectionError: string | null;
+  }[];
+  error: string;
+  statusCode: number;
+  count: number;
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+};
+
+export type GetManagementAnalyticsDatabaseSizeSummaryDTO = {
+  success: boolean;
+  message: string;
+  data: {
+    totalDatabaseSizeGB: number;
+    totalDataSizeGB: number;
+    totalLogSizeGB: number;
+    totalCustomers: number;
+    connectedCustomers: number;
+    disconnectedCustomers: number;
+    averageDatabaseSizeGB: number;
+    averageDataSizeGB: number;
+    averageLogSizeGB: number;
+    lastUpdated: string;
+  };
+  error: string;
+  statusCode: number;
+  count: number;
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+};
+
+export type GetManagementAnalyticsDatabaseBlockAnalysisDTO = {
+  success: boolean;
+  message: string;
+  data: {
+    customerId: string;
+    customerName: string;
+    databaseName: string;
+    serverName: string;
+    isConnected: boolean;
+    connectionError: string | null;
+    blockedSessions: {
+      sessionId: number;
+      status: string;
+      command: string;
+      waitType: string;
+      blockingSessionId: number;
+      sqlText: string;
+      waitTime: number;
+      lastWaitType: string;
+      cpuTime: number;
+      totalElapsedTime: number;
+    }[];
+    totalBlockedSessions: number;
+    lastUpdated: string;
+  }[];
+  error: string;
+  statusCode: number;
+  count: number;
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+};
+
+export type GetManagementAnalyticsDatabaseBlockSummaryDTO = {
+  success: boolean;
+  message: string;
+  data: {
+    totalCustomers: number;
+    connectedCustomers: number;
+    disconnectedCustomers: number;
+    customersWithBlocks: number;
+    totalBlockedSessions: number;
+    mostCommonWaitType: string;
+    averageBlockedSessionsPerCustomer: number;
+    lastUpdated: string;
+  };
+  error: string;
+  statusCode: number;
+  count: number;
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+};

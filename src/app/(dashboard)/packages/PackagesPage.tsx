@@ -1,16 +1,16 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'sonner';
 import { DataTable } from '@/components/table/DataTable';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { DataTableName } from '@/components/table/DataTable.enum';
-import { useCustomersTableColumns } from '@/features/Customers/table/CustomersTable.columns';
-import { useGetCustomersQuery } from '@/api/Customer/Customer.hook';
-import { toast } from 'sonner';
-import { CustomerApi } from '@/api/Customer/Customer.api';
-import { exportCustomersExcel } from '@/utils/excelExport';
+import { exportPackagesExcel } from '@/utils/excelExport';
+import { usePackagesTableColumns } from '@/features/Packages/table/PackagesTable.columns';
+import { useGetPackageQuery } from '@/api/Package/Package.hook';
+import { PackageApi } from '@/api/Package/Package.api';
 
-export default function CustomersPage() {
+export default function PackagesPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -19,19 +19,23 @@ export default function CustomersPage() {
   const pageSize = searchParams.get('pageSize') || '20';
   const searchTerm = searchParams.get('searchTerm') || undefined;
   const isActive = searchParams.get('isActive') || undefined;
+  const minPrice = searchParams.get('minPrice') || undefined;
+  const maxPrice = searchParams.get('maxPrice') || undefined;
 
   const {
-    data: customersListData,
+    data: packagesListData,
     isLoading,
     isError
-  } = useGetCustomersQuery({
+  } = useGetPackageQuery({
     pageNumber: Number(page) || 1,
     pageSize: Number(pageSize) || 20,
     isActive: isActive === 'true' ? true : isActive === 'false' ? false : undefined,
-    searchTerm: searchTerm
+    searchTerm: searchTerm,
+    minPrice: minPrice ? Number(minPrice) : undefined,
+    maxPrice: maxPrice ? Number(maxPrice) : undefined
   });
 
-  const { columns, filterColumns, renderCreateButton } = useCustomersTableColumns();
+  const { columns, filterColumns, renderCreateButton } = usePackagesTableColumns();
 
   const handleClearFiltersPress = () => {
     router.push(`${pathname}`);
@@ -40,30 +44,33 @@ export default function CustomersPage() {
   const handleExcelExportButton = async () => {
     const loadingToast = toast.loading('Excel dosyası hazırlanıyor...');
     try {
-      const allData = await CustomerApi.getManagementCustomers({
+      const allData = await PackageApi.getManagementPackage({
         pageNumber: Number(page) || 1,
         pageSize: Number(pageSize) || 20,
         isActive: isActive === 'true' ? true : isActive === 'false' ? false : undefined,
-        searchTerm: searchTerm
+        searchTerm: searchTerm,
+        minPrice: minPrice ? Number(minPrice) : undefined,
+        maxPrice: maxPrice ? Number(maxPrice) : undefined
       });
-      await exportCustomersExcel(allData?.data || [], searchParams);
+      await exportPackagesExcel(allData?.data || [], searchParams);
     } catch (e) {
       toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
     } finally {
       toast.dismiss(loadingToast);
     }
   };
+
   return (
     <DataTable
-      title={'Firmalar'}
-      tableName={DataTableName.CustomersTable}
-      data={customersListData?.data || []}
+      title={'Paketler'}
+      tableName={DataTableName.PackagesTable}
+      data={packagesListData?.data || []}
       columns={columns}
       filterColumns={filterColumns}
       isLoading={isLoading}
       isError={isError}
-      pageCount={customersListData?.pageSize || 0}
-      totalCount={customersListData?.totalCount || 0}
+      pageCount={packagesListData?.pageSize || 0}
+      totalCount={packagesListData?.totalCount || 0}
       clearFiltersPress={handleClearFiltersPress}
       handleExcelExportButton={handleExcelExportButton}
       renderCreateButton={renderCreateButton}

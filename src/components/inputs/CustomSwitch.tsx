@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 interface CustomSwitchProps {
   value: boolean;
   onChange: (value: boolean) => void;
-  trueIcon: React.ReactNode;
-  falseIcon: React.ReactNode;
+  trueIcon?: React.ReactNode;
+  falseIcon?: React.ReactNode;
   className?: string;
   switchClassName?: string;
 }

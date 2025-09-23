@@ -19,7 +19,7 @@ const SupportRequestsCard = ({ className = '' }: Props) => {
 
   const { data: ticketsData, isLoading } = useGetSupportAdminTicketsQuery({
     pageNumber: 1,
-    pageSize: 5,
+    pageSize: 20,
     status: 'open'
   });
 

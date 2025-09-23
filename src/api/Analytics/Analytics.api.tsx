@@ -4,7 +4,11 @@ import {
   GetManagementAnalyticsAdminLogsDTO,
   GetManagementAnalyticsAdminLogsParams,
   GetManagementAnalyticsCustomersCountDTO,
+  GetManagementAnalyticsCustomersDatabaseSizesDTO,
   GetManagementAnalyticsCustomersDetailedDTO,
+  GetManagementAnalyticsDatabaseBlockAnalysisDTO,
+  GetManagementAnalyticsDatabaseBlockSummaryDTO,
+  GetManagementAnalyticsDatabaseSizeSummaryDTO,
   GetManagementAnalyticsMachinesCountDTO,
   GetManagementAnalyticsMessageCreditDTO,
   GetManagementAnalyticsMicroservicesHealthDTO,
@@ -100,6 +104,37 @@ export const AnalyticsApi = {
     params: GetManagementAnalyticsAdminLogsParams
   ): Promise<GetManagementAnalyticsAdminLogsDTO> => {
     const response = await BaseAxiosService.get('/management/analytics/admin-logs', { params });
+    return response.data;
+  },
+
+  getManagementAnalyticsCustomersDatabaseSizes: async (
+    params: GetManagementAnalyticsTotalsParams
+  ): Promise<GetManagementAnalyticsCustomersDatabaseSizesDTO> => {
+    const response = await BaseAxiosService.get('/management/analytics/customers/database-sizes', { params });
+    return response.data;
+  },
+
+  getManagementAnalyticsDatabaseSizeSummary: async (
+    params: GetManagementAnalyticsTotalsParams
+  ): Promise<GetManagementAnalyticsDatabaseSizeSummaryDTO> => {
+    const response = await BaseAxiosService.get('/management/analytics/database-size-summary', { params });
+    return response.data;
+  },
+
+  // management/analytics/database-block-analysis
+
+  getManagementAnalyticsDatabaseBlockAnalysis: async (
+    params: GetManagementAnalyticsTotalsParams
+  ): Promise<GetManagementAnalyticsDatabaseBlockAnalysisDTO> => {
+    const response = await BaseAxiosService.get('/management/analytics/database-block-analysis', { params });
+    return response.data;
+  },
+
+  // management/analytics/database-block-summary
+  getManagementAnalyticsDatabaseBlockSummary: async (
+    params: GetManagementAnalyticsTotalsParams
+  ): Promise<GetManagementAnalyticsDatabaseBlockSummaryDTO> => {
+    const response = await BaseAxiosService.get('/management/analytics/database-block-summary', { params });
     return response.data;
   }
 };

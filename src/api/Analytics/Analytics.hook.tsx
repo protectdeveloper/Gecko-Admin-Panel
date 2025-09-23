@@ -115,3 +115,39 @@ export const getManagementAnalyticsAdminLogsQueryOptions = (params: GetManagemen
 export const useGetManagementAnalyticsAdminLogsQuery = (params: GetManagementAnalyticsAdminLogsParams) => {
   return useQuery(getManagementAnalyticsAdminLogsQueryOptions(params));
 };
+
+export const getManagementAnalyticsCustomersDatabaseSizesQueryOptions = (params: GetManagementAnalyticsTotalsParams) => ({
+  queryKey: ['getManagementAnalyticsCustomersDatabaseSizes', params],
+  queryFn: () => AnalyticsApi.getManagementAnalyticsCustomersDatabaseSizes(params)
+});
+
+export const useGetManagementAnalyticsCustomersDatabaseSizesQuery = (params: GetManagementAnalyticsTotalsParams) => {
+  return useQuery(getManagementAnalyticsCustomersDatabaseSizesQueryOptions(params));
+};
+
+export const getManagementAnalyticsDatabaseBlockAnalysisQueryOptions = (params: GetManagementAnalyticsTotalsParams) => ({
+  queryKey: ['getManagementAnalyticsDatabaseBlockAnalysis', params],
+  queryFn: () => AnalyticsApi.getManagementAnalyticsDatabaseBlockAnalysis(params)
+});
+
+export const useGetManagementAnalyticsDatabaseBlockAnalysisQuery = (params: GetManagementAnalyticsTotalsParams) => {
+  return useQuery(getManagementAnalyticsDatabaseBlockAnalysisQueryOptions(params));
+};
+
+export const getManagementAnalyticsDatabaseSizeSummaryQueryOptions = (params: GetManagementAnalyticsTotalsParams) => ({
+  queryKey: ['getManagementAnalyticsDatabaseSizeSummary', params],
+  queryFn: () => AnalyticsApi.getManagementAnalyticsDatabaseSizeSummary(params)
+});
+
+export const useGetManagementAnalyticsDatabaseSizeSummaryQuery = (params: GetManagementAnalyticsTotalsParams) => {
+  return useQuery(getManagementAnalyticsDatabaseSizeSummaryQueryOptions(params));
+};
+
+export const getManagementAnalyticsDatabaseBlockSummaryQueryOptions = (params: GetManagementAnalyticsTotalsParams) => ({
+  queryKey: ['getManagementAnalyticsDatabaseBlockSummary', params],
+  queryFn: () => AnalyticsApi.getManagementAnalyticsDatabaseBlockSummary(params)
+});
+
+export const useGetManagementAnalyticsDatabaseBlockSummaryQuery = (params: GetManagementAnalyticsTotalsParams) => {
+  return useQuery(getManagementAnalyticsDatabaseBlockSummaryQueryOptions(params));
+};

@@ -15,9 +15,9 @@
     "title": "Ana Sayfa",
     "description": "GeckoPlus Web yönetim paneline hoş geldiniz."
   },
-  "users": {
-    "title": "Kullanıcılar",
-    "description": "Kayıtlı tüm kullanıcıları yönetin ve görüntüleyin."
+  "machines": {
+    "title": "Makineler",
+    "description": "Kayıtlı tüm makineleri yönetin ve görüntüleyin."
   },
   "customers": {
     "title": "Firmalar",
@@ -26,5 +26,9 @@
   "support": {
     "title": "Destek",
     "description": "Destek taleplerinizi yönetin ve görüntüleyin."
+  },
+  "packages": {
+    "title": "Paketler",
+    "description": "Kayıtlı tüm paketleri yönetin ve görüntüleyin."
   }
 }

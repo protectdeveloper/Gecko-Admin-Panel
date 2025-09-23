@@ -6,7 +6,9 @@ import {
   Settings2Icon,
   HelpCircle,
   HomeIcon,
-  Building2
+  Building2,
+  MonitorCog,
+  Package
 } from 'lucide-react';
 
 export interface BreadcrumbItem {
@@ -51,9 +53,14 @@ export const sidebarMenuData = {
           icon: Building2
         },
         {
-          title: 'Kullanıcılar',
-          url: '/users',
-          icon: SquareUserRound
+          title: 'Makineler',
+          url: '/machines',
+          icon: MonitorCog
+        },
+        {
+          title: 'Paketler',
+          url: '/packages',
+          icon: Package
         },
         {
           title: 'Destek Talepleri',

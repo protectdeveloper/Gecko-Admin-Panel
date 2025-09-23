@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/table/DataTable';
-import LastJobsCard from '@/features/Dashboard/LastJobsCard';
 import TotalCountCard from '@/features/Dashboard/TotalCountCard';
 import { DataTableName } from '@/components/table/DataTable.enum';
 import LastUserLogsCard from '@/features/Dashboard/LastUserLogsCard';
@@ -19,6 +18,9 @@ import {
 } from '@/api/Analytics/Analytics.hook';
 import { useDashboardAdminLogsTableColumns } from '@/features/Dashboard/table/DashboardAdminLogsTable.columns';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import DatabaseSizesCard from '@/features/Dashboard/DatabaseSizesCard';
+import DatabaseBlockCard from '@/features/Dashboard/DatabaseBlockCard';
+import MqttMessageCard from '@/features/Dashboard/MqttMessageCard';
 
 const HomePage = () => {
   const router = useRouter();
@@ -124,40 +126,38 @@ const HomePage = () => {
             <TotalTransitionCardStatistic />
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <RabbitmqInfoCard className="h-[400px] overflow-auto" />
+            <DatabaseSizesCard className="h-[400px] overflow-auto" />
             <MicroservicesStatusCard className="h-[400px] overflow-auto" />
-            <LastJobsCard className="h-[400px] overflow-auto" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <DatabaseBlockCard className="h-[400px] overflow-auto" />
+            <MqttMessageCard className="h-[400px] overflow-auto" />
           </div>
         </div>
 
-        <div className="xl:col-span-3 flex flex-col sm:flex-row xl:flex-col gap-4 xl:h-[965px] min-h-0">
+        <div className="xl:col-span-3 flex flex-col sm:flex-row xl:flex-col gap-4 xl:h-[1385px] min-h-0">
           <ExpiringCompaniesCard className="flex-1 h-[400px] xl:min-h-0" />
           <SupportRequestsCard className="flex-1 h-[400px] xl:min-h-0" />
+          <LastUserLogsCard className="flex-1 h-[400px] xl:min-h-0" />
         </div>
       </div>
 
-      <div className="w-full grid grid-cols-1 xl:grid-cols-12 gap-4">
-        <div className="xl:col-span-9">
-          <DataTable
-            tableName={DataTableName.DashboardTable}
-            title={'Admin Logları'}
-            data={adminLogsData?.data || []}
-            columns={columns}
-            filterColumns={filterColumns}
-            totalCount={adminLogsData?.totalCount || 0}
-            pageCount={adminLogsData?.pageSize || 0}
-            isLoading={isAdminLogsLoading}
-            isError={isAdminLogsError}
-            clearFiltersPress={handleClearFiltersPress}
-            isExcelButtonVisible={false}
-          />
-        </div>
-
-        <div className="xl:col-span-3">
-          <LastUserLogsCard className="h-[715px] xl:min-h-0" />
-        </div>
-      </div>
+      <DataTable
+        tableName={DataTableName.DashboardTable}
+        title={'Admin Logları'}
+        data={adminLogsData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        totalCount={adminLogsData?.totalCount || 0}
+        pageCount={adminLogsData?.pageSize || 0}
+        isLoading={isAdminLogsLoading}
+        isError={isAdminLogsError}
+        clearFiltersPress={handleClearFiltersPress}
+        isExcelButtonVisible={false}
+      />
     </div>
   );
 };

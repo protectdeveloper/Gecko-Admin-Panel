@@ -1,25 +1,22 @@
-import { GetManagementCustomersDTO } from '@/api/Customer/Customer.types';
+'use client';
 import { AppAlert } from '@/components/AppAlert';
 import { AppSheet } from '@/components/AppSheet';
 import { DataTableToolbarFilterType, DataTableToolbarFilterItem } from '@/components/table/DataTable';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { getStatusOptionsData } from '@/utils/data';
-import { formatAvatarFallback } from '@/utils/formatAvatarFallback';
 import { formatDateWithTime } from '@/utils/formatTime';
 import { ColumnDef } from '@tanstack/react-table';
 import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import CustomerCreateEditForm from '../form/CustomerCreateEditForm';
-import { useDeleteCustomerByIdMutation } from '@/api/Customer/Customer.hook';
+import PackagesCreateEditForm from '../form/PackagesCreateEditForm';
+import { GetManagementPackageDTO } from '@/api/Package/Package.types';
+import { useDeletePackageByIdMutation } from '@/api/Package/Package.hook';
 
-export const useCustomersTableColumns = () => {
-  const router = useRouter();
+export const usePackagesTableColumns = () => {
   const { t } = useTranslation();
-  const { mutateAsync: deleteCustomer } = useDeleteCustomerByIdMutation();
+  const { mutateAsync: deletePackageById } = useDeletePackageByIdMutation();
 
   const renderCreateButton = useMemo(
     () => () => {
@@ -28,11 +25,11 @@ export const useCustomersTableColumns = () => {
           <AppSheet.Trigger asChild>
             <Button variant="outline" size="sm">
               <PlusCircle size={20} />
-              Firma Oluştur
+              Paket Oluştur
             </Button>
           </AppSheet.Trigger>
-          <AppSheet.Content title={'Firma Oluştur'}>
-            <CustomerCreateEditForm />
+          <AppSheet.Content title={'Paket Oluştur'}>
+            <PackagesCreateEditForm />
           </AppSheet.Content>
         </AppSheet.Sheet>
       );
@@ -40,39 +37,28 @@ export const useCustomersTableColumns = () => {
     []
   );
 
-  const handleDeleteCustomerPress = async (customerId: string) => {
-    const response = await deleteCustomer(customerId);
-    if (response?.success) {
+  const handleDeletePackagePress = async (packageId: string) => {
+    const response = await deletePackageById(packageId);
+
+    if (response.success) {
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     }
   };
 
-  const columns = useMemo<ColumnDef<GetManagementCustomersDTO['data'][0], any>[]>(
+  const columns = useMemo<ColumnDef<GetManagementPackageDTO['data'][0], any>[]>(
     () => [
       {
-        accessorKey: 'customerName',
-        label: 'Firma Adı',
-        cell: ({ row }) => (
-          <div
-            className="flex items-center gap-3 cursor-pointer hover:underline"
-            onClick={() => router.push(`/customers/detail/${row?.original?.customerID}`)}
-          >
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={row?.original?.logo || undefined} alt="User Avatar" />
-              <AvatarFallback>
-                {formatAvatarFallback(row?.original?.customerName?.split(' ')[0], row?.original?.customerName?.split(' ')[1])}
-              </AvatarFallback>
-            </Avatar>
-            <span className="font-medium">{row?.original?.customerName}</span>
-          </div>
-        ),
-        exportValue: (row: any) => row.customerName
+        accessorKey: 'packageName',
+        label: 'Paket Adı'
       },
       {
-        accessorKey: 'customerCode',
-        label: 'Firma Kodu'
+        accessorKey: 'description',
+        label: 'Açıklama'
       },
-
+      {
+        accessorKey: 'totalPrice',
+        label: 'Toplam Fiyat'
+      },
       {
         accessorKey: 'isActive',
         label: 'Durum',
@@ -101,8 +87,8 @@ export const useCustomersTableColumns = () => {
                   <Pencil size={20} />
                 </Button>
               </AppSheet.Trigger>
-              <AppSheet.Content title={'Firma Düzenle'}>
-                <CustomerCreateEditForm customerId={row?.original?.customerID} />
+              <AppSheet.Content title={'Paketi Düzenle'}>
+                <PackagesCreateEditForm packageId={row?.original?.packageID} />
               </AppSheet.Content>
             </AppSheet.Sheet>
 
@@ -113,8 +99,8 @@ export const useCustomersTableColumns = () => {
                 </Button>
               </AppAlert.Trigger>
               <AppAlert.Content
-                title={'Firma Sil'}
-                description={` ${row?.original?.customerName} adlı firmayı silmek istediğinize emin misiniz ?`}
+                title={'Paket Sil'}
+                description={` ${row?.original?.packageName} adlı paketi silmek istediğinize emin misiniz ?`}
               >
                 <AppAlert.Footer>
                   <AppAlert.Close asChild>
@@ -122,7 +108,7 @@ export const useCustomersTableColumns = () => {
                   </AppAlert.Close>
 
                   <Button
-                    onClick={() => handleDeleteCustomerPress(row?.original?.customerID)}
+                    onClick={() => handleDeletePackagePress(row?.original?.packageID)}
                     variant="destructive"
                     className="text-white"
                   >
@@ -140,8 +126,18 @@ export const useCustomersTableColumns = () => {
 
   const filterColumns: DataTableToolbarFilterItem[] = [
     {
-      label: 'Firma Adı',
+      label: 'Tüm Sonuçlarda Ara',
       queryName: 'searchTerm',
+      type: DataTableToolbarFilterType.SearchInput
+    },
+    {
+      label: 'Minimum Fiyat',
+      queryName: 'minPrice',
+      type: DataTableToolbarFilterType.SearchInput
+    },
+    {
+      label: 'Maksimum Fiyat',
+      queryName: 'maxPrice',
       type: DataTableToolbarFilterType.SearchInput
     },
     {
