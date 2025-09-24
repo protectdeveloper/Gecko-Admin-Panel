@@ -31,10 +31,11 @@ export type GetManagementPackageTypeByIdDTO = {
   success: boolean;
   message: string;
   data: {
-    packageID: string;
-    packageName: string;
+    packageTypeID: string;
+    typeName: string;
+    systemName: string;
     description: string;
-    totalPrice: number;
+    categoryName: string;
     isActive: boolean;
     createdAt: string;
     updatedAt: string;

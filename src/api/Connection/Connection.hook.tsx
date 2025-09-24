@@ -12,7 +12,7 @@ export const getManagementConnectionQueryOptions = (params: GetManagementConnect
   queryFn: () => ConnectionApi.getManagementConnection(params)
 });
 
-export const useGetManagementConnectionQuery = (params: GetManagementConnectionParams) => {
+export const useGetConnectionQuery = (params: GetManagementConnectionParams) => {
   return useQuery(getManagementConnectionQueryOptions(params));
 };
 
@@ -22,11 +22,11 @@ export const getManagementConnectionByIdQueryOptions = (id: string) => ({
   enabled: !!id
 });
 
-export const useGetManagementConnectionByIdQuery = (id: string) => {
+export const useGetConnectionByIdQuery = (id: string) => {
   return useQuery(getManagementConnectionByIdQueryOptions(id));
 };
 
-export const usePostCreateManagementConnectionMutation = () => {
+export const usePostCreateConnectionMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -42,7 +42,7 @@ export const usePostCreateManagementConnectionMutation = () => {
   });
 };
 
-export const usePutManagementConnectionByIdMutation = () => {
+export const usePutConnectionByIdMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -63,7 +63,7 @@ export const usePutManagementConnectionByIdMutation = () => {
   });
 };
 
-export const useDeleteManagementConnectionByIdMutation = () => {
+export const useDeleteConnectionByIdMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -88,6 +88,6 @@ export const getManagementConnectionCustomerByCustomerIdQueryOptions = (params: 
   enabled: !!params.customerId
 });
 
-export const useGetManagementConnectionCustomerByCustomerIdQuery = (params: GetManagementConnectionCustomerByIdParams) => {
+export const useGetConnectionCustomerByCustomerIdQuery = (params: GetManagementConnectionCustomerByIdParams) => {
   return useQuery(getManagementConnectionCustomerByCustomerIdQueryOptions(params));
 };

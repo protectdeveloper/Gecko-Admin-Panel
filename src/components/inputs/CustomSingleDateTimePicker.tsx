@@ -34,7 +34,7 @@ export function CustomSingleDateTimePicker({
   error
 }: CustomSingleDateTimePickerProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { t, currentLanguage } = useTranslation();
+  const { currentLanguage } = useTranslation();
   const { selectedDate, hours, minutes, updateTime, isTimeDisabled, handleDateChange } = useDateTimePicker({
     value,
     onChange,
@@ -60,7 +60,7 @@ export function CustomSingleDateTimePicker({
   }
 
   return (
-    <div className={cn('w-full flex flex-col gap-1')}>
+    <div className={cn('flex flex-col gap-1')}>
       {title && (
         <label
           htmlFor={`input-${title.replace(/\s+/g, '-').toLowerCase()}`}
@@ -76,7 +76,7 @@ export function CustomSingleDateTimePicker({
             id="date"
             variant="outline"
             className={cn(
-              'flex flex-row items-center justify-start bg-background border shadow-sm rounded-xl',
+              'flex flex-row items-center justify-start dark:bg-input/30 border shadow-sm rounded-xl',
               error && 'border-red-500 bg-destructive/10 dark:bg-destructive/10'
             )}
           >
@@ -87,9 +87,7 @@ export function CustomSingleDateTimePicker({
                 {format(selectedDate, 'd MMMM y HH:mm', { locale })}
               </span>
             ) : (
-              <span className="font-medium text-sm text-muted-foreground">
-                {placeholder || t('inputs.rangeDateTimePicker.selectDateTime')}
-              </span>
+              <span className="font-medium text-sm text-muted-foreground">{placeholder || 'Tarih ve Saat Seçiniz'}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -151,7 +149,7 @@ export function CustomSingleDateTimePicker({
                 size={'sm'}
                 variant={'default'}
               >
-                {t('shift.ok')}
+                Tamam
               </Button>
             </div>
           </div>

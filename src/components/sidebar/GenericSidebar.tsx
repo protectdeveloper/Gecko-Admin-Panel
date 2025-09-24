@@ -22,6 +22,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import CustomSidebarFooter from './custom-sidebar-footer';
 import GeckoAiImage from '../../../public/assets/img/geckoAi.png';
 import { useGetSupportAdminTicketsQuery } from '@/api/Support/Support.hook';
+import { NavMain } from './NavMain';
 
 export interface NavItem {
   title: string;
@@ -37,15 +38,7 @@ export interface NavGroup {
 
 export function GenericSidebar({ ...props }) {
   const router = useRouter();
-  const { t } = useTranslation();
-  const pathname = usePathname() || '';
   const { isMobile, open } = useSidebar();
-
-  const { data: supportTicketsData, refetch } = useGetSupportAdminTicketsQuery({
-    pageNumber: 1,
-    pageSize: 20,
-    status: 'open'
-  });
 
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => setIsMounted(true), []);
@@ -65,36 +58,9 @@ export function GenericSidebar({ ...props }) {
         )}
         <SidebarTrigger className="w-8 h-8 " />
       </SidebarHeader>
-
-      <SidebarContent className="p-0 gap-0 m-0">
-        {sidebarMenuData?.navMain?.map((item) => (
-          <SidebarGroup key={item?.title}>
-            <SidebarGroupContent>
-              {isMounted && (
-                <SidebarMenu className="flex flex-col gap-2">
-                  {item?.items?.map((item) => (
-                    <SidebarMenuItem key={item?.title}>
-                      <SidebarMenuButton asChild isActive={item?.url === pathname} className="py-[18px]">
-                        <Link href={item?.url} prefetch={true} className="flex flex-row items-center">
-                          {item?.icon && <item.icon />}
-                          <span>{t(`menu.${item?.title}`)}</span>
-
-                          {item?.url === '/support-requests' && (supportTicketsData?.totalCount ?? 0) > 0 && (
-                            <Badge variant="default" className="rounded-full ml-auto text-center p-[0px] h-[20px] w-[20px]">
-                              {supportTicketsData?.totalCount ?? 0}
-                            </Badge>
-                          )}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              )}
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+      <SidebarContent>
+        <NavMain items={sidebarMenuData.navMain} />
       </SidebarContent>
-
       <CustomSidebarFooter />
       <SidebarRail />
     </Sidebar>

@@ -8,7 +8,7 @@ export const getManagementPublicHolidayQueryOptions = (params: GetManagementPubl
   queryFn: () => PublicHolidayApi.getManagementPublicHoliday(params)
 });
 
-export const useGetManagementPublicHolidayQuery = (params: GetManagementPublicHolidayParams) => {
+export const useGetPublicHolidayQuery = (params: GetManagementPublicHolidayParams) => {
   return useQuery(getManagementPublicHolidayQueryOptions(params));
 };
 
@@ -18,11 +18,11 @@ export const getManagementPublicHolidayByIdQueryOptions = (id: string) => ({
   enabled: !!id
 });
 
-export const useGetManagementPublicHolidayByIdQuery = (id: string) => {
+export const useGetPublicHolidayByIdQuery = (id: string) => {
   return useQuery(getManagementPublicHolidayByIdQueryOptions(id));
 };
 
-export const usePostCreateManagementPublicHolidayMutation = () => {
+export const usePostCreatePublicHolidayMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -41,7 +41,7 @@ export const usePostCreateManagementPublicHolidayMutation = () => {
   });
 };
 
-export const usePutManagementPublicHolidayByIdMutation = () => {
+export const usePutPublicHolidayByIdMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -62,7 +62,7 @@ export const usePutManagementPublicHolidayByIdMutation = () => {
   });
 };
 
-export const useDeleteManagementPublicHolidayByIdMutation = () => {
+export const useDeletePublicHolidayByIdMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -87,6 +87,6 @@ export const getManagementPublicHolidayByYearQueryOptions = (year: number) => ({
   enabled: !!year
 });
 
-export const useGetManagementPublicHolidayByYearQuery = (year: number) => {
+export const useGetPublicHolidayByYearQuery = (year: number) => {
   return useQuery(getManagementPublicHolidayByYearQueryOptions(year));
 };

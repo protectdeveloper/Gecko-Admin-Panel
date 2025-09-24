@@ -8,7 +8,7 @@ export const getManagementPackageContentQueryOptions = (params: GetManagementPac
   queryFn: () => PackageContentApi.getManagementPackageContent(params)
 });
 
-export const useGetManagementPackageContentQuery = (params: GetManagementPackageContentParams) => {
+export const useGetPackageContentQuery = (params: GetManagementPackageContentParams) => {
   return useQuery(getManagementPackageContentQueryOptions(params));
 };
 
@@ -18,11 +18,11 @@ export const getManagementPackageContentByIdQueryOptions = (id: string) => ({
   enabled: !!id
 });
 
-export const useGetManagementPackageContentByIdQuery = (id: string) => {
+export const useGetPackageContentByIdQuery = (id: string) => {
   return useQuery(getManagementPackageContentByIdQueryOptions(id));
 };
 
-export const usePostCreateManagementPackageContentMutation = () => {
+export const usePostCreatePackageContentMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -41,7 +41,7 @@ export const usePostCreateManagementPackageContentMutation = () => {
   });
 };
 
-export const usePutManagementPackageContentByIdMutation = () => {
+export const usePutPackageContentByIdMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -62,7 +62,7 @@ export const usePutManagementPackageContentByIdMutation = () => {
   });
 };
 
-export const useDeleteManagementPackageContentByIdMutation = () => {
+export const useDeletePackageContentByIdMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

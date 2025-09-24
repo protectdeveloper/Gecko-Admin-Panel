@@ -1,7 +1,25 @@
 {
   "Ana Sayfa": "Ana Sayfa",
-  "Makineler": "Makineler",
+  "Admin Logları": "Admin Logları",
+
+  "Firma": "Firma",
   "Firmalar": "Firmalar",
+  "Firma Makineleri": "Firma Makineleri",
+  "Firma İletişim": "Firma İletişim",
+
+  "Makine": "Makine",
+  "Makineler": "Makineler",
+  "Makine Tipleri": "Makine Tipleri",
+  "Makine Tipi Geçiş Yöntemleri": "Makine Geçiş Yöntemleri",
+
+  "Paket": "Paket",
   "Paketler": "Paketler",
+  "Paket İçeriği": "Paket İçeriği",
+  "Paket Tipleri": "Paket Tipleri",
+
+  "Geçiş Yöntemleri": "Geçiş Yöntemleri",
+  "Resmi Tatiller": "Resmi Tatiller",
+  "Bağlantılar": "Bağlantılar",
+
   "Destek Talepleri": "Destek Talepleri"
 }

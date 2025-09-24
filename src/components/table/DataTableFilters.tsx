@@ -3,7 +3,6 @@ import CustomSearchInput from '../inputs/CustomSearchInput';
 import { CustomSelectBox } from '../inputs/CustomSelectBox';
 import CustomUiTextInput from '../inputs/CustomUiTextInput';
 import { CustomRangeDateTimePicker } from '../inputs/CustonRangeDateTimePicker';
-import { CustomUiSingleDateTimePicker } from '../inputs/CustomUiSingleDateTimePicker';
 import { DataTableToolbarFilterItem, DataTableToolbarFilterType } from './DataTable';
 import { CustonRangeDatePicker } from '../inputs/CustonRangeDatePicker';
 import { DateRange } from 'react-day-picker';
@@ -13,6 +12,7 @@ import { formatDatePathname } from '@/utils/formatTime';
 import { format } from 'date-fns';
 import CustomGroupedTreeMultiCheckbox from '../inputs/CustomGroupedTreeMultiCheckbox';
 import CustomMultiSelectBox from '../inputs/CustomMultiSelectBox';
+import { CustomSingleDateTimePicker } from '../inputs/CustomSingleDateTimePicker';
 
 export const DataTableFilters = ({ filterColumns }: { filterColumns?: DataTableToolbarFilterItem[] }) => {
   const baseSearchParams = useSearchParams() || new URLSearchParams();
@@ -219,7 +219,14 @@ export const DataTableFilters = ({ filterColumns }: { filterColumns?: DataTableT
         }
 
         if (item.type == DataTableToolbarFilterType.SingleDateTimePicker) {
-          return <CustomUiSingleDateTimePicker key={index} value={new Date()} onChange={() => {}} placeholder={item.label} />;
+          return (
+            <CustomSingleDateTimePicker
+              key={index}
+              value={searchParams?.[item?.queryName] ? new Date(decodeURIComponent(searchParams[item.queryName])) : null}
+              onChange={(value) => onChangeHandler(value ? value.toISOString() : '', item.queryName)}
+              placeholder={item.label}
+            />
+          );
         }
 
         if (item.type == DataTableToolbarFilterType.RangeDatePicker) {

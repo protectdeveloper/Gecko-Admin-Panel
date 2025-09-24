@@ -20,42 +20,22 @@ export const useGetMqttMessagesQuery = (sort?: string) => {
   return useQuery(getMqttMessagesQueryOptions(sort || ''));
 };
 
-export const usePostMqttStartMutation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: MqttApi.postMqttStart,
-    onSuccess: async (data) => {
-      if (data?.success) {
-        toast.success(data.message || 'MQTT başarıyla başlatıldı.');
-        await queryClient.refetchQueries({ queryKey: ['getMqttStatus'] });
-      } else {
-        toast.error(data?.error || 'MQTT başlatılırken bir hata oluştu.');
-      }
-    },
-    onError: (error: any) => {
-      toast.error(error?.response?.error || 'MQTT başlatılırken bir hata oluştu.');
-    }
-  });
+export const getMqttStartQueryOptions = {
+  queryKey: ['getMqttStart'],
+  queryFn: MqttApi.getMqttStart
 };
 
-export const usePostMqttStopMutation = () => {
-  const queryClient = useQueryClient();
+export const useGetMqttStartQuery = () => {
+  return useQuery(getMqttStartQueryOptions);
+};
 
-  return useMutation({
-    mutationFn: MqttApi.postMqttStop,
-    onSuccess: async (data) => {
-      if (data?.success) {
-        toast.success(data.message || 'MQTT başarıyla durduruldu.');
-        await queryClient.refetchQueries({ queryKey: ['getMqttStatus'] });
-      } else {
-        toast.error(data?.error || 'MQTT durdurulurken bir hata oluştu.');
-      }
-    },
-    onError: (error: any) => {
-      toast.error(error?.response?.error || 'MQTT durdurulurken bir hata oluştu.');
-    }
-  });
+export const getMqttStopQueryOptions = {
+  queryKey: ['getMqttStop'],
+  queryFn: MqttApi.getMqttStop
+};
+
+export const useGetMqttStopQuery = () => {
+  return useQuery(getMqttStopQueryOptions);
 };
 
 export const usePostMqttSubscribeTerminalStatusMutation = () => {

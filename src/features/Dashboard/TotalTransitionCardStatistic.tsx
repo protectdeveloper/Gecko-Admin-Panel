@@ -100,7 +100,7 @@ const TotalTransitionCardStatistic = () => {
     }
   }, [forceRefresh, refetch]);
 
-  if (isPassesStatisticsLoading || isPassesStatisticsFetching) {
+  if (isPassesStatisticsLoading || isPassesStatisticsFetching || forceRefresh) {
     return (
       <Card className="p-4 gap-3">
         <CardHeader className="flex items-center gap-2 p-0">

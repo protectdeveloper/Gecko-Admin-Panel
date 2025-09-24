@@ -36,7 +36,7 @@ export function CustomUiSingleDateTimePicker({
   ref
 }: CustomUiSingleDateTimePickerProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { t, currentLanguage } = useTranslation();
+  const { currentLanguage } = useTranslation();
   const locale = React.useMemo(() => getDateFnsLocale(currentLanguage), [currentLanguage]);
 
   const { selectedDate, hours, minutes, updateTime, isTimeDisabled, handleDateChange } = useDateTimePicker({
@@ -83,9 +83,7 @@ export function CustomUiSingleDateTimePicker({
                   {format(selectedDate, 'd MMMM y HH:mm', { locale })}
                 </span>
               ) : (
-                <span className="font-medium text-sm text-muted-foreground">
-                  {placeholder || t('inputs.rangeDateTimePicker.selectDateTime')}
-                </span>
+                <span className="font-medium text-sm text-muted-foreground">{placeholder || 'Tarih ve saat seçin'}</span>
               )}
             </div>
           </button>
@@ -148,7 +146,7 @@ export function CustomUiSingleDateTimePicker({
                 size={'sm'}
                 variant={'default'}
               >
-                {t('inputs.ok', 'Tamam')}
+                Tamam
               </Button>
             </div>
           </div>

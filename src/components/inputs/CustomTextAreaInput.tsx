@@ -77,9 +77,9 @@ const CustomTextAreaInput = React.forwardRef<HTMLTextAreaElement, CustomTextArea
             onFocusCapture={onFocusCapture}
             onBlur={onBlur}
             className={cn(
-              'w-full max-w-full resize-none dark:bg-input/0 p-0 py-1.5 m-0 border-none shadow-none text-sm',
+              'w-full max-w-full resize-none dark:bg-input/0 p-0 py-2 m-0 border-none shadow-none text-sm',
               'focus-visible:ring-0 focus-visible:ring-offset-0',
-              'overflow-y-auto overflow-x-hidden max-h-32 min-h-[38px]',
+              'overflow-y-auto overflow-x-hidden max-h-32 min-h-[35px]',
               'break-all whitespace-pre-wrap'
             )}
             id={`input-${placeholder.replace(/\s+/g, '-').toLowerCase()}`}

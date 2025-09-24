@@ -30,5 +30,21 @@
   "packages": {
     "title": "Paketler",
     "description": "Kayıtlı tüm paketleri yönetin ve görüntüleyin."
+  },
+  "publicHolidays": {
+    "title": "Resmi Tatiller",
+    "description": "Kayıtlı tüm resmi tatilleri yönetin ve görüntüleyin."
+  },
+  "accessMethods": {
+    "title": "Geçiş Yöntemleri",
+    "description": "Kayıtlı tüm geçiş yöntemlerini yönetin ve görüntüleyin."
+  },
+  "connections": {
+    "title": "Bağlantılar",
+    "description": "Kayıtlı tüm bağlantıları yönetin ve görüntüleyin."
+  },
+  "packagesTypes": {
+    "title": "Paket Tipleri",
+    "description": "Kayıtlı tüm paket tiplerini yönetin ve görüntüleyin."
   }
 }

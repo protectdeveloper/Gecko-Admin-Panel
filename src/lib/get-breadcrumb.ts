@@ -15,20 +15,35 @@ function findBreadcrumbByPattern(pathname: string): BreadcrumbItem | undefined {
   return breadcrumbData.find((item) => pathname === item.pattern || pathname.startsWith(item.pattern));
 }
 
-function getMetaFromMenu(
-  pathname: string,
-  menu: {
-    navMain: Array<{ items: Array<{ title: string; url: string; icon?: LucideIcon }> }>;
-    navFooter: Array<{ items: Array<{ title: string; url: string; icon?: LucideIcon }> }>;
-  },
-  t: (k: string) => string
-): BreadcrumbMeta | null {
+type MenuItem = {
+  title: string;
+  url: string;
+  icon?: LucideIcon | string;
+  items?: MenuItem[];
+};
+
+type SidebarMenuData = {
+  navMain: MenuItem[];
+  navFooter: MenuItem[];
+};
+
+function getMetaFromMenu(pathname: string, menu: SidebarMenuData, t: (k: string) => string): BreadcrumbMeta | null {
   const breadcrumb = findBreadcrumbByPattern(pathname);
   if (breadcrumb) {
     return { title: t(`menu.${breadcrumb.title}`), icon: breadcrumb.icon };
   }
 
-  const allItems = [...menu.navMain.flatMap((group) => group.items), ...menu.navFooter.flatMap((group) => group.items)];
+  // Flatten both top-level and nested items
+  const flattenMenuItems = (menuSection: any[]) => {
+    return menuSection.flatMap((item) => {
+      if (item.items) {
+        // Include parent and children
+        return [item, ...item.items.map((child: any) => ({ ...child, icon: child.icon ?? item.icon }))];
+      }
+      return [item];
+    });
+  };
+  const allItems = [...flattenMenuItems(menu.navMain), ...flattenMenuItems(menu.navFooter)];
 
   const exact = allItems.find((item) => item.url === pathname);
   if (exact) return { title: t(`menu.${exact.title}`), icon: exact.icon };
@@ -37,15 +52,18 @@ function getMetaFromMenu(
   return starts ? { title: t(`menu.${starts.title}`), icon: starts.icon } : null;
 }
 
-function getTrailFromMenu(
-  pathname: string,
-  menu: {
-    navMain: Array<{ items: Array<{ title: string; url: string; icon?: LucideIcon }> }>;
-    navFooter: Array<{ items: Array<{ title: string; url: string; icon?: LucideIcon }> }>;
-  },
-  t: (k: string) => string
-): BreadcrumbNode[] {
-  const allItems = [...menu.navMain.flatMap((g) => g.items), ...menu.navFooter.flatMap((g) => g.items)];
+function getTrailFromMenu(pathname: string, menu: SidebarMenuData, t: (k: string) => string): BreadcrumbNode[] {
+  // Flatten both top-level and nested items
+  const flattenMenuItems = (menuSection: any[]) => {
+    return menuSection.flatMap((item) => {
+      if (item.items) {
+        // Include parent and children
+        return [item, ...item.items.map((child: any) => ({ ...child, icon: child.icon ?? item.icon }))];
+      }
+      return [item];
+    });
+  };
+  const allItems = [...flattenMenuItems(menu.navMain), ...flattenMenuItems(menu.navFooter)];
 
   const parent = allItems
     .filter((i) => i.url !== '/' && pathname.startsWith(i.url))

@@ -1,6 +1,5 @@
 import {
   Settings,
-  SquareUserRound,
   type LucideIcon,
   User2Icon,
   Settings2Icon,
@@ -8,7 +7,11 @@ import {
   HomeIcon,
   Building2,
   MonitorCog,
-  Package
+  Package,
+  CalendarRange,
+  ArrowRightLeft,
+  RadioTower,
+  ShieldCheck
 } from 'lucide-react';
 
 export interface BreadcrumbItem {
@@ -25,14 +28,8 @@ export const breadcrumbData: BreadcrumbItem[] = [
 export const menuFooterData = [
   {
     title: 'Ayarlar',
-    url: '',
-    items: [
-      {
-        title: 'Ayarlar',
-        url: '/settings/customer-profile',
-        icon: Settings
-      }
-    ]
+    url: '/settings/customer-profile',
+    icon: Settings
   }
 ];
 
@@ -40,34 +37,90 @@ export const sidebarMenuData = {
   navMain: [
     {
       title: 'Ana Sayfa',
+      url: '/',
+      icon: HomeIcon
+    },
+    {
+      title: 'Admin Logları',
+      url: '/admin-logs',
+      icon: ShieldCheck
+    },
+    {
+      title: 'Firma',
       url: '#',
+      icon: Building2,
       items: [
         {
-          title: 'Ana Sayfa',
-          url: '/',
-          icon: HomeIcon
-        },
-        {
           title: 'Firmalar',
-          url: '/customers',
-          icon: Building2
+          url: '/customers'
         },
         {
-          title: 'Makineler',
-          url: '/machines',
-          icon: MonitorCog
+          title: 'Firma Makineleri',
+          url: '/customers/settings'
         },
         {
-          title: 'Paketler',
-          url: '/packages',
-          icon: Package
-        },
-        {
-          title: 'Destek Talepleri',
-          url: '/support-requests',
-          icon: HelpCircle
+          title: 'Firma İletişim',
+          url: '/customers/starred'
         }
       ]
+    },
+    {
+      title: 'Makine',
+      url: '#',
+      icon: MonitorCog,
+      items: [
+        {
+          title: 'Makineler',
+          url: '/machines'
+        },
+        {
+          title: 'Makine Tipleri',
+          url: '/machines/types'
+        },
+        {
+          title: 'Makine Geçiş Yöntemleri',
+          url: '/machines/type-access-methods'
+        }
+      ]
+    },
+    {
+      title: 'Paket',
+      url: '#',
+      icon: Package,
+      items: [
+        {
+          title: 'Paketler',
+          url: '/packages'
+        },
+        {
+          title: 'Paket İçeriği',
+          url: '/packages/content'
+        },
+        {
+          title: 'Paket Tipleri',
+          url: '/packages/types'
+        }
+      ]
+    },
+    {
+      title: 'Resmi Tatiller',
+      url: '/public-holidays',
+      icon: CalendarRange
+    },
+    {
+      title: 'Geçiş Yöntemleri',
+      url: '/access-methods',
+      icon: ArrowRightLeft
+    },
+    {
+      title: 'Bağlantılar',
+      url: '/connections',
+      icon: RadioTower
+    },
+    {
+      title: 'Destek Talepleri',
+      url: '/support-requests',
+      icon: HelpCircle
     }
   ],
   navFooter: menuFooterData
@@ -98,8 +151,6 @@ export const getMissingTypeOptionsData = (t: (key: string) => string) => [
   { value: 'late_entry', label: t('lateEntry') },
   { value: 'early_exit', label: t('earlyExit') }
 ];
-
-// Event Creation Options
 
 export const getInvitationSendingTypeData = (t: (key: string) => string) => [
   { label: t('eventCreate.sms'), id: '1', disabled: false },
@@ -157,8 +208,6 @@ export const getEventDetailParticipantStatusData = (t: (key: string) => string) 
   { label: t('eventDetail.participantsAwaitingApproval'), value: 'awaiting' },
   { label: t('eventDetail.bannedUsers'), value: 'banned' }
 ];
-
-// Support Ticket Data
 
 export const getSupportRequestUrgencyStatusData = (t: (key: string) => string) => [
   { label: t('support.lowStatus'), value: 'low' },

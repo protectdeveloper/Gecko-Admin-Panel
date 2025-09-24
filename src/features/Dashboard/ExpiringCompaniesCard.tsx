@@ -35,7 +35,7 @@ const ExpiringCompaniesCard = ({ className }: Props) => {
     }
   }, [forceRefresh, refetch]);
 
-  if (isLoading) {
+  if (isLoading || forceRefresh) {
     return (
       <Card className={cn('p-4 gap-3', className)}>
         <CardHeader className="p-0 gap-0">

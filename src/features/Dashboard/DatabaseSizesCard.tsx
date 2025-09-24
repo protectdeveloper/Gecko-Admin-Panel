@@ -24,7 +24,7 @@ const DatabaseSizesCard = ({ className }: Props) => {
     }
   }, [forceRefresh, refetch]);
 
-  if (isLoading) {
+  if (isLoading || forceRefresh) {
     return (
       <Card className={cn('p-4 gap-3', className)}>
         <CardHeader className="p-0">
@@ -105,13 +105,13 @@ const DatabaseSizesCard = ({ className }: Props) => {
             </div>
 
             <div className="flex flex-wrap gap-2 space-x-0 space-y-0 pt-2">
-              <Badge variant="secondary" className="bg-purple-800 text-white h-6">
+              <Badge variant="secondary" className="bg-purple-800 hover:bg-purple-600 text-white h-6">
                 Log Size: {item.logSizeGB ? item.logSizeGB.toFixed(2) + ' GB' : 'Bilinmiyor'}
               </Badge>
-              <Badge variant="secondary" className="bg-blue-800 text-white h-6">
+              <Badge variant="secondary" className="bg-blue-800 hover:bg-blue-600 text-white h-6">
                 Database Size: {item.databaseSizeGB ? item.databaseSizeGB.toFixed(2) + ' GB' : 'Bilinmiyor'}
               </Badge>
-              <Badge variant="secondary" className="bg-green-800 text-white h-6">
+              <Badge variant="secondary" className="bg-green-800 hover:bg-green-600 text-white h-6">
                 Data Size: {item.dataSizeGB ? item.dataSizeGB.toFixed(2) + ' GB' : 'Bilinmiyor'}
               </Badge>
             </div>

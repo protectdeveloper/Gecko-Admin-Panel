@@ -8,9 +8,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import {
   useGetMqttMessagesQuery,
+  useGetMqttStartQuery,
   useGetMqttStatusQuery,
-  usePostMqttStartMutation,
-  usePostMqttStopMutation,
+  useGetMqttStopQuery,
   usePostMqttSubscribeMutation,
   usePostMqttSubscribeTerminalStatusMutation,
   usePostMqttUnsubscribeMutation
@@ -21,8 +21,9 @@ interface Props {
 }
 
 const MqttMessageCard = ({ className }: Props) => {
-  const { mutateAsync: postStopMqtt, isPending: isStopPending } = usePostMqttStopMutation();
-  const { mutateAsync: postStartMqtt, isPending: isStartPending } = usePostMqttStartMutation();
+  const { data: mqttStartData, isLoading: isStartPending, refetch: refetchMqttStart } = useGetMqttStartQuery();
+  const { data: mqttStopData, isLoading: isStopPending, refetch: refetchMqttStop } = useGetMqttStopQuery();
+
   const { mutateAsync: postSubscribe, isPending: isSubscribePending } = usePostMqttSubscribeMutation();
   const { mutateAsync: postUnsubscribe, isPending: isUnsubscribePending } = usePostMqttUnsubscribeMutation();
   const { mutateAsync: postSubscribeTerminalStatus, isPending: isSubscribeTerminalStatusPending } =
@@ -33,9 +34,9 @@ const MqttMessageCard = ({ className }: Props) => {
 
   const handleMqttStartStop = async () => {
     if (mqttStatusData?.isConnected) {
-      await postStopMqtt();
+      await refetchMqttStop();
     } else {
-      await postStartMqtt();
+      await refetchMqttStart();
     }
   };
 
@@ -61,7 +62,14 @@ const MqttMessageCard = ({ className }: Props) => {
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="w-full h-full flex flex-col gap-3 p-0 overflow-scroll"></CardContent>
+      <CardContent className="w-full h-full flex flex-col gap-3 p-0 overflow-scroll">
+        {mqttMessagesData?.messages?.map((message, index) => (
+          <div key={index} className="p-2 border-b border-muted/50 last:border-0 grid grid-cols-5 gap-2">
+            <pre className="text-xs whitespace-pre-wrap break-all">{message.data.timestamp}</pre>
+            <pre className="text-xs whitespace-pre-wrap break-all">{message.data.status}</pre>
+          </div>
+        ))}
+      </CardContent>
     </Card>
   );
 };

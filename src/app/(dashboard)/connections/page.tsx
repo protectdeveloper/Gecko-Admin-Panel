@@ -1,16 +1,16 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getDynamicMetadata } from '@/lib/getDynamicMetadata';
-import AllUsersPage from './AllUsersPage';
+import ConnectionsPage from './ConnectionsPage';
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getDynamicMetadata('users');
+  return getDynamicMetadata('connections');
 }
 
 export default function Page() {
   return (
     <Suspense>
-      <AllUsersPage />
+      <ConnectionsPage />
     </Suspense>
   );
 }
