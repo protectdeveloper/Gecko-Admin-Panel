@@ -31,13 +31,15 @@ export type GetManagementPackageContentByIdDTO = {
   success: boolean;
   message: string;
   data: {
+    packageContentID: string;
     packageID: string;
-    packageName: string;
-    description: string;
-    totalPrice: number;
-    isActive: boolean;
+    packageTypeID: string;
+    quantity: number;
+    unitPrice: number;
     createdAt: string;
     updatedAt: string;
+    packageName: string;
+    packageTypeName: string;
   };
   error: string;
   statusCode: number;

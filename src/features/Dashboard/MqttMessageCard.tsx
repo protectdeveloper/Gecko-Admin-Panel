@@ -32,7 +32,9 @@ const MqttMessageCard = ({ className }: Props) => {
   const {
     data: mqttMessagesData,
     isLoading: isMqttMessagesLoading,
-    refetch: refetchMqttMessages
+    refetch: refetchMqttMessages,
+    isRefetching: isMqttMessagesRefetching,
+    isFetching: isMqttMessagesFetching
   } = useGetMqttMessagesQuery(undefined, { enabled: false });
 
   const { mutateAsync: postSubscribe, isPending: isSubscribePending } = usePostMqttSubscribeMutation();
@@ -114,6 +116,7 @@ const MqttMessageCard = ({ className }: Props) => {
                 onValueChange={(value) => setTimeSeconds(value)}
                 placeholder="Süre (sn)"
                 data={[
+                  { value: '1', label: '1 sn' },
                   { value: '5', label: '5 sn' },
                   { value: '10', label: '10 sn' },
                   { value: '30', label: '30 sn' },
@@ -128,62 +131,94 @@ const MqttMessageCard = ({ className }: Props) => {
       </CardHeader>
 
       <CardContent className="w-full h-full flex flex-col gap-3 p-0 overflow-scroll">
-        {mqttMessagesData?.messages?.map((message, index) => (
-          <div key={index} className="p-4 space-y-0 flex flex-col gap-3 border rounded-lg transition-shadow" onClick={() => {}}>
-            <div className="w-full flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                className="p-1 w-min h-min"
-                onClick={() => handleSubscribePress(message.topic)}
-              >
-                <ListVideo size={20} />
-              </Button>
+        {!isMqttMessagesFetching &&
+          !isMqttMessagesLoading &&
+          !isMqttMessagesRefetching &&
+          mqttMessagesData?.messages?.map((message, index) => (
+            <div key={index} className="p-4 space-y-0 flex flex-col gap-3 border rounded-lg transition-shadow" onClick={() => {}}>
+              <div className="w-full flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="p-1 w-min h-min"
+                  onClick={() => handleSubscribePress(message.topic)}
+                >
+                  <ListVideo size={20} />
+                </Button>
 
-              <div className="w-full flex flex-row items-center justify-between gap-2">
-                <div className="flex flex-col">
-                  <h3 className="text-base font-semibold">{message.customer.customerName}</h3>
-                  <span className="text-xs text-muted-foreground break-all whitespace-normal">{message.topic}</span>
+                <div className="w-full flex flex-row items-center justify-between gap-2">
+                  <div className="flex flex-col">
+                    <h3 className="text-base font-semibold">{message.customer.customerName}</h3>
+                    <span className="text-xs text-muted-foreground break-all whitespace-normal">{message.topic}</span>
+                  </div>
+
+                  <Badge variant="outline" className="font-medium">
+                    {message.customer.customerCode}
+                  </Badge>
                 </div>
+              </div>
 
-                <Badge variant="outline" className="font-medium">
-                  {message.customer.customerCode}
+              <Badge variant="link" className="w-full flex flex-wrap justify-between font-medium text-sm p-3">
+                <span className="flex items-center gap-1.5">
+                  <MonitorCog size={16} />
+                  {message.machine.machineName}
+                </span>
+
+                <span className="flex items-center gap-1.5">Version: {message.machine.version}</span>
+              </Badge>
+
+              <div className="w-full flex flex-wrap items-center justify-start gap-2">
+                <Badge variant={'default'}>
+                  <ArrowRightLeft size={14} />
+                  Process:
+                  <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.process}</span>
+                </Badge>
+
+                <Badge variant={'outline'}>
+                  <Pause size={14} />
+                  Status:
+                  <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.status}</span>
+                </Badge>
+
+                <Badge variant={'destructive'}>
+                  <MonitorCog size={14} />
+                  Timestamp:
+                  <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.timestamp}</span>
                 </Badge>
               </div>
+
+              <span className="text-xs text-muted-foreground">{formatDateWithTime(message?.receivedAt)}</span>
             </div>
+          ))}
 
-            <Badge variant="link" className="w-full flex flex-wrap justify-between font-medium text-sm p-3">
-              <span className="flex items-center gap-1.5">
-                <MonitorCog size={16} />
-                {message.machine.machineName}
-              </span>
+        {(isMqttMessagesLoading || isMqttMessagesRefetching || isMqttMessagesFetching) && (
+          <div className="space-y-3">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="p-4 space-y-0 flex flex-col gap-3 border rounded-lg transition-shadow">
+                <div className="w-full flex items-center gap-2">
+                  <Skeleton className="w-8 h-8 rounded-md" />
+                  <div className="w-full flex flex-row items-center justify-between gap-2">
+                    <div className="flex flex-col w-full">
+                      <Skeleton className="mb-1 w-1/3 h-4 rounded-md" />
+                      <Skeleton className="w-full h-3 rounded-md" />
+                    </div>
+                    <Skeleton className="w-12 h-6 rounded-md" />
+                  </div>
+                </div>
 
-              <span className="flex items-center gap-1.5">Version: {message.machine.version}</span>
-            </Badge>
+                <Skeleton className="w-full h-10 rounded-md" />
 
-            <div className="w-full flex flex-wrap items-center justify-start gap-2">
-              <Badge variant={'default'}>
-                <ArrowRightLeft size={14} />
-                Process:
-                <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.process}</span>
-              </Badge>
+                <div className="w-full flex flex-wrap items-center justify-start gap-2">
+                  <Skeleton className="w-32 h-6 rounded-md" />
+                  <Skeleton className="w-32 h-6 rounded-md" />
+                  <Skeleton className="w-32 h-6 rounded-md" />
+                </div>
 
-              <Badge variant={'outline'}>
-                <Pause size={14} />
-                Status:
-                <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.status}</span>
-              </Badge>
-
-              <Badge variant={'destructive'}>
-                <MonitorCog size={14} />
-                Timestamp:
-                <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.timestamp}</span>
-              </Badge>
-            </div>
-
-            <span className="text-xs text-muted-foreground">{formatDateWithTime(message?.receivedAt)}</span>
+                <Skeleton className="w-1/4 h-3 rounded-md" />
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </CardContent>
     </Card>
   );

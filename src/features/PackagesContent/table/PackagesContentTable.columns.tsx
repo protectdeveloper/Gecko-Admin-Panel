@@ -2,22 +2,27 @@
 import { AppAlert } from '@/components/AppAlert';
 import { AppSheet } from '@/components/AppSheet';
 import { DataTableToolbarFilterType, DataTableToolbarFilterItem } from '@/components/table/DataTable';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { getStatusOptionsData } from '@/utils/data';
 import { formatDateWithTime } from '@/utils/formatTime';
 import { ColumnDef } from '@tanstack/react-table';
 import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import PackagesCreateEditForm from '../form/PackagesCreateEditForm';
-import { GetManagementPackageDTO } from '@/api/Package/Package.types';
-import { useDeletePackageByIdMutation } from '@/api/Package/Package.hook';
+import { useDeletePackageContentByIdMutation } from '@/api/PackageContent/PackageContent.hook';
+import PackagesContentCreateEditForm from '../form/PackagesContentCreateEditForm';
+import { GetManagementPackageContentDTO } from '@/api/PackageContent/PackageContent.types';
+import { useGetPackageQuery } from '@/api/Package/Package.hook';
+import { useGetPackageTypeQuery } from '@/api/PackageType/PackageType.hook';
 
-export const usePackagesTableColumns = () => {
-  const { t } = useTranslation();
-  const { mutateAsync: deletePackageById } = useDeletePackageByIdMutation();
-
+export const usePackagesContentTableColumns = () => {
+  const { mutateAsync: deletePackageContentById } = useDeletePackageContentByIdMutation();
+  const { data: packageData } = useGetPackageQuery({
+    pageNumber: 1,
+    pageSize: 1000
+  });
+  const { data: packageTypeData } = useGetPackageTypeQuery({
+    pageNumber: 1,
+    pageSize: 1000
+  });
   const renderCreateButton = useMemo(
     () => () => {
       return (
@@ -25,11 +30,11 @@ export const usePackagesTableColumns = () => {
           <AppSheet.Trigger asChild>
             <Button variant="outline" size="sm">
               <PlusCircle size={20} />
-              Paket Oluştur
+              Paket İçeriği Oluştur
             </Button>
           </AppSheet.Trigger>
-          <AppSheet.Content title={'Paket Oluştur'}>
-            <PackagesCreateEditForm />
+          <AppSheet.Content title={'Paket İçeriği Oluştur'}>
+            <PackagesContentCreateEditForm />
           </AppSheet.Content>
         </AppSheet.Sheet>
       );
@@ -37,32 +42,35 @@ export const usePackagesTableColumns = () => {
     []
   );
 
-  const handleDeletePackagePress = async (packageId: string) => {
-    const response = await deletePackageById(packageId);
+  const handleDeletePackageContentPress = async (packageContentId: string) => {
+    const response = await deletePackageContentById(packageContentId);
 
     if (response.success) {
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     }
   };
 
-  const columns = useMemo<ColumnDef<GetManagementPackageDTO['data'][0], any>[]>(
+  const columns = useMemo<ColumnDef<GetManagementPackageContentDTO['data'][0], any>[]>(
     () => [
       {
         accessorKey: 'packageName',
-        label: 'Paket Adı'
+        label: 'Paket Adı',
+        cell: ({ row }) => <span>{row.original.packageName || '-'}</span>
       },
       {
-        accessorKey: 'description',
-        label: 'Açıklama'
+        accessorKey: 'packageTypeName',
+        label: 'Paket Tipi Adı',
+        cell: ({ row }) => <span>{row.original.packageTypeName || '-'}</span>
       },
       {
-        accessorKey: 'totalPrice',
-        label: 'Toplam Fiyat'
+        accessorKey: 'quantity',
+        label: 'Miktar',
+        cell: ({ row }) => <span>{row.original.quantity || '0'}</span>
       },
       {
-        accessorKey: 'isActive',
-        label: 'Durum',
-        cell: ({ row }) => <Badge className={'w-[85px] px-3 py-1 gap-2 -ml-1'}>{row.original.isActive ? 'Aktif' : 'Pasif'}</Badge>
+        accessorKey: 'unitPrice',
+        label: 'Birim Fiyatı',
+        cell: ({ row }) => <span>{row.original.unitPrice || '0'}</span>
       },
       {
         accessorKey: 'createdAt',
@@ -87,8 +95,8 @@ export const usePackagesTableColumns = () => {
                   <Pencil size={20} />
                 </Button>
               </AppSheet.Trigger>
-              <AppSheet.Content title={'Paketi Düzenle'}>
-                <PackagesCreateEditForm packageId={row?.original?.packageID} />
+              <AppSheet.Content title={'Paket İçeriğini Düzenle'}>
+                <PackagesContentCreateEditForm packageContentId={row?.original?.packageContentID} />
               </AppSheet.Content>
             </AppSheet.Sheet>
 
@@ -99,8 +107,8 @@ export const usePackagesTableColumns = () => {
                 </Button>
               </AppAlert.Trigger>
               <AppAlert.Content
-                title={'Paket Sil'}
-                description={` ${row?.original?.packageName} adlı paketi silmek istediğinize emin misiniz ?`}
+                title={'Paket İçeriğini Sil'}
+                description={` ${row?.original?.packageName} adlı paketin içeriğini silmek istediğinize emin misiniz ?`}
               >
                 <AppAlert.Footer>
                   <AppAlert.Close asChild>
@@ -108,7 +116,7 @@ export const usePackagesTableColumns = () => {
                   </AppAlert.Close>
 
                   <Button
-                    onClick={() => handleDeletePackagePress(row?.original?.packageID)}
+                    onClick={() => handleDeletePackageContentPress(row?.original?.packageContentID)}
                     variant="destructive"
                     className="text-white"
                   >
@@ -126,25 +134,16 @@ export const usePackagesTableColumns = () => {
 
   const filterColumns: DataTableToolbarFilterItem[] = [
     {
-      label: 'Tüm Sonuçlarda Ara',
-      queryName: 'searchTerm',
-      type: DataTableToolbarFilterType.SearchInput
-    },
-    {
-      label: 'Minimum Fiyat',
-      queryName: 'minPrice',
-      type: DataTableToolbarFilterType.SearchInput
-    },
-    {
-      label: 'Maksimum Fiyat',
-      queryName: 'maxPrice',
-      type: DataTableToolbarFilterType.SearchInput
-    },
-    {
-      label: 'Durum',
-      queryName: 'isActive',
+      label: 'Paket',
+      queryName: 'packageId',
       type: DataTableToolbarFilterType.SelectBox,
-      options: getStatusOptionsData(t)
+      options: packageData?.data?.map((item) => ({ label: item.packageName, value: item.packageID })) || []
+    },
+    {
+      label: 'Paket Tipi',
+      queryName: 'packageTypeId',
+      type: DataTableToolbarFilterType.SelectBox,
+      options: packageTypeData?.data?.map((item) => ({ label: item.typeName, value: item.packageTypeID })) || []
     }
   ];
 

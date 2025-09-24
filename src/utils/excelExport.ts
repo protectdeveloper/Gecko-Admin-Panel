@@ -8,6 +8,7 @@ import { GetManagementPublicHolidayDTO } from '@/api/PublicHoliday/PublicHoliday
 import { GetManagementAccessMethodDTO } from '@/api/AccessMethod/AccessMethod.types';
 import { GetManagementPackageTypeDTO } from '@/api/PackageType/PackageType.types';
 import { GetManagementConnectionDTO } from '@/api/Connection/Connection.types';
+import { GetManagementPackageContentDTO } from '@/api/PackageContent/PackageContent.types';
 
 export async function exportCustomersExcel(data: GetManagementCustomersDTO['data'], searchParams: URLSearchParams) {
   const excelData: Record<string, any>[] = data.map((item: GetManagementCustomersDTO['data'][0]) => ({
@@ -350,6 +351,61 @@ export async function exportConnectionsExcel(data: GetManagementConnectionDTO['d
     ['Bağlantı Türü']: item.connectionType || '-',
     ['Bağlantı Dizesi']: item.connectionString || '-',
     ['Durum']: item.isActive ? 'Aktif' : 'Pasif',
+    ['Oluşturulma Tarihi']: item.createdAt ? formatDateWithTime(item.createdAt) : '-',
+    ['Güncellenme Tarihi']: item.updatedAt ? formatDateWithTime(item.updatedAt) : '-'
+  }));
+
+  if (!excelData.length) {
+    toast.error('Sonuç bulunamadı, Excel dosyası oluşturulamadı.');
+    return;
+  }
+
+  const ExcelJS = await import('exceljs');
+
+  try {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Bağlantılar Raporu');
+
+    const headers = Object.keys(excelData[0]);
+    worksheet.addRow(headers);
+    excelData.forEach((rowData) => {
+      worksheet.addRow(headers.map((header) => rowData[header]));
+    });
+
+    worksheet.columns.forEach((col, colIdx) => {
+      const header = headers[colIdx];
+      let maxLength = header.length;
+      excelData.forEach((row) => {
+        const value = String(row[header] || '');
+        if (value.length > maxLength) maxLength = value.length;
+      });
+      col.width = maxLength + 2;
+    });
+
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
+    const datePart = startDate && endDate ? `_${startDate}_${endDate}` : `_${new Date().toISOString().split('T')[0]}`;
+    const fileName = 'Bağlantılar_Raporu' + datePart + '.xlsx';
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+
+    saveAs(blob, fileName);
+    toast.success('Excel dosyası başarıyla oluşturuldu.');
+  } catch (error) {
+    console.error(error);
+    toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
+  }
+}
+
+export async function exportPackageContentExcel(data: GetManagementPackageContentDTO['data'], searchParams: URLSearchParams) {
+  const excelData: Record<string, any>[] = data.map((item: GetManagementPackageContentDTO['data'][0]) => ({
+    ['Paket Adı']: item.packageName || '-',
+    ['Paket Tipi Adı']: item.packageTypeName || '-',
+    ['Miktar']: item.quantity || '-',
+    ['Birim Fiyatı']: item.unitPrice || '-',
     ['Oluşturulma Tarihi']: item.createdAt ? formatDateWithTime(item.createdAt) : '-',
     ['Güncellenme Tarihi']: item.updatedAt ? formatDateWithTime(item.updatedAt) : '-'
   }));

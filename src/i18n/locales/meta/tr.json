@@ -46,5 +46,13 @@
   "packagesTypes": {
     "title": "Paket Tipleri",
     "description": "Kayıtlı tüm paket tiplerini yönetin ve görüntüleyin."
+  },
+  "packagesContent": {
+    "title": "Paket İçerikleri",
+    "description": "Kayıtlı tüm paket içeriklerini yönetin ve görüntüleyin."
+  },
+  "adminLogs": {
+    "title": "Admin Logları",
+    "description": "Tüm admin loglarını yönetin ve görüntüleyin."
   }
 }

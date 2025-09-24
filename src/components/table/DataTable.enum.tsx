@@ -7,5 +7,7 @@ export enum DataTableName {
   PublicHolidaysTable = 'PublicHolidaysTable',
   AccessMethodsTable = 'AccessMethodsTable',
   ConnectionsTable = 'ConnectionsTable',
-  PackagesTypesTable = 'PackagesTypesTable'
+  PackagesTypesTable = 'PackagesTypesTable',
+  PackagesContentTable = 'PackagesContentTable',
+  AdminLogsTable = 'AdminLogsTable'
 }

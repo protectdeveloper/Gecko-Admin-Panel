@@ -132,6 +132,12 @@ export const getStatusOptionsData = (t: (key: string) => string) => [
   { label: t('staticData.statusOptions.inactive'), value: 'false' }
 ];
 
+export const getIsAuthorizedOptionsData = (t: (key: string) => string) => [
+  { label: t('staticData.isAuthorizedOptions.all'), value: 'all' },
+  { label: t('staticData.isAuthorizedOptions.authorized'), value: 'true' },
+  { label: t('staticData.isAuthorizedOptions.unauthorized'), value: 'false' }
+];
+
 export const getRequestTypeData = (t: (key: string) => string) => [
   { label: t('staticData.requestTypeOptions.all'), value: 'all' },
   { label: t('staticData.requestTypeOptions.get'), value: 'GET' },

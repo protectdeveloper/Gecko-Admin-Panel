@@ -11,5 +11,11 @@
     "post": "POST",
     "put": "PUT",
     "delete": "DELETE"
+  },
+
+  "isAuthorizedOptions": {
+    "all": "Tümü",
+    "authorized": "İzinli",
+    "unauthorized": "İzinsiz"
   }
 }

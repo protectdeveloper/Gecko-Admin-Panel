@@ -50,6 +50,11 @@ export const useConnectionsTableColumns = () => {
   const columns = useMemo<ColumnDef<GetManagementConnectionDTO['data'][0], any>[]>(
     () => [
       {
+        accessorKey: 'customerName',
+        label: 'Firma Adı',
+        cell: ({ row }) => <span>{row.original.customerName || '-'}</span>
+      },
+      {
         accessorKey: 'connectionType',
         label: 'Bağlantı Türü'
       },

@@ -18,6 +18,7 @@ export type GetManagementConnectionDTO = {
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
+    customerName: string;
   }[];
   error: string;
   statusCode: number;
