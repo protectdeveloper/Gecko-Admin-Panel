@@ -11,13 +11,14 @@ export const useGetMqttStatusQuery = () => {
   return useQuery(getMqttStatusQueryOptions);
 };
 
-export const getMqttMessagesQueryOptions = (sort: string) => ({
+export const getMqttMessagesQueryOptions = (sort: string, options = {}) => ({
   queryKey: ['getMqttMessages', sort],
-  queryFn: () => MqttApi.getMqttMessages(sort)
+  queryFn: () => MqttApi.getMqttMessages(sort),
+  ...options
 });
 
-export const useGetMqttMessagesQuery = (sort?: string) => {
-  return useQuery(getMqttMessagesQueryOptions(sort || ''));
+export const useGetMqttMessagesQuery = (sort?: string, options = {}) => {
+  return useQuery(getMqttMessagesQueryOptions(sort || '', options));
 };
 
 export const getMqttStartQueryOptions = {
@@ -25,8 +26,8 @@ export const getMqttStartQueryOptions = {
   queryFn: MqttApi.getMqttStart
 };
 
-export const useGetMqttStartQuery = () => {
-  return useQuery(getMqttStartQueryOptions);
+export const useGetMqttStartQuery = (options = {}) => {
+  return useQuery({ ...getMqttStartQueryOptions, ...options });
 };
 
 export const getMqttStopQueryOptions = {
@@ -34,40 +35,27 @@ export const getMqttStopQueryOptions = {
   queryFn: MqttApi.getMqttStop
 };
 
-export const useGetMqttStopQuery = () => {
-  return useQuery(getMqttStopQueryOptions);
+export const useGetMqttStopQuery = (options = {}) => {
+  return useQuery({ ...getMqttStopQueryOptions, ...options });
 };
 
-export const usePostMqttSubscribeTerminalStatusMutation = () => {
-  const queryClient = useQueryClient();
+export const getMqttSubscribeTerminalStatusQueryOptions = {
+  queryKey: ['getMqttSubscribeTerminalStatus'],
+  queryFn: MqttApi.getMqttSubscribeTerminalStatus
+};
 
-  return useMutation({
-    mutationFn: MqttApi.postMqttSubscribeTerminalStatus,
-    onSuccess: async (data, variables) => {
-      if (data?.success) {
-        toast.success(data.message || 'Terminal durumu aboneliği başarıyla başlatıldı.');
-      } else {
-        toast.error(data?.error || 'Terminal durumu aboneliği başlatılırken bir hata oluştu.');
-      }
-    },
-    onError: (error: any) => {
-      toast.error(error?.response?.error || 'Terminal durumu aboneliği başlatılırken bir hata oluştu.');
-    }
-  });
+export const useGetMqttSubscribeTerminalStatusQuery = (options = {}) => {
+  return useQuery({ ...getMqttSubscribeTerminalStatusQueryOptions, ...options });
 };
 
 export const usePostMqttSubscribeMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (topic: string) => MqttApi.postMqttSubscribe(topic),
+    mutationFn: MqttApi.postMqttSubscribe,
     onSuccess: async (data) => {
-      if (data?.success) {
-        toast.success(data.message || 'Abonelik başarıyla başlatıldı.');
-        await queryClient.refetchQueries({ queryKey: ['getMqttStatus'] });
-      } else {
-        toast.error(data?.error || 'Abonelik başlatılırken bir hata oluştu.');
-      }
+      toast.success(data.message || 'Abonelik başarıyla başlatıldı.');
+      await queryClient.refetchQueries({ queryKey: ['getMqttSubscribeTerminalStatus'] });
     },
     onError: (error: any) => {
       toast.error(error?.response?.error || 'Abonelik başlatılırken bir hata oluştu.');
@@ -79,14 +67,10 @@ export const usePostMqttUnsubscribeMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (topic: string) => MqttApi.postMqttUnsubscribe(topic),
+    mutationFn: MqttApi.postMqttUnsubscribe,
     onSuccess: async (data) => {
-      if (data?.success) {
-        toast.success(data.message || 'Abonelik başarıyla iptal edildi.');
-        await queryClient.refetchQueries({ queryKey: ['getMqttStatus'] });
-      } else {
-        toast.error(data?.error || 'Abonelik iptal edilirken bir hata oluştu.');
-      }
+      toast.success(data.message || 'Abonelik başarıyla iptal edildi.');
+      await queryClient.refetchQueries({ queryKey: ['getMqttSubscribeTerminalStatus'] });
     },
     onError: (error: any) => {
       toast.error(error?.response?.error || 'Abonelik iptal edilirken bir hata oluştu.');

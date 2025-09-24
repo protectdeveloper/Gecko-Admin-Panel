@@ -69,10 +69,11 @@ const ExpiringCompaniesCard = ({ className }: Props) => {
 
   return (
     <Card className={cn('p-4 gap-3', className)}>
-      <CardHeader className="p-0 gap-0">
-        <CardTitle className="flex flex-col gap-0 p-0">
+      <CardHeader className="p-0 ">
+        <CardTitle className="flex flex-col gap-0 lg:gap-3 2xl:gap-0 p-0">
           <div className="flex flex-row items-start justify-between gap-0">
             <span>Ödemesi Yaklaşan Firmalar</span>
+
             <Button
               size="icon"
               variant="outline"
@@ -87,7 +88,8 @@ const ExpiringCompaniesCard = ({ className }: Props) => {
           <CustomSelectBox
             value={lastDayCount}
             onValueChange={(value) => setLastDayCount(value)}
-            height={'35px'}
+            height={'30px'}
+            className="rounded-md"
             data={[
               { label: 'Son 7 Gün', value: '7' },
               { label: 'Son 30 Gün', value: '30' },

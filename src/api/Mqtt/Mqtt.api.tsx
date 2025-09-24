@@ -23,18 +23,18 @@ export const MqttApi = {
     return response.data;
   },
 
-  postMqttSubscribeTerminalStatus: async (): Promise<GenericResponse> => {
-    const response = await BaseAxiosService.post('/management/mqtt/subscribe-terminal-status');
+  getMqttSubscribeTerminalStatus: async (): Promise<GenericResponse> => {
+    const response = await BaseAxiosService.get('/management/mqtt/subscribe-terminal-status');
     return response.data;
   },
 
-  postMqttSubscribe: async (topic: string): Promise<GenericResponse> => {
-    const response = await BaseAxiosService.post('/management/mqtt/subscribe', topic);
+  postMqttSubscribe: async (body: { topic: string }): Promise<GenericResponse> => {
+    const response = await BaseAxiosService.post('/management/mqtt/subscribe', body);
     return response.data;
   },
 
-  postMqttUnsubscribe: async (topic: string): Promise<GenericResponse> => {
-    const response = await BaseAxiosService.post('/management/mqtt/unsubscribe', topic);
+  postMqttUnsubscribe: async (body: { topic: string }): Promise<GenericResponse> => {
+    const response = await BaseAxiosService.post('/management/mqtt/unsubscribe', body);
     return response.data;
   }
 };

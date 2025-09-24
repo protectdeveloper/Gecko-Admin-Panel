@@ -69,7 +69,7 @@ const MicroservicesStatusCard = ({ className }: Props) => {
   return (
     <Card className={cn(`p-4 gap-3`, className)}>
       <CardHeader className="p-0">
-        <CardTitle className="flex flex-col gap-0 p-0">
+        <CardTitle className="flex flex-col gap-0 lg:gap-3 2xl:gap-0 p-0">
           <div className="flex items-start justify-between gap-2">
             <span>Micro Servisler ve Durumu</span>
 

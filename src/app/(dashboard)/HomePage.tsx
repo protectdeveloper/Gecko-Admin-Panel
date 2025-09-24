@@ -138,10 +138,10 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="xl:col-span-3 flex flex-col sm:flex-row xl:flex-col gap-4 xl:h-[1385px] min-h-0">
-          <ExpiringCompaniesCard className="flex-1 h-[400px] xl:min-h-0" />
-          <SupportRequestsCard className="flex-1 h-[400px] xl:min-h-0" />
-          <LastUserLogsCard className="flex-1 h-[400px] xl:min-h-0" />
+        <div className="xl:col-span-3 flex flex-col lg:flex-row xl:flex-col gap-4 xl:h-[1385px] min-h-0">
+          <ExpiringCompaniesCard className="lg:flex-1 h-[400px] xl:min-h-0" />
+          <SupportRequestsCard className="lg:flex-1 h-[400px] xl:min-h-0" />
+          <LastUserLogsCard className="lg:flex-1 h-[400px] xl:min-h-0" />
         </div>
       </div>
 
