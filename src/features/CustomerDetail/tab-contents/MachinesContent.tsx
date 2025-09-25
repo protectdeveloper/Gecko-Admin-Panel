@@ -19,6 +19,7 @@ export default function MachinesContent({ customerId }: MachinesContentProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams() || new URLSearchParams();
 
+  const tab = searchParams.get('tab');
   const page = searchParams.get('page') || '1';
   const pageSize = searchParams.get('pageSize') || '20';
   const searchTerm = searchParams.get('searchTerm') || '';
@@ -50,7 +51,7 @@ export default function MachinesContent({ customerId }: MachinesContentProps) {
   });
 
   const handleClearFiltersPress = () => {
-    router.push(`${pathname}`);
+    router.push(`${pathname}?tab=${tab}`);
   };
 
   const handleExcelExportButton = async () => {
