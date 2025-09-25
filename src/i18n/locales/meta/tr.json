@@ -62,5 +62,9 @@
   "customersMachines": {
     "title": "Firma Makineleri",
     "description": "Kayıtlı tüm firma makinelerini yönetin ve görüntüleyin."
+  },
+  "customersDetail": {
+    "title": "Firma Detayı",
+    "description": "Firma detaylarını yönetin ve görüntüleyin."
   }
 }

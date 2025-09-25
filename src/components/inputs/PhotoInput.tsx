@@ -104,7 +104,7 @@ export function PhotoInput({
             <p className="text-sm font-semibold text-muted-foreground">{isDragActive ? 'Buraya Bırakın' : 'Fotoğraf Yükleyin'}</p>
             {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
           </div>
-          <Button size={'icon'} variant={'destructive'} className="w-min h-min p-2" onClick={onDeletePhotoPress}>
+          <Button size={'icon'} variant={'destructive'} className="w-min h-min text-white p-2" onClick={onDeletePhotoPress}>
             <Trash2 size={20} />
           </Button>
         </div>

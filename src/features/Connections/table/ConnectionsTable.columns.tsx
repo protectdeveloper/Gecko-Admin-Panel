@@ -15,7 +15,13 @@ import { GetManagementConnectionDTO } from '@/api/Connection/Connection.types';
 import { useDeleteConnectionByIdMutation } from '@/api/Connection/Connection.hook';
 import { useGetCustomersQuery } from '@/api/Customer/Customer.hook';
 
-export const useConnectionsTableColumns = () => {
+export const useConnectionsTableColumns = ({
+  isDisabledCustomerFilter = false,
+  customerId
+}: {
+  isDisabledCustomerFilter?: boolean;
+  customerId?: string;
+}) => {
   const { t } = useTranslation();
   const { data: customersData } = useGetCustomersQuery({ pageNumber: 1, pageSize: 9999 });
   const { mutateAsync: deleteConnectionById } = useDeleteConnectionByIdMutation();
@@ -31,7 +37,7 @@ export const useConnectionsTableColumns = () => {
             </Button>
           </AppSheet.Trigger>
           <AppSheet.Content title={'Bağlantı Oluştur'}>
-            <ConnectionsCreateEditForm />
+            <ConnectionsCreateEditForm isDisabledCustomerSelect={isDisabledCustomerFilter} customerId={customerId} />
           </AppSheet.Content>
         </AppSheet.Sheet>
       );
@@ -52,7 +58,7 @@ export const useConnectionsTableColumns = () => {
       {
         accessorKey: 'customerName',
         label: 'Firma Adı',
-        cell: ({ row }) => <span>{row.original.customerName || '-'}</span>
+        cell: ({ row }) => <span>{row.original?.customerName || '-'}</span>
       },
       {
         accessorKey: 'connectionType',
@@ -61,22 +67,24 @@ export const useConnectionsTableColumns = () => {
       {
         accessorKey: 'connectionString',
         label: 'Bağlantı Dizesi',
-        cell: ({ row }) => <span className="max-w-xs block truncate">{row.original.connectionString}</span>
+        cell: ({ row }) => <span className="max-w-xs block truncate">{row.original?.connectionString}</span>
       },
       {
         accessorKey: 'isActive',
         label: 'Durum',
-        cell: ({ row }) => <Badge className={'w-[85px] px-3 py-1 gap-2 -ml-1'}>{row.original.isActive ? 'Aktif' : 'Pasif'}</Badge>
+        cell: ({ row }) => (
+          <Badge className={'w-[85px] px-3 py-1 gap-2 -ml-1'}>{row.original?.isActive ? 'Aktif' : 'Pasif'}</Badge>
+        )
       },
       {
         accessorKey: 'createdAt',
         label: 'Oluşturulma Tarihi',
-        cell: ({ row }) => <span>{formatDateWithTime(row.original.createdAt)}</span>
+        cell: ({ row }) => <span>{formatDateWithTime(row.original?.createdAt)}</span>
       },
       {
         accessorKey: 'updatedAt',
         label: 'Güncellenme Tarihi',
-        cell: ({ row }) => <span>{formatDateWithTime(row.original.updatedAt)}</span>
+        cell: ({ row }) => <span>{formatDateWithTime(row.original?.updatedAt)}</span>
       },
       {
         accessorKey: 'transactions',
@@ -92,7 +100,11 @@ export const useConnectionsTableColumns = () => {
                 </Button>
               </AppSheet.Trigger>
               <AppSheet.Content title={'Bağlantı Düzenle'}>
-                <ConnectionsCreateEditForm connectionId={row?.original?.connectionID} />
+                <ConnectionsCreateEditForm
+                  isDisabledCustomerSelect={isDisabledCustomerFilter}
+                  customerId={row?.original?.customerID}
+                  connectionId={row?.original?.connectionID}
+                />
               </AppSheet.Content>
             </AppSheet.Sheet>
 
@@ -104,7 +116,7 @@ export const useConnectionsTableColumns = () => {
               </AppAlert.Trigger>
               <AppAlert.Content
                 title={'Bağlantı Sil'}
-                description={` ${row?.original?.connectionString} adlı bağlantıyı silmek istediğinize emin misiniz ?`}
+                description={` ${row?.original?.customerName} adlı firmanın bağlantısını silmek istediğinize emin misiniz ?`}
               >
                 <AppAlert.Footer>
                   <AppAlert.Close asChild>
@@ -134,16 +146,17 @@ export const useConnectionsTableColumns = () => {
       queryName: 'searchTerm',
       type: DataTableToolbarFilterType.SearchInput
     },
-    {
-      label: 'Firma',
-      queryName: 'customerId',
-      type: DataTableToolbarFilterType.SelectBox,
-      options:
-        customersData?.data?.map((customer) => ({
-          label: customer.customerName,
-          value: customer.customerID
-        })) || []
-    },
+    ...(!isDisabledCustomerFilter
+      ? [
+          {
+            label: 'Firma',
+            queryName: 'customerId',
+            type: DataTableToolbarFilterType.SelectBox,
+            options: customersData?.data.map((customer) => ({ label: customer.customerName, value: customer.customerID })) || []
+          } as DataTableToolbarFilterItem
+        ]
+      : []),
+
     {
       label: 'Durum',
       queryName: 'isActive',

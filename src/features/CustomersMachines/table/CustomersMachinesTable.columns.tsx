@@ -1,4 +1,5 @@
 'use client';
+
 import { AppAlert } from '@/components/AppAlert';
 import { AppSheet } from '@/components/AppSheet';
 import { DataTableToolbarFilterType, DataTableToolbarFilterItem } from '@/components/table/DataTable';
@@ -15,7 +16,13 @@ import { useDeleteCustomerMachineByIdMutation } from '@/api/CustomerMachine/Cust
 import { GetManagementCustomerMachineDTO } from '@/api/CustomerMachine/CustomerMachine.types';
 import { useGetCustomersQuery } from '@/api/Customer/Customer.hook';
 
-export const useCustomersMachinesTableColumns = () => {
+export const useCustomersMachinesTableColumns = ({
+  isDisabledCustomerFilter = false,
+  customerId
+}: {
+  isDisabledCustomerFilter?: boolean;
+  customerId?: string;
+}) => {
   const { t } = useTranslation();
   const { data: customersData } = useGetCustomersQuery({ pageNumber: 1, pageSize: 1000 });
   const { mutateAsync: deleteCustomerMachine } = useDeleteCustomerMachineByIdMutation();
@@ -31,7 +38,7 @@ export const useCustomersMachinesTableColumns = () => {
             </Button>
           </AppSheet.Trigger>
           <AppSheet.Content title={'Firma Makinesi Oluştur'}>
-            <CustomersMachinesCreateEditForm />
+            <CustomersMachinesCreateEditForm isDisabledCustomerSelect={isDisabledCustomerFilter} customerId={customerId} />
           </AppSheet.Content>
         </AppSheet.Sheet>
       );
@@ -119,7 +126,11 @@ export const useCustomersMachinesTableColumns = () => {
                 </Button>
               </AppSheet.Trigger>
               <AppSheet.Content title={'Firma Makinesi Düzenle'}>
-                <CustomersMachinesCreateEditForm customerMachineId={row?.original?.customerMachineID} />
+                <CustomersMachinesCreateEditForm
+                  isDisabledCustomerSelect={isDisabledCustomerFilter}
+                  customerId={row?.original?.customerID}
+                  customerMachineId={row?.original?.customerMachineID}
+                />
               </AppSheet.Content>
             </AppSheet.Sheet>
 
@@ -171,12 +182,17 @@ export const useCustomersMachinesTableColumns = () => {
       queryName: 'assemblyName',
       type: DataTableToolbarFilterType.SearchInput
     },
-    {
-      label: 'Firma',
-      queryName: 'customerId',
-      type: DataTableToolbarFilterType.SelectBox,
-      options: customersData?.data.map((customer) => ({ label: customer.customerName, value: customer.customerID })) || []
-    },
+    ...(!isDisabledCustomerFilter
+      ? [
+          {
+            label: 'Firma',
+            queryName: 'customerId',
+            type: DataTableToolbarFilterType.SelectBox,
+            options: customersData?.data.map((customer) => ({ label: customer.customerName, value: customer.customerID })) || []
+          } as DataTableToolbarFilterItem
+        ]
+      : []),
+
     {
       label: 'TAS Durumu',
       queryName: 'isTasEnabled',

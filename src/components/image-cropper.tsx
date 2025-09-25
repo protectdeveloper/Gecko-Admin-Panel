@@ -38,31 +38,22 @@ export function ImageCropper({ open, onOpenChange, selectedFile, onCrop, onCance
   function handleCropSave() {
     if (!completedCrop || !imgRef.current) return;
     const image = imgRef.current;
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    const cropWidth = completedCrop.width * scaleX;
-    const cropHeight = completedCrop.height * scaleY;
-    canvas.width = cropWidth;
-    canvas.height = cropHeight;
-    ctx.drawImage(image, completedCrop.x * scaleX, completedCrop.y * scaleY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-    // Original image (128x128)
-    const originalCanvas = document.createElement('canvas');
-    const originalCtx = originalCanvas.getContext('2d');
-    originalCanvas.width = 128;
-    originalCanvas.height = 128;
-    originalCtx?.drawImage(canvas, 0, 0, 128, 128);
-    const originalDataUrl = originalCanvas.toDataURL('image/jpeg', 0.9);
-    // Thumbnail (64x64)
-    const thumbnailCanvas = document.createElement('canvas');
-    const thumbnailCtx = thumbnailCanvas.getContext('2d');
-    thumbnailCanvas.width = 64;
-    thumbnailCanvas.height = 64;
-    thumbnailCtx?.drawImage(canvas, 0, 0, 64, 64);
-    const thumbnailUrl = thumbnailCanvas.toDataURL('image/jpeg', 0.8);
-    onCrop({ originalImage: originalDataUrl, thumbnailImage: thumbnailUrl });
+    const cropX = Math.round(completedCrop.x * scaleX);
+    const cropY = Math.round(completedCrop.y * scaleY);
+    const cropWidth = Math.round(completedCrop.width * scaleX);
+    const cropHeight = Math.round(completedCrop.height * scaleY);
+
+    // Crop edilen alanı orijinal çözünürlükte döndür, çıktı formatı JPEG ve kalite 0.7
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = cropWidth;
+    cropCanvas.height = cropHeight;
+    const cropCtx = cropCanvas.getContext('2d');
+    if (!cropCtx) return;
+    cropCtx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+    const croppedDataUrl = cropCanvas.toDataURL('image/jpeg', 0.5);
+    onCrop({ originalImage: croppedDataUrl, thumbnailImage: croppedDataUrl });
     onOpenChange(false);
   }
 

@@ -1,4 +1,5 @@
 'use client';
+
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { AppSheet } from '@/components/AppSheet';
@@ -24,6 +25,8 @@ import CustomTextAreaInput from '@/components/inputs/CustomTextAreaInput';
 
 interface CustomersMachinesCreateEditFormProps {
   customerMachineId?: string;
+  customerId?: string | undefined;
+  isDisabledCustomerSelect?: boolean;
 }
 
 const MapWithNoSSR = dynamic(() => import('./MapComponent'), {
@@ -31,7 +34,11 @@ const MapWithNoSSR = dynamic(() => import('./MapComponent'), {
   loading: () => <div>Harita yükleniyor...</div>
 });
 
-const CustomersMachinesCreateEditForm = ({ customerMachineId }: CustomersMachinesCreateEditFormProps) => {
+const CustomersMachinesCreateEditForm = ({
+  customerMachineId,
+  customerId = undefined,
+  isDisabledCustomerSelect = false
+}: CustomersMachinesCreateEditFormProps) => {
   const { data: machinesData } = useGetMachinesQuery({
     pageNumber: 1,
     pageSize: 1000
@@ -64,7 +71,7 @@ const CustomersMachinesCreateEditForm = ({ customerMachineId }: CustomersMachine
 
   const form = useForm<FormValues>({
     values: {
-      customerID: customerMachineDetailData?.data.customerID || '',
+      customerID: customerMachineDetailData?.data.customerID || customerId || '',
       machineID: customerMachineDetailData?.data.machineID || '',
       machineName: customerMachineDetailData?.data.machineName || '',
       description: customerMachineDetailData?.data.description || '',
@@ -162,6 +169,7 @@ const CustomersMachinesCreateEditForm = ({ customerMachineId }: CustomersMachine
               placeholder="Firma Seçin"
               data={customersData?.data.map((customer) => ({ value: customer.customerID, label: customer.customerName })) || []}
               error={error?.message}
+              disabled={isDisabledCustomerSelect}
               className="w-full"
             />
           )}

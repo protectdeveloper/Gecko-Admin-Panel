@@ -10,7 +10,11 @@ import { useCustomersMachinesTableColumns } from '@/features/CustomersMachines/t
 import { useGetCustomerMachineQuery } from '@/api/CustomerMachine/CustomerMachine.hook';
 import { CustomerMachineApi } from '@/api/CustomerMachine/CustomerMachine.api';
 
-export default function CustomersMachinesPage() {
+interface MachinesContentProps {
+  customerId: string;
+}
+
+export default function MachinesContent({ customerId }: MachinesContentProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -20,7 +24,6 @@ export default function CustomersMachinesPage() {
   const searchTerm = searchParams.get('searchTerm') || '';
   const assemblyName = searchParams.get('assemblyName') || '';
   const machineName = searchParams.get('machineName') || undefined;
-  const customerId = searchParams.get('customerId') || undefined;
   const isActive = searchParams.get('isActive') || undefined;
   const isOnline = searchParams.get('isOnline') || undefined;
   const isTasEnabled = searchParams.get('isTasEnabled') || undefined;
@@ -41,7 +44,10 @@ export default function CustomersMachinesPage() {
     isTasEnabled: isTasEnabled === 'true' ? true : isTasEnabled === 'false' ? false : undefined
   });
 
-  const { columns, filterColumns, renderCreateButton } = useCustomersMachinesTableColumns({});
+  const { columns, filterColumns, renderCreateButton } = useCustomersMachinesTableColumns({
+    isDisabledCustomerFilter: true,
+    customerId: customerId
+  });
 
   const handleClearFiltersPress = () => {
     router.push(`${pathname}`);

@@ -16,9 +16,15 @@ import CustomCheckbox from '@/components/inputs/CustomCheckbox';
 
 interface ConnectionsCreateEditFormProps {
   connectionId?: string;
+  customerId?: string;
+  isDisabledCustomerSelect?: boolean;
 }
 
-const ConnectionsCreateEditForm = ({ connectionId }: ConnectionsCreateEditFormProps) => {
+const ConnectionsCreateEditForm = ({
+  connectionId,
+  customerId,
+  isDisabledCustomerSelect = false
+}: ConnectionsCreateEditFormProps) => {
   const { mutateAsync: putUpdateConnection } = usePutConnectionByIdMutation();
   const { mutateAsync: postCreateConnection } = usePostCreateConnectionMutation();
   const { data: customersData } = useGetCustomersQuery({ pageNumber: 1, pageSize: 1000 });
@@ -37,7 +43,7 @@ const ConnectionsCreateEditForm = ({ connectionId }: ConnectionsCreateEditFormPr
     values: {
       connectionType: connectionDetailData?.data?.connectionType || '',
       connectionString: connectionDetailData?.data?.connectionString || '',
-      customerId: connectionDetailData?.data?.customerID || '',
+      customerId: connectionDetailData?.data?.customerID || customerId || '',
       isActive: connectionDetailData?.data?.isActive || true
     },
     resolver: zodResolver(ConnectionsCreateEditFormSchema)
@@ -99,12 +105,13 @@ const ConnectionsCreateEditForm = ({ connectionId }: ConnectionsCreateEditFormPr
               onValueChange={onChange}
               data={
                 customersData?.data.map((customer) => ({
-                  label: customer.customerName,
-                  value: customer.customerID
+                  label: customer?.customerName,
+                  value: customer?.customerID
                 })) || []
               }
               error={error?.message}
               className="w-full"
+              disabled={isDisabledCustomerSelect}
             />
           )}
         />

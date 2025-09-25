@@ -10,7 +10,11 @@ import { useGetConnectionQuery } from '@/api/Connection/Connection.hook';
 import { useConnectionsTableColumns } from '@/features/Connections/table/ConnectionsTable.columns';
 import { ConnectionApi } from '@/api/Connection/Connection.api';
 
-export default function ConnectionsPage() {
+interface ConnectionsContentProps {
+  customerId: string;
+}
+
+export default function ConnectionsContent({ customerId }: ConnectionsContentProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -19,7 +23,6 @@ export default function ConnectionsPage() {
   const pageSize = searchParams.get('pageSize') || '20';
   const searchTerm = searchParams.get('searchTerm') || undefined;
   const isActive = searchParams.get('isActive') || undefined;
-  const customerId = searchParams.get('customerId') || undefined;
 
   const {
     data: connectionsListData,
@@ -33,7 +36,10 @@ export default function ConnectionsPage() {
     customerId: customerId
   });
 
-  const { columns, filterColumns, renderCreateButton } = useConnectionsTableColumns({});
+  const { columns, filterColumns, renderCreateButton } = useConnectionsTableColumns({
+    isDisabledCustomerFilter: true,
+    customerId: customerId
+  });
 
   const handleClearFiltersPress = () => {
     router.push(`${pathname}`);

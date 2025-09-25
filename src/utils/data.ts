@@ -1,8 +1,6 @@
 import {
   Settings,
   type LucideIcon,
-  User2Icon,
-  Settings2Icon,
   HelpCircle,
   HomeIcon,
   Building2,
@@ -11,7 +9,8 @@ import {
   CalendarRange,
   ArrowRightLeft,
   RadioTower,
-  ShieldCheck
+  ShieldCheck,
+  Building
 } from 'lucide-react';
 
 export interface BreadcrumbItem {
@@ -20,10 +19,7 @@ export interface BreadcrumbItem {
   pattern: string;
 }
 
-export const breadcrumbData: BreadcrumbItem[] = [
-  { title: 'settings', icon: Settings2Icon, pattern: '/settings' },
-  { title: 'usersDetail', icon: User2Icon, pattern: '/users/detail/' }
-];
+export const breadcrumbData: BreadcrumbItem[] = [{ title: 'Firma Detayı', icon: Building, pattern: '/customers/detail/' }];
 
 export const menuFooterData = [
   {

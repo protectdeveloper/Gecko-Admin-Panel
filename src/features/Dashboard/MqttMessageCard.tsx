@@ -180,7 +180,7 @@ const MqttMessageCard = ({ className }: Props) => {
                   <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.status}</span>
                 </Badge>
 
-                <Badge variant={'destructive'}>
+                <Badge variant={'destructive'} className="text-white">
                   <MonitorCog size={14} />
                   Timestamp:
                   <span className="text-xs font-medium break-words whitespace-pre-wrap">{message.data.timestamp}</span>
