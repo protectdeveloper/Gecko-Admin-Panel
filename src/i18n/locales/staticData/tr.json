@@ -17,5 +17,11 @@
     "all": "Tümü",
     "authorized": "İzinli",
     "unauthorized": "İzinsiz"
+  },
+
+  "isOnlineOptions": {
+    "all": "Tümü",
+    "online": "Online",
+    "offline": "Offline"
   }
 }

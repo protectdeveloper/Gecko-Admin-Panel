@@ -4,7 +4,7 @@ import { AppSheet } from '@/components/AppSheet';
 import { DataTableToolbarFilterType, DataTableToolbarFilterItem } from '@/components/table/DataTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { getStatusOptionsData } from '@/utils/data';
+import { getIsOnlineOptionsData, getStatusOptionsData } from '@/utils/data';
 import { formatDateWithTime } from '@/utils/formatTime';
 import { ColumnDef } from '@tanstack/react-table';
 import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
@@ -13,9 +13,11 @@ import { useTranslation } from 'react-i18next';
 import CustomersMachinesCreateEditForm from '../form/CustomersMachinesCreateEditForm';
 import { useDeleteCustomerMachineByIdMutation } from '@/api/CustomerMachine/CustomerMachine.hook';
 import { GetManagementCustomerMachineDTO } from '@/api/CustomerMachine/CustomerMachine.types';
+import { useGetCustomersQuery } from '@/api/Customer/Customer.hook';
 
 export const useCustomersMachinesTableColumns = () => {
   const { t } = useTranslation();
+  const { data: customersData } = useGetCustomersQuery({ pageNumber: 1, pageSize: 1000 });
   const { mutateAsync: deleteCustomerMachine } = useDeleteCustomerMachineByIdMutation();
 
   const renderCreateButton = useMemo(
@@ -73,12 +75,20 @@ export const useCustomersMachinesTableColumns = () => {
       {
         accessorKey: 'isOnline',
         label: 'Online Durumu',
-        cell: ({ row }) => <Badge variant={'outline'}>{row.original.isOnline ? 'Online' : 'Offline'}</Badge>
+        cell: ({ row }) => (
+          <Badge variant={'outline'} className={'w-[85px] px-3 py-1 gap-2'}>
+            {row.original.isOnline ? 'Online' : 'Offline'}
+          </Badge>
+        )
       },
       {
         accessorKey: 'isTasEnabled',
         label: 'TAS Durumu',
-        cell: ({ row }) => <Badge variant={'outline'}>{row.original.isTasEnabled ? 'Enabled' : 'Disabled'}</Badge>
+        cell: ({ row }) => (
+          <Badge variant={'outline'} className={'w-[85px] px-3 py-1 gap-2'}>
+            {row.original.isTasEnabled ? 'Enabled' : 'Disabled'}
+          </Badge>
+        )
       },
       {
         accessorKey: 'isActive',
@@ -147,12 +157,35 @@ export const useCustomersMachinesTableColumns = () => {
 
   const filterColumns: DataTableToolbarFilterItem[] = [
     {
-      label: 'Firma Adı',
+      label: 'Tüm Sonuçlarda Ara',
       queryName: 'searchTerm',
       type: DataTableToolbarFilterType.SearchInput
     },
     {
-      label: 'Durum',
+      label: 'Makine Ara',
+      queryName: 'machineName',
+      type: DataTableToolbarFilterType.SearchInput
+    },
+    {
+      label: 'Montaj Ara',
+      queryName: 'assemblyName',
+      type: DataTableToolbarFilterType.SearchInput
+    },
+    {
+      label: 'Firma',
+      queryName: 'customerId',
+      type: DataTableToolbarFilterType.SelectBox,
+      options: customersData?.data.map((customer) => ({ label: customer.customerName, value: customer.customerID })) || []
+    },
+    {
+      label: 'Online Durumu',
+      queryName: 'isOnline',
+      type: DataTableToolbarFilterType.SelectBox,
+      options: getIsOnlineOptionsData(t)
+    },
+
+    {
+      label: 'Aktif Durum',
       queryName: 'isActive',
       type: DataTableToolbarFilterType.SelectBox,
       options: getStatusOptionsData(t)

@@ -130,6 +130,12 @@ export const getIsAuthorizedOptionsData = (t: (key: string) => string) => [
   { label: t('staticData.isAuthorizedOptions.unauthorized'), value: 'false' }
 ];
 
+export const getIsOnlineOptionsData = (t: (key: string) => string) => [
+  { label: t('staticData.isOnlineOptions.all'), value: 'all' },
+  { label: t('staticData.isOnlineOptions.online'), value: 'true' },
+  { label: t('staticData.isOnlineOptions.offline'), value: 'false' }
+];
+
 export const getRequestTypeData = (t: (key: string) => string) => [
   { label: t('staticData.requestTypeOptions.all'), value: 'all' },
   { label: t('staticData.requestTypeOptions.get'), value: 'GET' },
