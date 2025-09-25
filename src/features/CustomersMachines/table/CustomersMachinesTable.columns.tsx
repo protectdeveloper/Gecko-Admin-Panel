@@ -4,7 +4,7 @@ import { AppSheet } from '@/components/AppSheet';
 import { DataTableToolbarFilterType, DataTableToolbarFilterItem } from '@/components/table/DataTable';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { getIsOnlineOptionsData, getStatusOptionsData } from '@/utils/data';
+import { getIsOnlineOptionsData, getIsTasEnabledOptionsData, getStatusOptionsData } from '@/utils/data';
 import { formatDateWithTime } from '@/utils/formatTime';
 import { ColumnDef } from '@tanstack/react-table';
 import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
@@ -176,6 +176,12 @@ export const useCustomersMachinesTableColumns = () => {
       queryName: 'customerId',
       type: DataTableToolbarFilterType.SelectBox,
       options: customersData?.data.map((customer) => ({ label: customer.customerName, value: customer.customerID })) || []
+    },
+    {
+      label: 'TAS Durumu',
+      queryName: 'isTasEnabled',
+      type: DataTableToolbarFilterType.SelectBox,
+      options: getIsTasEnabledOptionsData(t)
     },
     {
       label: 'Online Durumu',

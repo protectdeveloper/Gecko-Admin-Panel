@@ -23,5 +23,11 @@
     "all": "Tümü",
     "online": "Online",
     "offline": "Offline"
+  },
+
+  "isTasEnabledOptions": {
+    "all": "Tümü",
+    "enabled": "Enabled",
+    "disabled": "Disabled"
   }
 }

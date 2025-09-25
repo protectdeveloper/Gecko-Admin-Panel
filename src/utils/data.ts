@@ -136,6 +136,12 @@ export const getIsOnlineOptionsData = (t: (key: string) => string) => [
   { label: t('staticData.isOnlineOptions.offline'), value: 'false' }
 ];
 
+export const getIsTasEnabledOptionsData = (t: (key: string) => string) => [
+  { label: t('staticData.isTasEnabledOptions.all'), value: 'all' },
+  { label: t('staticData.isTasEnabledOptions.enabled'), value: 'true' },
+  { label: t('staticData.isTasEnabledOptions.disabled'), value: 'false' }
+];
+
 export const getRequestTypeData = (t: (key: string) => string) => [
   { label: t('staticData.requestTypeOptions.all'), value: 'all' },
   { label: t('staticData.requestTypeOptions.get'), value: 'GET' },
