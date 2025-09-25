@@ -54,5 +54,13 @@
   "adminLogs": {
     "title": "Admin Logları",
     "description": "Tüm admin loglarını yönetin ve görüntüleyin."
+  },
+  "machinesTypes": {
+    "title": "Makine Tipleri",
+    "description": "Kayıtlı tüm makine tiplerini yönetin ve görüntüleyin."
+  },
+  "customersMachines": {
+    "title": "Firma Makineleri",
+    "description": "Kayıtlı tüm firma makinelerini yönetin ve görüntüleyin."
   }
 }

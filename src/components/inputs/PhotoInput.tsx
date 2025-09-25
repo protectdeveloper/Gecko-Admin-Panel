@@ -8,6 +8,8 @@ import { AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { formatAvatarFallback } from '@/utils/formatAvatarFallback';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '../ui/button';
+import { Trash2 } from 'lucide-react';
 
 export type FileWithPreview = FileWithPath & {
   preview: string;
@@ -17,12 +19,21 @@ interface PhotoInputProps {
   value?: string;
   previewImage?: string;
   onChange?: (value: { originalImage: string; thumbnailImage: string }) => void;
+  onDeletePhotoPress?: () => void;
   firstName?: string;
   lastName?: string;
   disabled?: boolean;
 }
 
-export function PhotoInput({ value, previewImage, onChange, firstName, lastName, disabled }: PhotoInputProps) {
+export function PhotoInput({
+  value,
+  previewImage,
+  onChange,
+  onDeletePhotoPress,
+  firstName,
+  lastName,
+  disabled
+}: PhotoInputProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [openPreviewImage, setOpenPreviewImage] = useState(false);
@@ -84,13 +95,18 @@ export function PhotoInput({ value, previewImage, onChange, firstName, lastName,
       </div>
 
       {!disabled && (
-        <div
-          {...getRootProps()}
-          className={`cursor-pointer p-2 bg-muted rounded-lg transition-colors ${isDragActive ? 'bg-muted' : ''}`}
-        >
-          <input {...getInputProps()} />
-          <p className="text-sm font-semibold text-muted-foreground">{isDragActive ? 'Buraya Bırakın' : 'Fotoğraf Yükleyin'}</p>
-          {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+        <div className="flex items-center gap-2">
+          <div
+            {...getRootProps()}
+            className={`cursor-pointer p-2 bg-muted rounded-lg transition-colors ${isDragActive ? 'bg-muted' : ''}`}
+          >
+            <input {...getInputProps()} />
+            <p className="text-sm font-semibold text-muted-foreground">{isDragActive ? 'Buraya Bırakın' : 'Fotoğraf Yükleyin'}</p>
+            {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+          </div>
+          <Button size={'icon'} variant={'destructive'} className="w-min h-min p-2" onClick={onDeletePhotoPress}>
+            <Trash2 size={20} />
+          </Button>
         </div>
       )}
 

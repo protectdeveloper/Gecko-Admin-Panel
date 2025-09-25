@@ -18,6 +18,7 @@ export const CustomerMachineApi = {
 
   getManagementCustomerMachineById: async (id: string): Promise<GetManagementCustomerMachineByIdDTO> => {
     const response = await BaseAxiosService.get(`/management/customer-machine/${id}`);
+
     return response.data;
   },
 

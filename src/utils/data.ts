@@ -56,11 +56,7 @@ export const sidebarMenuData = {
         },
         {
           title: 'Firma Makineleri',
-          url: '/customers/settings'
-        },
-        {
-          title: 'Firma İletişim',
-          url: '/customers/starred'
+          url: '/customers/machines'
         }
       ]
     },
@@ -76,10 +72,6 @@ export const sidebarMenuData = {
         {
           title: 'Makine Tipleri',
           url: '/machines/types'
-        },
-        {
-          title: 'Makine Geçiş Yöntemleri',
-          url: '/machines/type-access-methods'
         }
       ]
     },

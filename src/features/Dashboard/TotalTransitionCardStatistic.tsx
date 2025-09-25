@@ -105,7 +105,9 @@ const TotalTransitionCardStatistic = () => {
       <Card className="p-4 gap-3">
         <CardHeader className="flex items-center gap-2 p-0">
           <div className="grid flex-1 gap-1">
-            <CardTitle>Toplam Geçiş Sayısı İstatistiği</CardTitle>
+            <CardTitle>
+              Toplam Geçiş Sayısı İstatistiği - {passesStatisticsData?.data?.totalPassCount.toLocaleString('tr-TR')}
+            </CardTitle>
           </div>
           <Tabs value={view} onValueChange={handleTabChange} className="space-x-1">
             <TabsList>
@@ -133,7 +135,9 @@ const TotalTransitionCardStatistic = () => {
     <Card className="p-4">
       <CardHeader className="flex items-center gap-2 p-0">
         <div className="grid flex-1 gap-1">
-          <CardTitle>Toplam Geçiş Sayısı İstatistiği</CardTitle>
+          <CardTitle>
+            Toplam Geçiş Sayısı İstatistiği - {passesStatisticsData?.data.totalPassCount.toLocaleString('tr-TR')}
+          </CardTitle>
         </div>
         <Tabs value={view} onValueChange={handleTabChange} className="space-x-1">
           <TabsList>

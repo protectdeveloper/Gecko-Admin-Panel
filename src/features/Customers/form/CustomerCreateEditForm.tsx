@@ -103,18 +103,8 @@ const CustomerCreateEditForm = ({ customerId }: CustomerCreateEditFormProps) => 
                 }}
                 firstName={watch('customerName')?.split(' ')[0] || ''}
                 lastName={watch('customerName')?.split(' ')[1] || ''}
+                onDeletePhotoPress={() => setValue('logo', '')}
               />
-
-              <Button
-                size={'default'}
-                onClick={() => {
-                  onChange(null);
-                  setValue('logo', '');
-                }}
-              >
-                <Trash2 size={20} />
-                Fotoğrafı Sil
-              </Button>
             </div>
           )}
         />

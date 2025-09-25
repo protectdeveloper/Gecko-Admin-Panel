@@ -62,7 +62,7 @@ const MqttMessageCard = ({ className }: Props) => {
         if (mqttStatusData?.isConnected) {
           refetchMqttMessages();
         }
-      }, Number(timeSeconds) * 1000);
+      }, Number(timeSeconds || '10') * 1000);
     }
     return () => {
       if (interval) clearInterval(interval);

@@ -59,7 +59,7 @@ export function CustomSelectBox({
       {title && (
         <label
           htmlFor={`input-${title?.replace(/\s+/g, '-').toLowerCase()}`}
-          className={cn('pl-0.5 text-sm font-medium', error && 'text-red-500')}
+          className={cn('pl-0.5 text-sm font-medium text-muted-foreground', error && 'text-red-500')}
         >
           {title}
         </label>
