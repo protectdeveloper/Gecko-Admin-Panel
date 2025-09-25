@@ -64,10 +64,10 @@ const CustomerDetailPage = () => {
       </div>
 
       <div className="flex w-full">
-        <Tabs defaultValue={tab || 'users'} onValueChange={(value) => onChangeHandler(value, 'tab')} className="w-full">
+        <Tabs value={tab || 'users'} onValueChange={(value) => onChangeHandler(value, 'tab')} className="w-full">
           <TabsList className="rounded-md">
-            {customerTabs.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value}>
+            {customerTabs.map((tab, index) => (
+              <TabsTrigger key={index} value={tab.value}>
                 {tab.label}
               </TabsTrigger>
             ))}
