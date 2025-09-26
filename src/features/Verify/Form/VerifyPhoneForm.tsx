@@ -145,7 +145,7 @@ const VerifyPhoneForm = () => {
                 render={({ field: { onChange, value }, fieldState: { error } }) => (
                   <div className="flex flex-col items-center space-y-3">
                     <InputOTP maxLength={6} value={value} onChange={onChange}>
-                      <InputOTPGroup className="gap-1">
+                      <InputOTPGroup className="w-full flex flex-wrap gap-2 lg:gap-1 justify-center">
                         {[...Array(6)].map((_, i) => (
                           <Fragment key={i}>
                             <InputOTPSlot
