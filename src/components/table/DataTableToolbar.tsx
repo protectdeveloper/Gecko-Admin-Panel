@@ -226,7 +226,6 @@ function ToolbarExportExcelButton({
       saveAs(blob, `${fileName}.xlsx`);
       toast.success('Excel başarıyla oluşturuldu');
     } catch (error) {
-      console.error(error);
       toast.error('Excel oluşturulurken bir hata oluştu');
     }
   };

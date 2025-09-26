@@ -56,19 +56,21 @@ export default function MachinesTypesPage() {
   };
 
   return (
-    <DataTable
-      title={'Makine Tipleri'}
-      tableName={DataTableName.MachinesTypesTable}
-      data={machineTypesListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={machineTypesListData?.pageSize || 0}
-      totalCount={machineTypesListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Makine Tipleri'}
+        tableName={DataTableName.MachinesTypesTable}
+        data={machineTypesListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={machineTypesListData?.pageSize || 0}
+        totalCount={machineTypesListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

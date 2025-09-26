@@ -49,17 +49,19 @@ export default function AdminLogsPage() {
   };
 
   return (
-    <DataTable
-      title={'Admin Logları'}
-      tableName={DataTableName.AdminLogsTable}
-      data={adminLogListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading || isFetching || isRefetching}
-      isError={isError}
-      pageCount={adminLogListData?.pageSize || 0}
-      totalCount={adminLogListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Admin Logları'}
+        tableName={DataTableName.AdminLogsTable}
+        data={adminLogListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading || isFetching || isRefetching}
+        isError={isError}
+        pageCount={adminLogListData?.pageSize || 0}
+        totalCount={adminLogListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+      />
+    </div>
   );
 }

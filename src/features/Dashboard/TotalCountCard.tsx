@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ArrowRightLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,6 +16,14 @@ interface Props {
 }
 
 const TotalCountCard = ({ title, count = 0, icon = null, isLoading = false, className, onRefresh }: Props) => {
+  const [animating, setAnimating] = useState(false);
+
+  const handleRefresh = () => {
+    if (onRefresh) onRefresh();
+    setAnimating(true);
+    setTimeout(() => setAnimating(false), 1500);
+  };
+
   if (isLoading) {
     return (
       <Card className={cn('flex flex-col items-center justify-center p-4 gap-5 relative', className)}>
@@ -40,10 +48,12 @@ const TotalCountCard = ({ title, count = 0, icon = null, isLoading = false, clas
           size="icon"
           variant="outline"
           className="p-1.5 w-min h-min absolute top-3 right-3"
-          onClick={onRefresh}
+          onClick={handleRefresh}
           disabled={isLoading}
         >
-          <ArrowRightLeft size={20} />
+          <span className={animating ? 'animate-spin' : ''}>
+            <ArrowRightLeft size={20} />
+          </span>
         </Button>
       </CardHeader>
 

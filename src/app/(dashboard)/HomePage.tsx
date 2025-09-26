@@ -84,17 +84,18 @@ const HomePage = () => {
               title="Toplam Firma Sayısı"
               count={analyticsTotalsData?.data.totalCustomers || 0}
               icon={<Building2 size={45} className="text-muted-foreground" />}
-              isLoading={isAnalyticsTotalsLoading}
+              isLoading={isAnalyticsTotalsLoading || forceRefresh}
               onRefresh={() => {
                 setForceRefresh(false);
                 setTimeout(() => setForceRefresh(true), 0);
               }}
             />
+
             <TotalCountCard
               title="Toplam Kullanıcı Sayısı"
               count={analyticsTotalsData?.data.totalUsers || 0}
               icon={<UsersRound size={45} className="text-muted-foreground" />}
-              isLoading={isAnalyticsTotalsLoading}
+              isLoading={isAnalyticsTotalsLoading || forceRefresh}
               onRefresh={() => {
                 setForceRefresh(false);
                 setTimeout(() => setForceRefresh(true), 0);
@@ -104,7 +105,7 @@ const HomePage = () => {
               title="Toplam Makine Sayısı"
               count={analyticsTotalsData?.data.totalMachines || 0}
               icon={<MonitorCog size={45} className="text-muted-foreground" />}
-              isLoading={isAnalyticsTotalsLoading}
+              isLoading={isAnalyticsTotalsLoading || forceRefresh}
               onRefresh={() => {
                 setForceRefresh(false);
                 setTimeout(() => setForceRefresh(true), 0);
@@ -114,7 +115,7 @@ const HomePage = () => {
               title="Toplam Kalan SMS / E-posta Sayısı"
               count={analyticsMessageCreditData?.data?.creditAmount || 0}
               icon={<Mails size={45} className="text-muted-foreground" />}
-              isLoading={isAnalyticsMessageCreditLoading}
+              isLoading={isAnalyticsMessageCreditLoading || forceRefresh}
               onRefresh={() => {
                 setForceRefresh(false);
                 setTimeout(() => setForceRefresh(true), 0);

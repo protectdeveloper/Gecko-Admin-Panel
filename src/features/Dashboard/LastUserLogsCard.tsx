@@ -6,6 +6,7 @@ import { formatAvatarFallback } from '@/utils/formatAvatarFallback';
 import { formatDateWithTime } from '@/utils/formatTime';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
+import { Info } from 'lucide-react';
 
 interface Props {
   className?: string;
@@ -120,7 +121,7 @@ const LastUserLogsCard = ({ className = '' }: Props) => {
       </CardHeader>
 
       <CardContent className="w-full h-full flex flex-col p-0 overflow-scroll">
-        {randomUserLogData.map((item, index) => (
+        {randomUserLogData?.map((item, index) => (
           <div key={index} className="py-3 first:pt-0 last:pb-0 space-y-2 border-b last:border-b-0 transition-shadow">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -141,6 +142,13 @@ const LastUserLogsCard = ({ className = '' }: Props) => {
             </div>
           </div>
         ))}
+
+        {(!randomUserLogData || randomUserLogData?.length === 0) && (
+          <div className="w-full h-full flex flex-col gap-3 items-center justify-center text-sm text-muted-foreground">
+            <Info className="text-white bg-primary rounded-full" size={40} />
+            <span className="text-sm font-medium">Sonuç bulunamadı</span>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

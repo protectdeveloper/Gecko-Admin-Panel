@@ -58,19 +58,21 @@ export default function PackagesTypesPage() {
   };
 
   return (
-    <DataTable
-      title={'Paket Tipleri'}
-      tableName={DataTableName.PackagesTypesTable}
-      data={packageTypesListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={packageTypesListData?.pageSize || 0}
-      totalCount={packageTypesListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Paket Tipleri'}
+        tableName={DataTableName.PackagesTypesTable}
+        data={packageTypesListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={packageTypesListData?.pageSize || 0}
+        totalCount={packageTypesListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

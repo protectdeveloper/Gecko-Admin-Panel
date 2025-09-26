@@ -14,6 +14,10 @@ import { usePathname } from 'next/navigation';
 import { ModeToggle } from '../sidebar/theme-dropdown';
 import { SidebarTrigger, useSidebar } from '../ui/sidebar';
 import { getBreadcrumbMetaFromPathname, getBreadcrumbTrailFromPathname } from '@/lib/get-breadcrumb';
+import { AppAlert } from '../AppAlert';
+import { Button } from '../ui/button';
+import DatabaseCreateEditForm from '@/features/Database/form/DatabaseCreateEditForm';
+import { Database } from 'lucide-react';
 
 export default function HeaderBar() {
   const pathname = usePathname() || '';
@@ -82,6 +86,17 @@ export default function HeaderBar() {
       )}
 
       <div className="flex items-center justify-end gap-2">
+        <AppAlert.AlertDialog>
+          <AppAlert.Trigger asChild>
+            <Button variant="outline" size="default">
+              <Database /> Database Oluştur
+            </Button>
+          </AppAlert.Trigger>
+          <AppAlert.Content title="Veritabanı Oluştur" description="Yeni veritabanı oluşturun.">
+            <DatabaseCreateEditForm />
+            <AppAlert.Footer></AppAlert.Footer>
+          </AppAlert.Content>
+        </AppAlert.AlertDialog>
         <ModeToggle />
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { toast } from 'sonner';
 
 interface UseVerificationCodeHashReturn {
   verifyCode: (code: string, storedHash: string, storedSalt: string) => Promise<boolean>;
@@ -79,7 +80,7 @@ export const useVerificationCodeHash = (): UseVerificationCodeHashReturn => {
 
         return bytesToBase64(finalHash);
       } catch (error) {
-        console.error('Hash hesaplama hatası:', error);
+        toast.error('Hash hesaplama hatası');
         throw new Error('Hash hesaplanamadı');
       }
     },
@@ -93,7 +94,7 @@ export const useVerificationCodeHash = (): UseVerificationCodeHashReturn => {
         const computedHash = await computeHash(code, storedSalt);
         return computedHash === storedHash;
       } catch (error) {
-        console.error('Kod doğrulama hatası:', error);
+        toast.error('Kod doğrulama hatası');
         return false;
       }
     },

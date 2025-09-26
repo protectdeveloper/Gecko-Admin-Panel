@@ -61,19 +61,21 @@ export default function PackagesPage() {
   };
 
   return (
-    <DataTable
-      title={'Paketler'}
-      tableName={DataTableName.PackagesTable}
-      data={packagesListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={packagesListData?.pageSize || 0}
-      totalCount={packagesListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Paketler'}
+        tableName={DataTableName.PackagesTable}
+        data={packagesListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={packagesListData?.pageSize || 0}
+        totalCount={packagesListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

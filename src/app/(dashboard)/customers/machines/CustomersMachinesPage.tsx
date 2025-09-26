@@ -69,19 +69,21 @@ export default function CustomersMachinesPage() {
     }
   };
   return (
-    <DataTable
-      title={'Firma Makineleri'}
-      tableName={DataTableName.CustomersMachinesTable}
-      data={customersMachinesListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={customersMachinesListData?.pageSize || 0}
-      totalCount={customersMachinesListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Firma Makineleri'}
+        tableName={DataTableName.CustomersMachinesTable}
+        data={customersMachinesListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={customersMachinesListData?.pageSize || 0}
+        totalCount={customersMachinesListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

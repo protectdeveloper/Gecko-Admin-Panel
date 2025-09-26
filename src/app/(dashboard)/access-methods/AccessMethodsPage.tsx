@@ -55,19 +55,21 @@ export default function AccessMethodsPage() {
   };
 
   return (
-    <DataTable
-      title={'Geçiş Yöntemleri'}
-      tableName={DataTableName.AccessMethodsTable}
-      data={accessMethodListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={accessMethodListData?.pageSize || 0}
-      totalCount={accessMethodListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Geçiş Yöntemleri'}
+        tableName={DataTableName.AccessMethodsTable}
+        data={accessMethodListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={accessMethodListData?.pageSize || 0}
+        totalCount={accessMethodListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

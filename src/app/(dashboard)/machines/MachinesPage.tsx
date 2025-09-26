@@ -66,19 +66,21 @@ export default function MachinesPage() {
     }
   };
   return (
-    <DataTable
-      title={'Makineler'}
-      tableName={DataTableName.MachinesTable}
-      data={machinesListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={machinesListData?.pageSize || 0}
-      totalCount={machinesListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Makineler'}
+        tableName={DataTableName.MachinesTable}
+        data={machinesListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={machinesListData?.pageSize || 0}
+        totalCount={machinesListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

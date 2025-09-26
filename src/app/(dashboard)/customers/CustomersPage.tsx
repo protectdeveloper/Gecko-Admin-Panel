@@ -54,19 +54,21 @@ export default function CustomersPage() {
     }
   };
   return (
-    <DataTable
-      title={'Firmalar'}
-      tableName={DataTableName.CustomersTable}
-      data={customersListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={customersListData?.pageSize || 0}
-      totalCount={customersListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Firmalar'}
+        tableName={DataTableName.CustomersTable}
+        data={customersListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={customersListData?.pageSize || 0}
+        totalCount={customersListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

@@ -114,6 +114,16 @@ export const sidebarMenuData = {
   navFooter: menuFooterData
 };
 
+export const customerDetailTabs = [
+  { label: 'Kullanıcılar', value: 'users' },
+  { label: 'Makineler', value: 'machines' },
+  { label: 'Geçişler', value: 'transitions' },
+  { label: 'Bağlantılar', value: 'connections' },
+  { label: 'Geçiş Metodları', value: 'transitionMethods' },
+  { label: 'Ödemeler', value: 'payments' },
+  { label: 'Ayarlar', value: 'settings' }
+];
+
 export const getStatusOptionsData = (t: (key: string) => string) => [
   { label: t('staticData.statusOptions.all'), value: 'all' },
   { label: t('staticData.statusOptions.active'), value: 'true' },

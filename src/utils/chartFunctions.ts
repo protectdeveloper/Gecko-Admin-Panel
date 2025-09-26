@@ -157,7 +157,5 @@ export function formatAverageTime(timeString: string): string {
     result = '0 dk';
   }
 
-  console.log('result:', result);
-
   return result;
 }

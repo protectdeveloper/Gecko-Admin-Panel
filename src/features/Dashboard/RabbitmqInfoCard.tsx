@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { ArrowRightLeft } from 'lucide-react';
+import { ArrowRightLeft, Info } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
@@ -111,6 +111,13 @@ const RabbitmqInfoCard = ({ className }: Props) => {
             <span className="text-sm text-muted-foreground font-semibold">Consumers Sayısı: {queue.consumers}</span>
           </div>
         ))}
+
+        {(!rabbitmqData || rabbitmqData?.data?.queues?.length === 0) && (
+          <div className="w-full h-full flex flex-col gap-3 items-center justify-center text-sm text-muted-foreground">
+            <Info className="text-white bg-primary rounded-full" size={40} />
+            <span className="text-sm font-medium">Sonuç bulunamadı</span>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

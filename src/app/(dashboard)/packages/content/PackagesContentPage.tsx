@@ -55,19 +55,21 @@ export default function PackagesContentPage() {
   };
 
   return (
-    <DataTable
-      title={'Paket İçerikleri'}
-      tableName={DataTableName.PackagesContentTable}
-      data={packageContentListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={packageContentListData?.pageSize || 0}
-      totalCount={packageContentListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Paket İçerikleri'}
+        tableName={DataTableName.PackagesContentTable}
+        data={packageContentListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={packageContentListData?.pageSize || 0}
+        totalCount={packageContentListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

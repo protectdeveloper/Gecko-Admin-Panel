@@ -60,19 +60,21 @@ export default function PublicHolidaysPage() {
   };
 
   return (
-    <DataTable
-      title={'Tatil Listesi'}
-      tableName={DataTableName.PublicHolidaysTable}
-      data={publicHolidaysListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={publicHolidaysListData?.pageSize || 0}
-      totalCount={publicHolidaysListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Tatil Listesi'}
+        tableName={DataTableName.PublicHolidaysTable}
+        data={publicHolidaysListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={publicHolidaysListData?.pageSize || 0}
+        totalCount={publicHolidaysListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

@@ -177,8 +177,6 @@ const MachinesCreateEditForm = ({ machineID }: CustomerCreateEditFormProps) => {
     }
   };
 
-  console.log('form errors', form.formState.errors);
-
   return (
     <div className="w-full flex flex-col px-4 gap-4 h-[92vh]">
       <div className="flex-1 flex flex-col overflow-auto gap-4">

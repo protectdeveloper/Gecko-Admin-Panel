@@ -58,19 +58,21 @@ export default function ConnectionsPage() {
   };
 
   return (
-    <DataTable
-      title={'Bağlantılar'}
-      tableName={DataTableName.ConnectionsTable}
-      data={connectionsListData?.data || []}
-      columns={columns}
-      filterColumns={filterColumns}
-      isLoading={isLoading}
-      isError={isError}
-      pageCount={connectionsListData?.pageSize || 0}
-      totalCount={connectionsListData?.totalCount || 0}
-      clearFiltersPress={handleClearFiltersPress}
-      handleExcelExportButton={handleExcelExportButton}
-      renderCreateButton={renderCreateButton}
-    />
+    <div className="w-full overflow-auto">
+      <DataTable
+        title={'Bağlantılar'}
+        tableName={DataTableName.ConnectionsTable}
+        data={connectionsListData?.data || []}
+        columns={columns}
+        filterColumns={filterColumns}
+        isLoading={isLoading}
+        isError={isError}
+        pageCount={connectionsListData?.pageSize || 0}
+        totalCount={connectionsListData?.totalCount || 0}
+        clearFiltersPress={handleClearFiltersPress}
+        handleExcelExportButton={handleExcelExportButton}
+        renderCreateButton={renderCreateButton}
+      />
+    </div>
   );
 }

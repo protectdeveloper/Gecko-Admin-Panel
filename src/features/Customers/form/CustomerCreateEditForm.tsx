@@ -1,6 +1,5 @@
 'use client';
 import { z } from 'zod';
-import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AppSheet } from '@/components/AppSheet';
 import { Controller, useForm } from 'react-hook-form';
@@ -23,14 +22,14 @@ const CustomerCreateEditForm = ({ customerId }: CustomerCreateEditFormProps) => 
   const { mutateAsync: postCreateCustomer } = usePostCreateCustomerMutation();
   const { mutateAsync: putUpdateCustomer } = usePutUpdateCustomerByIdMutation();
 
-  const LoginSchema = z.object({
+  const CustomerCreateEditFormSchema = z.object({
     logo: z.string().optional(),
     customerName: z.string().min(1, 'Firma adı zorunludur'),
     customerCode: z.string().regex(/^\d{6}$/, 'Firma kodu 6 haneli rakamlardan oluşmalıdır'),
     isActive: z.boolean().optional()
   });
 
-  type FormValues = z.infer<typeof LoginSchema>;
+  type FormValues = z.infer<typeof CustomerCreateEditFormSchema>;
 
   const form = useForm<FormValues>({
     values: {
@@ -39,7 +38,7 @@ const CustomerCreateEditForm = ({ customerId }: CustomerCreateEditFormProps) => 
       customerCode: customerData?.data.customerCode || '',
       isActive: customerData?.data.isActive || false
     },
-    resolver: zodResolver(LoginSchema)
+    resolver: zodResolver(CustomerCreateEditFormSchema)
   });
 
   const { handleSubmit, control, watch, setValue } = form;

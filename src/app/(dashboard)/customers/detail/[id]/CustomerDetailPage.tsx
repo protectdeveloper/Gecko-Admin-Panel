@@ -1,21 +1,22 @@
 'use client';
 import React from 'react';
+import { cn } from '@/lib/utils';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { customerDetailTabs } from '@/utils/data';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import TotalCountCard from '@/features/Dashboard/TotalCountCard';
 import { ArrowLeftRight, MonitorCog, UsersRound } from 'lucide-react';
-import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import MachinesContent from '@/features/CustomerDetail/tab-contents/MachinesContent';
 import ConnectionsContent from '@/features/CustomerDetail/tab-contents/ConnectionContent';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 const CustomerDetailPage = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const tab = searchParams.get('tab');
+  const tab = searchParams.get('tab') || 'users';
   const customerId = pathname.split('/').pop() || '';
 
   const onChangeHandler = (value: string, queryName: string) => {
@@ -29,16 +30,6 @@ const CustomerDetailPage = () => {
 
     router.push(`${pathname}?${newSearchParams.toString()}`);
   };
-
-  const customerTabs = [
-    { label: 'Kullanıcılar', value: 'users' },
-    { label: 'Makineler', value: 'machines' },
-    { label: 'Geçişler', value: 'transitions' },
-    { label: 'Bağlantılar', value: 'connections' },
-    { label: 'Geçiş Metodları', value: 'transitionMethods' },
-    { label: 'Ödemeler', value: 'payments' },
-    { label: 'Ayarlar', value: 'settings' }
-  ];
 
   return (
     <div className="w-full flex flex-col bg-card p-4 min-h-screen gap-4">
@@ -68,11 +59,11 @@ const CustomerDetailPage = () => {
 
       <Tabs value={tab || 'users'} onValueChange={(value) => onChangeHandler(value, 'tab')} className="w-full p-0 m-0 min-h-0">
         <Card className="w-full flex flex-row flex-wrap p-0 gap-1 md:gap-0 overflow-auto rounded-md">
-          {customerTabs.map((customerTab, index) => (
+          {customerDetailTabs.map((customerTab, index) => (
             <Button
               key={index}
               variant="ghost"
-              className={cn('rounded-md flex-1', tab === customerTab.value && 'bg-accent text-accent-foreground')}
+              className={cn('flex-1 rounded-md h-8', tab === customerTab.value && 'bg-accent text-accent-foreground')}
               onClick={() => onChangeHandler(customerTab.value, 'tab')}
             >
               {customerTab.label}

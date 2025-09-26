@@ -61,7 +61,6 @@ export async function exportCustomersExcel(data: GetManagementCustomersDTO['data
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -128,7 +127,6 @@ export async function exportMachinesExcel(data: GetManagementMachinesDTO['data']
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -179,7 +177,6 @@ export async function exportPackagesExcel(data: GetManagementPackageDTO['data'],
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -231,7 +228,6 @@ export async function exportPublicHolidaysExcel(data: GetManagementPublicHoliday
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -287,7 +283,6 @@ export async function exportAccessMethodsExcel(data: GetManagementAccessMethodDT
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -343,7 +338,6 @@ export async function exportPackageTypesExcel(data: GetManagementPackageTypeDTO[
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -397,7 +391,6 @@ export async function exportConnectionsExcel(data: GetManagementConnectionDTO['d
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -452,7 +445,6 @@ export async function exportPackageContentExcel(data: GetManagementPackageConten
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -507,7 +499,6 @@ export async function exportMachinesTypesExcel(data: GetManagementMachineTypesDT
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }
@@ -567,7 +558,6 @@ export async function exportCustomersMachinesExcel(data: GetManagementCustomerMa
     saveAs(blob, fileName);
     toast.success('Excel dosyası başarıyla oluşturuldu.');
   } catch (error) {
-    console.error(error);
     toast.error('Excel dosyası oluşturulurken bir hata oluştu.');
   }
 }

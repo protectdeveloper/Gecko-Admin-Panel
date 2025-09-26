@@ -135,10 +135,10 @@ const ExpiringCompaniesCard = ({ className }: Props) => {
           </div>
         ))}
 
-        {(!packagesExpiringData || packagesExpiringData?.data.expiringPackages.length === 0) && (
+        {(!packagesExpiringData || packagesExpiringData?.data?.expiringPackages?.length === 0) && (
           <div className="w-full h-full flex flex-col gap-3 items-center justify-center text-sm text-muted-foreground">
             <Info className="text-white bg-primary rounded-full" size={40} />
-            <span className="text-sm font-medium">Veri bulunamadı</span>
+            <span className="text-sm font-medium">Sonuç bulunamadı</span>
           </div>
         )}
       </CardContent>
