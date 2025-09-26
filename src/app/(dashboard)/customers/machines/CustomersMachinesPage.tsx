@@ -28,6 +28,7 @@ export default function CustomersMachinesPage() {
   const {
     data: customersMachinesListData,
     isLoading,
+    isFetching,
     isError
   } = useGetCustomerMachineQuery({
     pageNumber: Number(page) || 1,
@@ -76,7 +77,7 @@ export default function CustomersMachinesPage() {
         data={customersMachinesListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={customersMachinesListData?.pageSize || 0}
         totalCount={customersMachinesListData?.totalCount || 0}

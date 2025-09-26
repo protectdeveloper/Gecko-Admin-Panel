@@ -23,6 +23,7 @@ export default function CustomersPage() {
   const {
     data: customersListData,
     isLoading,
+    isFetching,
     isError
   } = useGetCustomersQuery({
     pageNumber: Number(page) || 1,
@@ -61,7 +62,7 @@ export default function CustomersPage() {
         data={customersListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={customersListData?.pageSize || 0}
         totalCount={customersListData?.totalCount || 0}

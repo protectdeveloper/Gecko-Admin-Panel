@@ -51,6 +51,7 @@ const HomePage = () => {
   const {
     data: adminLogsData,
     isLoading: isAdminLogsLoading,
+    isFetching: isAdminLogsFetching,
     isError: isAdminLogsError
   } = useGetManagementAnalyticsAdminLogsQuery({
     pageNumber: Number(page) || 1,
@@ -154,7 +155,7 @@ const HomePage = () => {
         filterColumns={filterColumns}
         totalCount={adminLogsData?.totalCount || 0}
         pageCount={adminLogsData?.pageSize || 0}
-        isLoading={isAdminLogsLoading}
+        isLoading={isAdminLogsLoading || isAdminLogsFetching}
         isError={isAdminLogsError}
         clearFiltersPress={handleClearFiltersPress}
         isExcelButtonVisible={false}

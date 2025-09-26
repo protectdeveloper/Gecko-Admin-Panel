@@ -26,6 +26,7 @@ export default function PublicHolidaysPage() {
   const {
     data: publicHolidaysListData,
     isLoading,
+    isFetching,
     isError
   } = useGetPublicHolidayQuery({
     pageNumber: Number(page) || 1,
@@ -67,7 +68,7 @@ export default function PublicHolidaysPage() {
         data={publicHolidaysListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={publicHolidaysListData?.pageSize || 0}
         totalCount={publicHolidaysListData?.totalCount || 0}

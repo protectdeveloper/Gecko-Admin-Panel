@@ -23,6 +23,7 @@ export default function PackagesContentPage() {
   const {
     data: packageContentListData,
     isLoading,
+    isFetching,
     isError
   } = useGetPackageContentQuery({
     pageNumber: Number(page) || 1,
@@ -62,7 +63,7 @@ export default function PackagesContentPage() {
         data={packageContentListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={packageContentListData?.pageSize || 0}
         totalCount={packageContentListData?.totalCount || 0}

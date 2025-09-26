@@ -24,6 +24,7 @@ export default function PackagesTypesPage() {
   const {
     data: packageTypesListData,
     isLoading,
+    isFetching,
     isError
   } = useGetPackageTypeQuery({
     pageNumber: Number(page) || 1,
@@ -65,7 +66,7 @@ export default function PackagesTypesPage() {
         data={packageTypesListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={packageTypesListData?.pageSize || 0}
         totalCount={packageTypesListData?.totalCount || 0}

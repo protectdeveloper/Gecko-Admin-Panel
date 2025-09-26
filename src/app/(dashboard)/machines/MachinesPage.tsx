@@ -27,6 +27,7 @@ export default function MachinesPage() {
   const {
     data: machinesListData,
     isLoading,
+    isFetching,
     isError
   } = useGetMachinesQuery({
     pageNumber: Number(page) || 1,
@@ -73,7 +74,7 @@ export default function MachinesPage() {
         data={machinesListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={machinesListData?.pageSize || 0}
         totalCount={machinesListData?.totalCount || 0}

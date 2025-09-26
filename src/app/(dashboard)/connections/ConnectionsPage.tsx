@@ -24,6 +24,7 @@ export default function ConnectionsPage() {
   const {
     data: connectionsListData,
     isLoading,
+    isFetching,
     isError
   } = useGetConnectionQuery({
     pageNumber: Number(page) || 1,
@@ -65,7 +66,7 @@ export default function ConnectionsPage() {
         data={connectionsListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={connectionsListData?.pageSize || 0}
         totalCount={connectionsListData?.totalCount || 0}

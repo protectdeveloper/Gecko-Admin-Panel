@@ -23,6 +23,7 @@ export default function AccessMethodsPage() {
   const {
     data: accessMethodListData,
     isLoading,
+    isFetching,
     isError
   } = useGetAccessMethodQuery({
     pageNumber: Number(page) || 1,
@@ -62,7 +63,7 @@ export default function AccessMethodsPage() {
         data={accessMethodListData?.data || []}
         columns={columns}
         filterColumns={filterColumns}
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         isError={isError}
         pageCount={accessMethodListData?.pageSize || 0}
         totalCount={accessMethodListData?.totalCount || 0}
