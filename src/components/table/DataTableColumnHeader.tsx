@@ -10,7 +10,6 @@ import {
 import { cn } from '../../lib/utils';
 import { Button } from '../ui/button';
 import { flexRender } from '@tanstack/react-table';
-import { useTranslation } from 'react-i18next';
 
 export default function ColumnHeader({ column, header, className }: { column: any; header: any; className?: string }) {
   const columnDef: any = column.columnDef;

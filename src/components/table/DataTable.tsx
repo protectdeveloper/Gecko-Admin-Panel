@@ -35,8 +35,9 @@ import { CustomGroupedSelectBoxOption } from '../inputs/CustomGroupedSelectBox';
 import { CustomGroupedTreeMultiCheckboxData } from '../inputs/CustomGroupedTreeMultiCheckbox';
 import { DataTableName } from './DataTable.enum';
 import { useTableStore } from '@/store/useTableStore';
-import { useTranslation } from 'react-i18next';
 import { CustomMultiSelectBoxOption } from '../inputs/CustomMultiSelectBox';
+import { Skeleton } from '../ui/skeleton';
+import DataTableHeaderSkeleton from './DataTableHeaderSkeleton';
 
 export type DataTableMeta = {
   pageSizeOptions?: number[];
@@ -314,6 +315,7 @@ export const DataTable = (props: DataTableProps) => {
   if (props?.isLoading) {
     return (
       <div className="w-full p-5 gap-3 grid bg-background shadow-sm rounded-xl border border-border">
+        <DataTableHeaderSkeleton />
         <DataTableFilters filterColumns={props?.filterColumns} />
         <DataTableSkeleton columnCount={tableInstance.getAllColumns().length} />
       </div>

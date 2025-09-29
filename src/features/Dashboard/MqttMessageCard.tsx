@@ -198,9 +198,10 @@ const MqttMessageCard = ({ className }: Props) => {
                 <div className="w-full flex items-center gap-2">
                   <Skeleton className="w-8 h-8 rounded-md" />
                   <div className="w-full flex flex-row items-center justify-between gap-2">
-                    <div className="flex flex-col w-full">
-                      <Skeleton className="mb-1 w-1/3 h-4 rounded-md" />
+                    <div className="flex flex-col w-full gap-1.5">
+                      <Skeleton className="w-1/3 h-4 rounded-md" />
                       <Skeleton className="w-full h-3 rounded-md" />
+                      <Skeleton className="w-4/5 h-3 rounded-md" />
                     </div>
                     <Skeleton className="w-12 h-6 rounded-md" />
                   </div>
