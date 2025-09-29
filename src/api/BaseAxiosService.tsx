@@ -55,6 +55,7 @@ BaseAxiosService.interceptors.response.use(
 
       return Promise.reject(new Error('Unauthorized'));
     }
+
     return response;
   },
   (error) => {
@@ -64,6 +65,12 @@ BaseAxiosService.interceptors.response.use(
 
       window.location.href = '/auth/login';
       toast.error(error?.response?.data?.error || 'Oturumunuz sonlandı. Lütfen tekrar giriş yapın.');
+      return Promise.reject(new Error('Unauthorized'));
+    }
+
+    if (error?.response.status === 500) {
+      toast.error(error?.response?.data?.message || error?.message || 'Bir hata oluştu. Lütfen tekrar deneyin.');
+      return Promise.reject(new Error(error?.response?.data?.message || 'Internal Server Error'));
     }
 
     return Promise.reject(error);
