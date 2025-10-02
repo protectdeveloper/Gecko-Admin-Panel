@@ -13,7 +13,7 @@ import {
   SidebarMenuSubItem
 } from '@/components/ui/sidebar';
 import { useTranslation } from 'react-i18next';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useGetSupportAdminTicketsQuery } from '@/api/Support/Support.hook';
 import { Badge } from '../ui/badge';
 
@@ -31,10 +31,10 @@ export function NavMain({
     }[];
   }[];
 }) {
-  const { t } = useTranslation();
-  const pathname = usePathname() || '';
   const router = useRouter();
-  const { data: supportTicketsData, refetch } = useGetSupportAdminTicketsQuery({
+  const { t } = useTranslation();
+
+  const { data: supportTicketsData } = useGetSupportAdminTicketsQuery({
     pageNumber: 1,
     pageSize: 20,
     status: 'open'

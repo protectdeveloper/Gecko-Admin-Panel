@@ -447,7 +447,8 @@ function SidebarMenuButton({
     />
   );
 
-  if (!tooltip) {
+  // Mobil cihazlarda veya sidebar açıkken tooltip gösterme
+  if (!tooltip || isMobile || state !== 'collapsed') {
     return button;
   }
 
@@ -460,7 +461,7 @@ function SidebarMenuButton({
   return (
     <Tooltip>
       <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent side="right" align="center" hidden={state !== 'collapsed' || isMobile} {...tooltip} />
+      <TooltipContent className="bg-muted" side="right" align="center" {...tooltip} />
     </Tooltip>
   );
 }

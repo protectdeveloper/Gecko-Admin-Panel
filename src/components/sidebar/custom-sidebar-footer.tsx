@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import { SidebarFooter, SidebarMenuButton } from '@/components/ui/sidebar';
-import { AppAlert } from '../AppAlert';
+import { NavUser } from './NavUser';
 import { LogOut } from 'lucide-react';
 import { Button } from '../ui/button';
-import { NavUser } from './nav-user';
-import { useAuthStore } from '@/store/useAuthStore';
+import { AppAlert } from '../AppAlert';
 import { deleteCookie } from 'cookies-next';
+import { useAuthStore } from '@/store/useAuthStore';
+import { SidebarFooter, SidebarMenuButton } from '@/components/ui/sidebar';
 
 const CustomSidebarFooter = () => {
   const { logout } = useAuthStore();

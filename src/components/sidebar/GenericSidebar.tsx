@@ -1,28 +1,13 @@
 'use client';
 import * as React from 'react';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail,
-  SidebarTrigger,
-  useSidebar
-} from '@/components/ui/sidebar';
-import Link from 'next/link';
 import Image from 'next/image';
-import { Badge } from '../ui/badge';
-import { useTranslation } from 'react-i18next';
+import { cn } from '@/lib/utils';
+import { NavMain } from './NavMain';
+import { useRouter } from 'next/navigation';
 import { sidebarMenuData } from '@/utils/data';
-import { usePathname, useRouter } from 'next/navigation';
 import CustomSidebarFooter from './custom-sidebar-footer';
 import GeckoAiImage from '../../../public/assets/img/geckoAi.png';
-import { useGetSupportAdminTicketsQuery } from '@/api/Support/Support.hook';
-import { NavMain } from './NavMain';
+import { Sidebar, SidebarContent, SidebarHeader, SidebarRail, SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 
 export interface NavItem {
   title: string;
@@ -45,7 +30,7 @@ export function GenericSidebar({ ...props }) {
 
   return (
     <Sidebar collapsible={'icon'} {...props}>
-      <SidebarHeader className="flex flex-row items-center justify-between py-4">
+      <SidebarHeader className="flex flex-row items-center justify-between py-3.5">
         {(open || isMobile) && isMounted && (
           <Image
             alt="Logo"
@@ -56,7 +41,7 @@ export function GenericSidebar({ ...props }) {
             src={GeckoAiImage}
           />
         )}
-        <SidebarTrigger className="w-8 h-8 " />
+        <SidebarTrigger className={cn('w-8 h-8', !open && 'pt-2')} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={sidebarMenuData.navMain} />
