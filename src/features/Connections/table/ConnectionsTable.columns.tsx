@@ -58,6 +58,7 @@ export const useConnectionsTableColumns = ({
       {
         accessorKey: 'customerName',
         label: 'Firma Adı',
+        sortingFn: 'text',
         cell: ({ row }) => <span>{row.original?.customerName || '-'}</span>
       },
       {

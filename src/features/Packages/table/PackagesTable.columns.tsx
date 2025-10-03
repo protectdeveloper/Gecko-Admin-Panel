@@ -49,7 +49,8 @@ export const usePackagesTableColumns = () => {
     () => [
       {
         accessorKey: 'packageName',
-        label: 'Paket Adı'
+        label: 'Paket Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'description',

@@ -52,6 +52,7 @@ export const useCustomersTableColumns = () => {
       {
         accessorKey: 'customerName',
         label: 'Firma Adı',
+        sortingFn: 'text',
         cell: ({ row }) => (
           <div
             className="flex items-center gap-3 cursor-pointer hover:underline"

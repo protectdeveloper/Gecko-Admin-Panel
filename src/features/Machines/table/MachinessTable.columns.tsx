@@ -50,7 +50,8 @@ export const useMachinesTableColumns = () => {
     () => [
       {
         accessorKey: 'connectionName',
-        label: 'Bağlantı Adı'
+        label: 'Bağlantı Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'serialNumber',

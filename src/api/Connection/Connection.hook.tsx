@@ -52,7 +52,7 @@ export const usePutConnectionByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Bağlantı başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementConnection'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementConnectionById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementConnectionById', variables.id] });
       } else {
         toast.error(data?.error || 'Bağlantı güncellenirken bir hata oluştu.');
       }

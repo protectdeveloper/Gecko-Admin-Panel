@@ -45,7 +45,8 @@ export const usePublicHolidaysTableColumns = () => {
     () => [
       {
         accessorKey: 'holidayName',
-        label: 'Tatil Adı'
+        label: 'Tatil Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'startTime',

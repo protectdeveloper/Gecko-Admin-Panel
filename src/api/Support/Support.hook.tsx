@@ -27,7 +27,7 @@ export const useGetSupportAdminTicketMessagesByIdQuery = (params: GetSupportAdmi
 export const useSupportAdminTicketSendMessageMutation = () => {
   return useMutation({
     mutationFn: SupportApi.postSupportAdminTicketSendMessage,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
       } else {
         toast.error(data?.message || 'Destek bileti mesajı gönderilirken bir hata oluştu.');

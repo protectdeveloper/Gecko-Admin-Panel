@@ -57,7 +57,8 @@ export const useCustomersMachinesTableColumns = ({
     () => [
       {
         accessorKey: 'machineName',
-        label: 'Makine Adı'
+        label: 'Makine Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'description',
@@ -65,7 +66,8 @@ export const useCustomersMachinesTableColumns = ({
       },
       {
         accessorKey: 'assemblyName',
-        label: 'Montaj Adı'
+        label: 'Montaj Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'tolerance',

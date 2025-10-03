@@ -27,7 +27,7 @@ export const usePostCreatePackageTypeMutation = () => {
 
   return useMutation({
     mutationFn: PackageTypeApi.postCreateManagementPackageType,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Paket tipi başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPackageType'] });
@@ -51,7 +51,7 @@ export const usePutPackageTypeByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Paket tipi başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPackageType'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementPackageTypeById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementPackageTypeById', variables.id] });
       } else {
         toast.error(data?.error || 'Paket tipi güncellenirken bir hata oluştu.');
       }

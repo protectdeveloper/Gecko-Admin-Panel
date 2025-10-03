@@ -55,11 +55,13 @@ export const usePackagesContentTableColumns = () => {
       {
         accessorKey: 'packageName',
         label: 'Paket Adı',
+        sortingFn: 'text',
         cell: ({ row }) => <span>{row.original.packageName || '-'}</span>
       },
       {
         accessorKey: 'packageTypeName',
         label: 'Paket Tipi Adı',
+        sortingFn: 'text',
         cell: ({ row }) => <span>{row.original.packageTypeName || '-'}</span>
       },
       {

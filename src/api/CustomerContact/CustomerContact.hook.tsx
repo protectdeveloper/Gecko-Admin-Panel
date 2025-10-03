@@ -27,7 +27,7 @@ export const usePostCreateCustomerContactMutation = () => {
 
   return useMutation({
     mutationFn: CustomerContactApi.postCreateManagementCustomerContact,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Firma başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementCustomerContact'] });
@@ -51,7 +51,7 @@ export const usePutUpdateCustomerContactByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Firma iletişim bilgisi başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementCustomerContact'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementCustomerContactById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementCustomerContactById', variables.id] });
       } else {
         toast.error(data?.error || 'Firma iletişim bilgisi güncellenirken bir hata oluştu.');
       }

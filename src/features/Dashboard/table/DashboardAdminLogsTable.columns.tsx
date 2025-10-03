@@ -14,7 +14,8 @@ export const useDashboardAdminLogsTableColumns = () => {
     () => [
       {
         accessorKey: 'adminName',
-        label: 'Admin Adı'
+        label: 'Admin Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'ipAddress',

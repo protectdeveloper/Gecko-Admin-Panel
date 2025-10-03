@@ -30,7 +30,7 @@ export const usePostCreateMachineTypeAccessMethodMutation = () => {
 
   return useMutation({
     mutationFn: MachineTypeAccessMethodApi.postCreateManagementMachineTypeAccessMethod,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Firma başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementMachineTypeAccessMethods'] });
@@ -54,7 +54,7 @@ export const usePutUpdateMachineTypeAccessMethodByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Firma başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementMachineTypeAccessMethods'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementMachineTypeAccessMethodById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementMachineTypeAccessMethodById', variables.id] });
       } else {
         toast.error(data?.error || 'Firma güncellenirken bir hata oluştu.');
       }

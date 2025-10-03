@@ -27,7 +27,7 @@ export const usePostCreatePackageContentMutation = () => {
 
   return useMutation({
     mutationFn: PackageContentApi.postCreateManagementPackageContent,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Paket içeriği başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPackageContent'] });
@@ -51,7 +51,7 @@ export const usePutPackageContentByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Paket içeriği başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPackageContent'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementPackageContentById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementPackageContentById', variables.id] });
       } else {
         toast.error(data?.error || 'Paket içeriği güncellenirken bir hata oluştu.');
       }

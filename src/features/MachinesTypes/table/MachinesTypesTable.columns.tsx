@@ -51,6 +51,7 @@ export const useMachinesTypesTableColumns = () => {
       {
         accessorKey: 'typeName',
         label: 'Makine Tipi Adı',
+        sortingFn: 'text',
         cell: ({ row }) => (
           <div className="flex items-center gap-3 cursor-pointer hover:underline">
             <Avatar className="h-10 w-10">
@@ -66,7 +67,8 @@ export const useMachinesTypesTableColumns = () => {
       },
       {
         accessorKey: 'systemName',
-        label: 'Sistem Adı'
+        label: 'Sistem Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'description',

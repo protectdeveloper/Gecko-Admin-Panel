@@ -36,7 +36,6 @@ import { CustomGroupedTreeMultiCheckboxData } from '../inputs/CustomGroupedTreeM
 import { DataTableName } from './DataTable.enum';
 import { useTableStore } from '@/store/useTableStore';
 import { CustomMultiSelectBoxOption } from '../inputs/CustomMultiSelectBox';
-import { Skeleton } from '../ui/skeleton';
 import DataTableHeaderSkeleton from './DataTableHeaderSkeleton';
 
 export type DataTableMeta = {
@@ -274,11 +273,23 @@ export const DataTable = (props: DataTableProps) => {
       ...props
     },
     enableRowSelection: true,
+    sortingFns: {
+      text: (rowA: any, rowB: any, columnId: string) => {
+        const aValue = String(rowA.getValue(columnId) || '');
+        const bValue = String(rowB.getValue(columnId) || '');
+
+        return aValue.localeCompare(bValue, 'tr-TR', {
+          sensitivity: 'base',
+          ignorePunctuation: true,
+          numeric: true
+        });
+      }
+    },
     ...(props?.pageCount || props?.totalCount
       ? {
           pageCount: calculatedPageCount,
           manualPagination: true,
-          manualSorting: true,
+          manualSorting: false,
           manualFiltering: true
         }
       : {}),

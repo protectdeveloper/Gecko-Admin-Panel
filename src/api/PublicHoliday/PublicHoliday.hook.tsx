@@ -27,7 +27,7 @@ export const usePostCreatePublicHolidayMutation = () => {
 
   return useMutation({
     mutationFn: PublicHolidayApi.postCreateManagementPublicHoliday,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Tatil başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPublicHoliday'] });
@@ -51,7 +51,7 @@ export const usePutPublicHolidayByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Tatil başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPublicHoliday'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementPublicHolidayById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementPublicHolidayById', variables.id] });
       } else {
         toast.error(data?.error || 'Tatil güncellenirken bir hata oluştu.');
       }

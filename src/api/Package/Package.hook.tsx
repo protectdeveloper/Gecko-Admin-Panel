@@ -27,7 +27,7 @@ export const usePostCreatePackageMutation = () => {
 
   return useMutation({
     mutationFn: PackageApi.postCreateManagementPackage,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Paket başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPackages'] });
@@ -51,7 +51,7 @@ export const usePutPackageByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Paket başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementPackages'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementPackageById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementPackageById', variables.id] });
       } else {
         toast.error(data?.error || 'Paket güncellenirken bir hata oluştu.');
       }

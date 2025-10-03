@@ -49,7 +49,8 @@ export const useAccessMethodsTableColumns = () => {
     () => [
       {
         accessorKey: 'methodName',
-        label: 'Geçiş Yöntemi Adı'
+        label: 'Geçiş Yöntemi Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'description',
@@ -57,7 +58,8 @@ export const useAccessMethodsTableColumns = () => {
       },
       {
         accessorKey: 'systemName',
-        label: 'Sistem Adı'
+        label: 'Sistem Adı',
+        sortingFn: 'text'
       },
       {
         accessorKey: 'identifierCode',

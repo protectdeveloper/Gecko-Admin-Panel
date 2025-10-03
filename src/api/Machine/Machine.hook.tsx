@@ -27,7 +27,7 @@ export const usePostCreateMachineMutation = () => {
 
   return useMutation({
     mutationFn: MachineApi.postCreateManagementMachine,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Firma başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementMachines'] });
@@ -51,7 +51,7 @@ export const usePutUpdateMachineByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Firma başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementMachines'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementMachineById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementMachineById', variables.id] });
       } else {
         toast.error(data?.error || 'Firma güncellenirken bir hata oluştu.');
       }

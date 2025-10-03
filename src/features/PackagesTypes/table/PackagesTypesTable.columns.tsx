@@ -50,11 +50,13 @@ export const usePackagesTypesTableColumns = () => {
       {
         accessorKey: 'typeName',
         label: 'Paket Tipi Adı',
+        sortingFn: 'text',
         cell: ({ row }) => <span>{row.original.typeName || '-'}</span>
       },
       {
         accessorKey: 'systemName',
         label: 'Sistem Adı',
+        sortingFn: 'text',
         cell: ({ row }) => <span>{row.original.systemName || '-'}</span>
       },
       {
@@ -65,6 +67,7 @@ export const usePackagesTypesTableColumns = () => {
       {
         accessorKey: 'categoryName',
         label: 'Kategori Adı',
+        sortingFn: 'text',
         cell: ({ row }) => <span>{row.original.categoryName || '-'}</span>
       },
       {

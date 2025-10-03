@@ -27,7 +27,7 @@ export const usePostCreateAccessMethodMutation = () => {
 
   return useMutation({
     mutationFn: AccessMethodApi.postCreateManagementAccessMethod,
-    onSuccess: async (data, variables) => {
+    onSuccess: async (data) => {
       if (data?.success) {
         toast.success(data.message || 'Erişim yöntemi başarıyla oluşturuldu.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementAccessMethod'] });
@@ -51,7 +51,7 @@ export const usePutAccessMethodByIdMutation = () => {
       if (data?.success) {
         toast.success(data.message || 'Erişim yöntemi başarıyla güncellendi.');
         await queryClient.invalidateQueries({ queryKey: ['getManagementAccessMethod'] });
-        await queryClient.invalidateQueries({ queryKey: ['getManagementAccessMethodById', variables.id] });
+        await queryClient.refetchQueries({ queryKey: ['getManagementAccessMethodById', variables.id] });
       } else {
         toast.error(data?.error || 'Erişim yöntemi güncellenirken bir hata oluştu.');
       }
